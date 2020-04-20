@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:minHeight="180dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:elevation="2dp"
+
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:paddingTop="15dp">
+
+        <TextView
+            android:id="@+id/vertical_rv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="start|center_vertical"
+            android:padding="3dp"
+            android:text="Latest Releases"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+           />
+
+        <TextView
+            android:id="@+id/vertical_rv_more_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableEnd="@drawable/ic_more"
+            android:drawableRight="@drawable/ic_more"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="end|end"
+            android:layout_gravity="bottom"
+            android:padding="3dp"
+            android:text="see All"
+            android:textColor="@color/textColor"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+
+            tools:text="more" />
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/vertical_rv_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:nestedScrollingEnabled="false"
+        android:padding="10dp"
+        tools:listitem="@layout/vertical_single_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>
+
+
+</layout>

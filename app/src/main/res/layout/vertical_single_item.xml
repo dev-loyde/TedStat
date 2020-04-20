@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="item"
+            type="com.devloyde.healthguard.models.HealthCard" />
+    </data>
+
+<com.google.android.material.card.MaterialCardView
+
+    style="@style/Widget.MaterialComponents.CardView"
+    android:layout_width="120dp"
+    android:layout_height="150dp"
+    android:minWidth="150dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginVertical="5dp"
+    android:background="@color/cardBackgroundColor"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    android:minHeight="180dp"
+    app:cardCornerRadius="3dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="false"
+    app:rippleColor="#eeffffff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/vertical_img"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            app:imageUrl="@{item.image}"
+ />
+
+        <TextView
+            android:id="@+id/vertical_title"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_weight="0.5"
+            android:text="@{item.title}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+           />
+
+        <TextView
+            android:id="@+id/vertical_description"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="0.5"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@{item.description}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+         />
+
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+
+</layout>

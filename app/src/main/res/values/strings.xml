@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">HealthGuard</string>
+    <string name="title_home">HealthGuard</string>
+    <string name="title_news">News</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="menu_home">Home</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+</resources>
