@@ -35,12 +35,13 @@ class NewsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(NewsViewModel::class.java)
+        viewModel = ViewModelProviders(this).get(NewsViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
     }
 }
