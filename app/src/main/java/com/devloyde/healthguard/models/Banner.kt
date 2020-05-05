@@ -26,3 +26,9 @@ data class GlobalStat(
     var totalRecoveredCases: Int,
     var newlyRecoveredCases: Int
 )
+
+data class SettingsListItem(
+    var icon:Int,
+    var title: String,
+    var pref: Int?
+)

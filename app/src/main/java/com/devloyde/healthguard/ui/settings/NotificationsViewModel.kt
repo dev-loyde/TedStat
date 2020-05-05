@@ -1,4 +1,4 @@
-package com.devloyde.healthguard.ui.notifications
+package com.devloyde.healthguard.ui.settings
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

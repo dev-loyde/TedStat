@@ -9,8 +9,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.devloyde.healthguard.databinding.ActivityMainBinding
+import com.devloyde.healthguard.models.SettingsListItem
+import com.devloyde.healthguard.ui.settings.SettingsFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SettingsFragment.OnListFragmentInteractionListener {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,8 +24,12 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
+            R.id.navigation_home, R.id.navigation_news,R.id.navigation_dashboard, R.id.navigation_settings))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    override fun onListFragmentInteraction(item: SettingsListItem?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

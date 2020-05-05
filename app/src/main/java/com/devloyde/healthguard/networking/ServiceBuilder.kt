@@ -1,0 +1,49 @@
+package com.devloyde.healthguard.networking
+
+import com.tickaroo.tikxml.TikXml
+import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+object JsonServiceBuilder {
+    private const val baseUrl = "https://api.smartable.ai"
+
+    private val httpClient = OkHttpClient.Builder().addInterceptor(Interceptor(){
+       val request = it.request()
+            .newBuilder().addHeader("Subscription-Key","dcb377dcaa654d42852d79dd0b977247").build()
+        return@Interceptor it.proceed(request)
+    })
+
+    private val retrofit = Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(httpClient.build())
+        .build()
+
+    fun<T> buildService(service: Class<T>):T{
+        return retrofit.create(service)
+    }
+
+
+}
+
+object XmlServiceBuilder {
+    private const val baseUrl = "https://www.who.int"
+
+    private val httpClient = OkHttpClient.Builder()
+    private val tikxml = TikXml.Builder().exceptionOnUnreadXml(false).build()
+
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(baseUrl)
+        .addConverterFactory(TikXmlConverterFactory.create(tikxml))
+        .client(httpClient.build())
+        .build()
+
+    fun<T> buildService(service: Class<T>):T{
+        return retrofit.create(service)
+    }
+
+
+}
