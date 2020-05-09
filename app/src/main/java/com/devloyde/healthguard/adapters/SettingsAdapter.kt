@@ -4,22 +4,17 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.devloyde.healthguard.R
 import com.devloyde.healthguard.databinding.FragmentSettingsItemBinding
-import com.devloyde.healthguard.databinding.VerticalSingleItemBinding
 import com.devloyde.healthguard.models.SettingsListItem
 
 
 import com.devloyde.healthguard.ui.settings.SettingsFragment.OnListFragmentInteractionListener
-import com.devloyde.healthguard.ui.dummy.DummyContent.DummyItem
-import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.switchmaterial.SwitchMaterial
-
 import kotlinx.android.synthetic.main.fragment_settings_item.view.*
+
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the

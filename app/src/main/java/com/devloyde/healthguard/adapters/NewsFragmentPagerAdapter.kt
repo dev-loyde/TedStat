@@ -16,6 +16,7 @@ class NewsFragmentPagerAdapter(fragmentManager: FragmentManager, lifecycle: Life
 
     fun addFragment(fragments: Fragment) {
         mFragmentList.add(fragments)
+        notifyDataSetChanged()
     }
 
     override fun createFragment(position: Int): Fragment {

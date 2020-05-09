@@ -1,47 +1,112 @@
 package com.devloyde.healthguard.models
 
-data class News(
-    var location: NewsLocation,
-    var updatedDateTime: String,
-    var news: List<NewsContent>
+data class NewsCard(
+    val image: String?,
+    val title: String?,
+    val link: String?,
+    val date: String?,
+    val provider: String?
 )
 
-data class NewsLocation(
-    val countryOrRegion: String,
-    val provinceOrState: String,
-    val county: String,
-    val isoCode: String,
-    val lat: String,
-    val long: String
+data class RecommendedNews(
+    val image: String?,
+    val title: String?,
+    val link: String?,
+    val date: String?,
+    val provider: String? = "WHO"
 )
 
-data class NewsContent(
-    val path: String,
+data class GlobalNews(
+    val image: List<GlobalImage>,
     val title: String,
-    val excerpt: String,
-    val heat: Int,
+    val description: String,
+    val link: String,
     val tags: List<String>,
+    val date: String,
     val type: String,
-    val webUrl: String,
-    val ampWebUrl: String,
-    val cdnAmpWebUrl: String,
-    val publishedDateTime: String,
-    val updatedDateTime: String,
-    val provider: NewsProvider,
-    val images: NewsImages,
     val locale: String,
-    val categories: List<String>,
-    val topics: List<String>
+    val topics: List<String>,
+    val provider: GlobalNewsProvider?
 )
 
-data class NewsProvider(
-    val name: String,
-    val domain: String
-)
-
-data class NewsImages(
-    val url: String,
+data class GlobalImage(
+    val url:String,
     val width: String,
     val height: String,
-    val title: String
+    val title: String,
+    val attribution: String
+)
+
+data class GlobalNewsProvider(
+    val name: String,
+    val domain: String,
+    val images: String
+)
+
+data class LocalNews(
+    val image: String,
+    val title: String,
+    val shortDescription: String,
+    val link: String,
+    val date: String,
+    val provider: String? = "NCDC"
+)
+
+data class CountryNews(
+    val image: List<GlobalImage>,
+    val title: String,
+    val description: String,
+    val link: String,
+    val tags: List<String>,
+    val date: String,
+    val type: String,
+    val locale: String,
+    val topics: List<String>,
+    val provider: GlobalNewsProvider?
+)
+
+data class NigeriaCountryNews(
+    val image: String,
+    val title: String,
+    val link: String,
+    val date: String,
+    val publisher: String?
+)
+
+
+// RETROFIT CALL RESPONSES
+
+data class RecommendedNewsResponse(
+    val error: Boolean,
+    val message: String,
+    val data: List<RecommendedNews>
+)
+
+data class LocalNewsResponse(
+    val error: Boolean,
+    val message: String,
+    val data: List<LocalNews>
+)
+
+data class GlobalNewsData(
+    val updatedTime: String,
+    val news: List<GlobalNews>
+)
+
+data class GlobalNewsResponse(
+    val error: Boolean,
+    val message: String,
+    val data: GlobalNewsData
+)
+
+data class CountryNewsResponse(
+    val error: Boolean,
+    val message: String,
+    val data: List<CountryNews>
+)
+
+data class NigeriaNewsResponse(
+    val error: Boolean,
+    val message: String,
+    val data: List<NigeriaCountryNews>
 )

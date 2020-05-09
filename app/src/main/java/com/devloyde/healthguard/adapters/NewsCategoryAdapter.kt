@@ -1,21 +1,29 @@
 package com.devloyde.healthguard.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.lifecycle.observe
 
 import androidx.recyclerview.widget.RecyclerView
 import com.devloyde.healthguard.databinding.NewsCategoryListItemBinding
+import com.devloyde.healthguard.models.*
+import com.devloyde.healthguard.ui.news.NewsFragment
+import com.squareup.picasso.Picasso
 
-import com.devloyde.healthguard.databinding.VerticalSingleItemBinding
-import com.devloyde.healthguard.models.News
-import com.devloyde.healthguard.models.NewsContent
 
+class NewsCategoryAdapter :
+    RecyclerView.Adapter<NewsCategoryAdapter.NewsCategoryViewHolder>() {
 
-class NewsCategoryAdapter(
-    private var mItems: List<String>
-    //   private var restaurantItemClickListener: RestaurantItemClick
-) : RecyclerView.Adapter<NewsCategoryAdapter.NewsCategoryViewHolder>() {
+    private var mItems = ArrayList<Any>()
+
+    fun addItems(items: List<Any>) {
+        mItems = items as ArrayList<Any>
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsCategoryViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -24,8 +32,55 @@ class NewsCategoryAdapter(
     }
 
     override fun onBindViewHolder(holder: NewsCategoryViewHolder, position: Int) {
-        val news = mItems[position]
-        holder.bind(news as String)
+        when (val news = mItems[position]) {
+            is RecommendedNews -> {
+
+                Picasso.with(holder.image.context)
+                    .load(news.image)
+                    .into(holder.image)
+
+                holder.title.text = news.title
+                holder.publisher.text = "WHO"
+            }
+            is LocalNews -> {
+
+                Picasso.with(holder.image.context)
+                    .load(news.image)
+                    .into(holder.image)
+
+                holder.title.text = news.title
+                holder.publisher.text = "NCDC"
+            }
+            is GlobalNews -> {
+
+                Picasso.with(holder.image.context)
+                    .load(news.image[0].url)
+                    .into(holder.image)
+
+                holder.title.text = news.title
+                holder.publisher.text = news.provider?.name
+
+            }
+            is NigeriaCountryNews -> {
+
+                Picasso.with(holder.image.context)
+                    .load(news.image)
+                    .into(holder.image)
+
+                holder.title.text = news.title
+                holder.publisher.text = news.publisher
+
+            }
+            is CountryNews -> {
+                Picasso.with(holder.image.context)
+                    .load(news.image[0].url)
+                    .into(holder.image)
+
+                holder.title.text = news.title
+                holder.publisher.text = news.provider?.name
+
+            }
+        }
 
     }
 
@@ -35,10 +90,16 @@ class NewsCategoryAdapter(
 
     inner class NewsCategoryViewHolder(val binding: NewsCategoryListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        var image: ImageView
+        var title: TextView
+        var publisher: TextView
 
-        fun bind(item: String) {
-
-            binding.executePendingBindings()
+        init {
+            binding.apply {
+                image = newsImg
+                title = newsTitle
+                publisher = newsPublisher
+            }
         }
 
 

@@ -5,19 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.devloyde.healthguard.R
 import com.devloyde.healthguard.adapters.NewsCategoryAdapter
 import com.devloyde.healthguard.databinding.FragmentNewsCategoryBinding
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.devloyde.healthguard.models.CountryNews
+import com.devloyde.healthguard.models.NewsCard
+import com.devloyde.healthguard.models.NigeriaCountryNews
+import com.devloyde.healthguard.ui.news.NewsFragment.Companion.GLOBAL_NEWS
+import com.devloyde.healthguard.ui.news.NewsFragment.Companion.HEALTH_CARE_NEWS
+import com.devloyde.healthguard.ui.news.NewsFragment.Companion.LOCAL_NEWS
+import com.devloyde.healthguard.ui.news.NewsFragment.Companion.RECOMMENDED_NEWS
 
 /**
  * A simple [Fragment] subclass.
@@ -25,17 +28,18 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class NewsCategoryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private lateinit  var binding: FragmentNewsCategoryBinding
+    private lateinit var newsType: String
+    private lateinit var binding: FragmentNewsCategoryBinding
+    private lateinit var viewModel: NewsViewModel
+    private lateinit var newsAdapter: NewsCategoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            newsType = it.getString("FRAGMENT")!!
         }
+
+        viewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -43,36 +47,46 @@ class NewsCategoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_news_category, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_news_category, container, false)
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.newsCategoryRecyclerView.apply{
-            layoutManager =  LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-            adapter = NewsCategoryAdapter(listOf(
-                "boy",
-                "girl",
-                "anything",
-                "lorem",
-                "ipsum",
-                "dolor",
-                "amit",
-                "consectim",
-                "dolorfiti",
-                "mozami",
-                "girl",
-                "anything",
-                "lorem",
-                "ipsum",
-                "dolor",
-                "amit",
-                "consectim",
-                "dolor fiti",
-                "mozami" )
-            )
+
+        newsAdapter = NewsCategoryAdapter()
+        binding.newsCategoryRecyclerView.apply {
+            layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+            adapter = newsAdapter
+        }
+        getCategoryData(newsType)
+    }
+
+    private fun getCategoryData(fragment: String) {
+        when (fragment) {
+            RECOMMENDED_NEWS -> {
+                viewModel.recommendedNews.observe(viewLifecycleOwner) { recommendedNews ->
+                   newsAdapter.addItems(recommendedNews)
+                }
+            }
+            GLOBAL_NEWS -> {
+                viewModel.globalNews.observe(viewLifecycleOwner) { globalNews ->
+                    newsAdapter.addItems(globalNews)
+                }
+            }
+            LOCAL_NEWS -> {
+                val isoCode = "NG"
+                viewModel.countryNews.observe(viewLifecycleOwner) { countryNews ->
+                    newsAdapter.addItems(countryNews)
+                }
+            }
+            HEALTH_CARE_NEWS -> {
+                viewModel.localNews.observe(viewLifecycleOwner) { localNews ->
+                    newsAdapter.addItems(localNews)
+                }
+            }
         }
     }
 
@@ -81,17 +95,14 @@ class NewsCategoryFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
+         * @param fragment Parameter 1.
          * @return A new instance of fragment NewsCategoryFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(fragment: String) =
             NewsCategoryFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString("FRAGMENT", fragment)
                 }
             }
     }
