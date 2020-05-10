@@ -11,7 +11,7 @@ import com.devloyde.healthguard.models.HealthCard
 
 
 class VerticalAdapter(
-    private var mItems: ArrayList<HealthCard>
+    private var mItems: List<HealthCard>
     //   private var restaurantItemClickListener: RestaurantItemClick
 ) : RecyclerView.Adapter<VerticalAdapter.VerticalInnerViewHolder>() {
 
