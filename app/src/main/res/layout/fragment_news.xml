@@ -5,7 +5,8 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?attr/backgroundColor">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/news_appbar"
@@ -17,11 +18,24 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/news_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="hello" />
+
+              >
+
+            <TextView
+                android:id="@+id/news_toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_horizontal"
+                android:text="Headlines" />
+
+            </androidx.appcompat.widget.Toolbar>
+
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/news_tab_layout"

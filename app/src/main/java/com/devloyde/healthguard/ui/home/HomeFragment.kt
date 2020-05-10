@@ -69,135 +69,69 @@ class HomeFragment : Fragment() {
 
     private fun allItems(): ArrayList<Any> {
 
-        val verticalRv: VerticalRv
-        val horizontalRv: HorizontalRv
-        val horizontalRv2: HorizontalRv
-        val carousel: Carousels
-
         val allItems: ArrayList<Any> = ArrayList()
-        val verticalInput: ArrayList<HealthCard> = ArrayList()
-        val horizontalInput: ArrayList<HorizontalSingle> = ArrayList()
-        val horizontalInput2: ArrayList<HorizontalSingle> = ArrayList()
-        val carouselItem: ArrayList<Carousel> = ArrayList()
 
-        carouselItem.add(Carousel(title = "Stay warm at all times", image = R.drawable.family))
-        carouselItem.add(
-            Carousel(
-                title = "Stay warm at all times",
-                image = R.drawable.social_distance
-            )
-        )
-        carouselItem.add(
-            Carousel(
-                title = "Healthy lifestyle increase life",
-                image = R.drawable.warrior
+        //     HOME CAROUSEL INPUT
+        val carouselItemList = Carousels(
+            listOf(
+                Carousel(title = "Stay warm at all times", image = R.drawable.family),
+                Carousel(
+                    title = "Stay warm at all times",
+                    image = R.drawable.social_distance
+                ),
+                Carousel(
+                    title = "Healthy lifestyle increase life",
+                    image = R.drawable.warrior
+                )
             )
         )
 
-        carousel = Carousels(carouselItem)
-
-        verticalInput.add(
-            HealthCard(
-                title = "card 1",
-                description = "",
-                image = R.drawable.antiseptic
-            )
-        )
-        verticalInput.add(
-            HealthCard(
-                title = "card 1",
-                description = "",
-                image = R.drawable.dont_touch
-            )
-        )
-        verticalInput.add(HealthCard(title = "card 1", description = "", image = R.drawable.mask))
-        verticalInput.add(
-            HealthCard(
-                title = "card 1",
-                description = "",
-                image = R.drawable.men_with_mask
-            )
-        )
-        verticalInput.add(
-            HealthCard(
-                title = "card 1",
-                description = "",
-                image = R.drawable.antiseptic
-            )
-        )
-        verticalInput.add(
-            HealthCard(
-                title = "card 1",
-                description = "",
-                image = R.drawable.dont_touch
-            )
-        )
-        verticalInput.add(HealthCard(title = "card 1", description = "", image = R.drawable.mask))
-        verticalInput.add(
-            HealthCard(
-                title = "card 1",
-                description = "",
-                image = R.drawable.men_with_mask
+        //   SAFETY ITEMS INPUT
+        val safetyTipsList = VerticalRv(
+            "Safety Tips", listOf(
+                HealthCard(
+                    title = "Sanitizers",
+                    description = "Regularly and thoroughly wash your " +
+                            "hands with soap and running water or use of alcohol-based" +
+                            " sanitizers if water is not available",
+                    image = R.drawable.antiseptic
+                ),
+                HealthCard(
+                    title = "Touch",
+                    description = "Avoid touching your eyes nose and mouth with unwashed" +
+                            " hands <br> Normal practices like greeting one another" +
+                            " with handshakes or hugging should be avoided",
+                    image = R.drawable.dont_touch
+                ),
+                HealthCard(
+                    title = "Face masks",
+                    description = "The wearing of face masks is recommended in order to prevent" +
+                            "those who are infected from but asymptomatic from spreading the virus." +
+                            " and others from contacting.Properly dispose of the mask in waste bins." +
+                            "Improper handling could lead to infections",
+                    image = R.drawable.mask
+                ),
+                HealthCard(
+                    title = "Disposable Tissue",
+                    description = "If someone is coughing or sneezing, " +
+                            "prompt them to cover their cough with a disposable tissue and " +
+                            "discard in a waste bin and washing their hands or using their elbow bent",
+                    image = R.drawable.mask
+                )
             )
         )
 
-        verticalRv = VerticalRv("Safety Tips", verticalInput)
+        // GLOBAL STATISTICS
+        val globalStat = GlobalStat("time", 2333, 222, 2, 445, 223, 200)
 
-        horizontalInput.add(
-            HorizontalSingle(
-                title = "card 1",
-                description = "",
-                image = R.drawable.antiseptic
-            )
-        )
-        horizontalInput.add(
-            HorizontalSingle(
-                title = "card 1",
-                description = "",
-                image = R.drawable.dont_touch
-            )
-        )
-        horizontalInput.add(
-            HorizontalSingle(
-                title = "card 1",
-                description = "",
-                image = R.drawable.mask
-            )
-        )
 
-        horizontalRv = HorizontalRv(null, horizontalInput)
-
-        horizontalInput2.add(
-            HorizontalSingle(
-                title = "card 1",
-                description = "",
-                image = R.drawable.antiseptic
+        allItems.addAll(
+            listOf(
+                carouselItemList,
+                safetyTipsList,
+                globalStat
             )
         )
-        horizontalInput2.add(
-            HorizontalSingle(
-                title = "card 1",
-                description = "",
-                image = R.drawable.dont_touch
-            )
-        )
-        horizontalInput2.add(
-            HorizontalSingle(
-                title = "card 1",
-                description = "",
-                image = R.drawable.mask
-            )
-        )
-
-        horizontalRv2 = HorizontalRv(null, horizontalInput2)
-
-        allItems.add(carousel)
-        allItems.add(VerticalRv("Safety Tips", verticalInput))
-        allItems.add(GlobalStat("time", 2333, 222, 2, 445, 223, 200))
-        allItems.add(VerticalRv("Covid-19 Prevention", verticalInput))
-        allItems.add(horizontalRv)
-        allItems.add(VerticalRv("Home Remedies", verticalInput))
-        allItems.add(horizontalRv2)
 
         return allItems
     }

@@ -5,7 +5,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+       >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,6 +30,20 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
 
+            <TextView
+                android:id="@+id/vertical_rv_more_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_vertical|end"
+                android:padding="3dp"
+                android:paddingTop="8dp"
+                android:text="more"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="@color/colorAccent" />
+
 
         </LinearLayout>
 
@@ -39,7 +54,7 @@
 
             android:layout_margin="16dp"
             android:layout_marginVertical="5dp"
-            android:background="@color/cardBackgroundColor"
+            android:background="?attr/cardBackground"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackgroundBorderless"
@@ -99,7 +114,6 @@
                     android:id="@+id/progress_stat"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@color/cardBackgroundColor"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintHorizontal_chainStyle="packed"
@@ -183,22 +197,6 @@
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-            <TextView
-                android:id="@+id/vertical_rv_more_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_weight="1"
-                android:drawableEnd="@drawable/ic_more"
-                android:drawableRight="@drawable/ic_more"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center_vertical|end"
-                android:padding="3dp"
-                android:paddingTop="8dp"
-                android:text="see All"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                android:textColor="@color/colorAccent" />
 
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>

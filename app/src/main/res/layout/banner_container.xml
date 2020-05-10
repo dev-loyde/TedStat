@@ -14,7 +14,7 @@
         app:elevation="4dp"
         app:shape_arc_height="25dp"
         app:shape_arc_position="bottom"
-        android:background="@color/cardBackgroundColor"
+        android:background="?attr/cardBackground"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

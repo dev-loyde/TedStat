@@ -13,7 +13,7 @@ data class Carousel(
     var image: Int
 )
 
-data class Carousels(var carousels: ArrayList<Carousel>)
+data class Carousels(var carousels: List<Carousel>)
 
 
 data class Welcomes(var welcomes: List<Welcome>)

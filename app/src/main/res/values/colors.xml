@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#008577</color>
-    <color name="colorAccent">#e9967a</color>
-    <color name="textColor">#777777</color>
-    <color name="tintColor">#ffffff</color>
-    <color name="cardBackgroundColor">#ffffff</color>
-    <color name="backgroundColor">#f2f2f2</color>
+        <color name="colorPrimaryDark">#008577</color>
+        <color name="colorAccent">#e9967a</color>
+        <color name="textColor">#777777</color>
+        <color name="tintColor">#ffffff</color>
+        <color name="cardBackground">#ffffff</color>
+        <color name="backgroundColor">#f2f2f2</color>
 
-<!--    <color name="colorPrimary">#212121</color>-->
-<!--    <color name="colorPrimaryDark">#212121</color>-->
+
+<!--    <color name="colorPrimaryDark">#008577</color>-->
 <!--    <color name="colorAccent">#D81B60</color>-->
 <!--    <color name="textColor">#ffffff</color>-->
 <!--    <color name="tintColor">#000000</color>-->

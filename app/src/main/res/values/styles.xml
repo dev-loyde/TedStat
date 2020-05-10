@@ -7,6 +7,12 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionBarSize">45dp</item>
+
+        <item name="cardBackground">@color/cardBackground</item>
+        <item name="backgroundColor">@color/backgroundColor</item>
+        <item name="tintColor">@color/tintColor</item>
+        <item name="textColor">@color/textColor</item>
+        <item name="android:textColorPrimary">@color/textColor</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

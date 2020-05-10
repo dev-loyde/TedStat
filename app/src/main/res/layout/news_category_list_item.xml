@@ -13,7 +13,8 @@
         app:cardCornerRadius="5dp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="false"
-        app:rippleColor="#eeffffff">
+        app:rippleColor="#eeffffff"
+        android:background="?attr/cardBackground">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

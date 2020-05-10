@@ -1,63 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="horizontalItem"
             type="com.devloyde.healthguard.models.HorizontalSingle" />
     </data>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:orientation="vertical"
-    android:padding="10dp">
-
-    <ImageView
-        android:id="@+id/horizontal_img"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:imageUrl="@{horizontalItem.image}"/>
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="?attr/cardBackground">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/scrim_bg" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start|center_vertical"
-        android:layout_marginLeft="30dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/horizontal_title"
+        <ImageView
+            android:id="@+id/horizontal_img"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="@{horizontalItem.title}"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            android:textColor="@android:color/white" />
+            android:layout_height="match_parent"
+            app:imageUrl="@{horizontalItem.image}" />
 
-        <TextView
-            android:id="@+id/horizontal_description"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/scrim_bg" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxWidth="180dp"
-            android:maxLines="4"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="@android:color/white"
-            tools:text="@{horizontalItem.description}" />
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginLeft="30dp"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/horizontal_btn"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Learn More" />
+            <TextView
+                android:id="@+id/horizontal_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="@{horizontalItem.title}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="@android:color/white" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/horizontal_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="180dp"
+                android:maxLines="4"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textColor="@android:color/white"
+                tools:text="@{horizontalItem.description}" />
 
-</FrameLayout>
+            <Button
+                android:id="@+id/horizontal_btn"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Learn More" />
+
+        </LinearLayout>
+
+    </FrameLayout>
 </layout>

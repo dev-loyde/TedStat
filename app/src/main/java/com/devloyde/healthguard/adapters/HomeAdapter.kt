@@ -112,7 +112,7 @@ globalStat -> globalStatView(holder as GlobalStatViewHolder,position)
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(items: HorizontalRv) {
-            val horizontalItems: ArrayList<HorizontalSingle> = items.horizontalItems
+            val horizontalItems: List<HorizontalSingle> = items.horizontalItems
             val mContext = binding.horizontalRvContainer.context
             val adapter2 = HorizontalAdapter(horizontalItems)
             binding.horizontalRvContainer.layoutManager =
@@ -146,7 +146,7 @@ globalStat -> globalStatView(holder as GlobalStatViewHolder,position)
 
         fun bind(items: VerticalRv, position: Int) {
             val verticalHeader: String = items.title
-            val verticalItems: ArrayList<HealthCard> = items.verticalItems
+            val verticalItems: List<HealthCard> = items.verticalItems
             val adapter1 = VerticalAdapter(verticalItems)
             val mContext = binding.verticalRvContainer.context
 
