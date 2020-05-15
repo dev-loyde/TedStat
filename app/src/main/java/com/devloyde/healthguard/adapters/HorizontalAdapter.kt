@@ -36,8 +36,8 @@ class HorizontalAdapter(private val mItems: List<HorizontalSingle>): RecyclerVie
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: HorizontalSingle){
-            binding.horizontalItem = item
-            binding.executePendingBindings()
+//            binding.horizontalItem = item
+//            binding.executePendingBindings()
         }
 
 

@@ -116,7 +116,7 @@ class HomeFragment : Fragment() {
                     description = "If someone is coughing or sneezing, " +
                             "prompt them to cover their cough with a disposable tissue and " +
                             "discard in a waste bin and washing their hands or using their elbow bent",
-                    image = R.drawable.mask
+                    image = R.drawable.toilet_paper
                 )
             )
         )
@@ -124,12 +124,54 @@ class HomeFragment : Fragment() {
         // GLOBAL STATISTICS
         val globalStat = GlobalStat("time", 2333, 222, 2, 445, 223, 200)
 
+        // What you should know
+        val awareness = HorizontalSingle("what you should know about covid-19","coronavirus is a blah blah blah",R.raw.covid_virus)
+
+        // Transmission
+        val transmission = VerticalRv(
+            "Safety Tips", listOf(
+                HealthCard(
+                    title = "Sanitizers",
+                    description = "Regularly and thoroughly wash your " +
+                            "hands with soap and running water or use of alcohol-based" +
+                            " sanitizers if water is not available",
+                    image = R.drawable.antiseptic
+                ),
+                HealthCard(
+                    title = "Touch",
+                    description = "Avoid touching your eyes nose and mouth with unwashed" +
+                            " hands <br> Normal practices like greeting one another" +
+                            " with handshakes or hugging should be avoided",
+                    image = R.drawable.dont_touch
+                ),
+                HealthCard(
+                    title = "Face masks",
+                    description = "The wearing of face masks is recommended in order to prevent" +
+                            "those who are infected from but asymptomatic from spreading the virus." +
+                            " and others from contacting.Properly dispose of the mask in waste bins." +
+                            "Improper handling could lead to infections",
+                    image = R.drawable.mask
+                ),
+                HealthCard(
+                    title = "Disposable Tissue",
+                    description = "If someone is coughing or sneezing, " +
+                            "prompt them to cover their cough with a disposable tissue and " +
+                            "discard in a waste bin and washing their hands or using their elbow bent",
+                    image = R.drawable.mask
+                )
+            )
+        )
+
+        // Games for children
+        val games = HorizontalSingle("Games for children to keeps your home alive","coronavirus is a blah blah blah",R.raw.ninja_kids_istayhome)
 
         allItems.addAll(
             listOf(
                 carouselItemList,
                 safetyTipsList,
-                globalStat
+                globalStat,
+                awareness,
+                games
             )
         )
 

@@ -44,28 +44,30 @@
         <TextView
             android:id="@+id/vertical_title"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginEnd="7dp"
             android:layout_marginRight="7dp"
+            android:paddingBottom="5dp"
             android:layout_weight="0.5"
             android:text="@{item.title}"
+            android:gravity="center_vertical"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
            />
 
-        <TextView
-            android:id="@+id/vertical_description"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="0.5"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="@{item.description}"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-         />
+<!--        <TextView-->
+<!--            android:id="@+id/vertical_description"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:layout_weight="0.5"-->
+<!--            android:ellipsize="end"-->
+<!--            android:singleLine="true"-->
+<!--            android:text="@{item.description}"-->
+<!--            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"-->
+<!--         />-->
 
 
     </LinearLayout>

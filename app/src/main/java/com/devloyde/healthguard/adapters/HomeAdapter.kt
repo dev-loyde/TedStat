@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.devloyde.healthguard.databinding.*
 import com.devloyde.healthguard.models.*
+import com.squareup.picasso.Picasso
 
 
 class HomeAdapter(private var mItems: ArrayList<Any>) :
@@ -42,12 +43,12 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
 
             }
             horizontal -> {
-                binding = HorizontalRvContainerBinding.inflate(inflater, parent, false)
+                binding = HorizontalSingleItemBinding.inflate(inflater, parent, false)
                 holder = HorizontalViewHolder(binding)
             }
 
             else -> {
-                binding = HorizontalRvContainerBinding.inflate(inflater, parent, false)
+                binding = HorizontalSingleItemBinding.inflate(inflater, parent, false)
                 holder = HorizontalViewHolder(binding)
             }
         }
@@ -71,7 +72,7 @@ globalStat -> globalStatView(holder as GlobalStatViewHolder,position)
     }
 
     private fun horizontalView(holder: HorizontalViewHolder, position: Int) {
-        val horizontalItems = mItems[position] as HorizontalRv
+        val horizontalItems = mItems[position] as HorizontalSingle
         holder.bind(horizontalItems)
     }
 
@@ -96,7 +97,7 @@ globalStat -> globalStatView(holder as GlobalStatViewHolder,position)
         if (mItems[position] is VerticalRv) {
             return vertical
         }
-        if (mItems[position] is HorizontalRv) {
+        if (mItems[position] is HorizontalSingle) {
             return horizontal
         }
         if (mItems[position] is Carousels) {
@@ -108,16 +109,15 @@ globalStat -> globalStatView(holder as GlobalStatViewHolder,position)
         return -1
     }
 
-    class HorizontalViewHolder(private val binding: HorizontalRvContainerBinding) :
+    class HorizontalViewHolder(private val binding: HorizontalSingleItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(items: HorizontalRv) {
-            val horizontalItems: List<HorizontalSingle> = items.horizontalItems
-            val mContext = binding.horizontalRvContainer.context
-            val adapter2 = HorizontalAdapter(horizontalItems)
-            binding.horizontalRvContainer.layoutManager =
-                LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false)
-            binding.horizontalRvContainer.adapter = adapter2
+        fun bind(items: HorizontalSingle) {
+            val horizontalItem: HorizontalSingle = items
+            binding.horizontalTitle.text = items.title
+            binding.horizontalImg.imageAssetsFolder = "images"
+            binding.horizontalImg.setAnimation(items.image)
+
         }
     }
 

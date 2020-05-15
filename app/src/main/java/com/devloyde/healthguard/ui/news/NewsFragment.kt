@@ -8,7 +8,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -90,44 +89,13 @@ class NewsFragment : Fragment() {
     private var localFragmentInstance = NewsCategoryFragment.newInstance(LOCAL_NEWS)
     private var healthCareFragmentInstance = NewsCategoryFragment.newInstance(HEALTH_CARE_NEWS)
 
-    private fun getRecommendedFragment(): NewsCategoryFragment {
-        if (recommendedFragmentInstance != null) {
-            return recommendedFragmentInstance
-        }
-        recommendedFragmentInstance = NewsCategoryFragment.newInstance(RECOMMENDED_NEWS)
-        return recommendedFragmentInstance
-    }
-
-    private fun getGlobalFragment(): NewsCategoryFragment {
-        if (globalFragmentInstance != null) {
-            return globalFragmentInstance
-        }
-        globalFragmentInstance = NewsCategoryFragment.newInstance(GLOBAL_NEWS)
-        return globalFragmentInstance
-    }
-
-    private fun getLocalFragment(): NewsCategoryFragment {
-        if (localFragmentInstance != null) {
-            return localFragmentInstance
-        }
-        localFragmentInstance = NewsCategoryFragment.newInstance(GLOBAL_NEWS)
-        return localFragmentInstance
-    }
-
-    private fun getHealthCareFragment(): NewsCategoryFragment {
-        if (healthCareFragmentInstance != null) {
-            return healthCareFragmentInstance
-        }
-        healthCareFragmentInstance = NewsCategoryFragment.newInstance(GLOBAL_NEWS)
-        return healthCareFragmentInstance
-    }
 
     private fun addNewsFragmentPagerData() {
 
-        newsFragmentPagerAdapter.addFragment(getRecommendedFragment())
-        newsFragmentPagerAdapter.addFragment(getGlobalFragment())
-        newsFragmentPagerAdapter.addFragment(getLocalFragment())
-        newsFragmentPagerAdapter.addFragment(getHealthCareFragment())
+        newsFragmentPagerAdapter.addFragment(recommendedFragmentInstance)
+        newsFragmentPagerAdapter.addFragment(globalFragmentInstance)
+        newsFragmentPagerAdapter.addFragment(localFragmentInstance)
+        newsFragmentPagerAdapter.addFragment(healthCareFragmentInstance)
 
     }
 

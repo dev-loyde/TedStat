@@ -15,7 +15,7 @@ class SliderPagerAdapter(items: List<Any>) :
 
     private val banner: Int = 1
     private val welcome: Int = 2
-    private var mItems : List<Any> = items
+    private var mItems: List<Any> = items
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -81,7 +81,7 @@ class SliderPagerAdapter(items: List<Any>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Carousel) {
-          binding.item = item
+            binding.item = item
         }
     }
 
@@ -90,7 +90,7 @@ class SliderPagerAdapter(items: List<Any>) :
 
         fun bind(item: Welcome) {
             binding.item = item
-       binding.welcomeImg.imageAssetsFolder = "images"
+            binding.welcomeImg.imageAssetsFolder = "images"
             binding.welcomeImg.setAnimation(item.img)
         }
     }
