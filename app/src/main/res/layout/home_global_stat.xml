@@ -7,7 +7,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
 
-       >
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,8 +27,8 @@
                 android:gravity="start|center_vertical"
                 android:padding="3dp"
                 android:text="Global Statistics"
-
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/textColor" />
 
 
             <TextView
@@ -36,13 +36,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center_vertical|end"
                 android:padding="3dp"
                 android:paddingTop="8dp"
                 android:text="more"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorAccent" />
 
 
@@ -53,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:layout_margin="16dp"
+            android:layout_margin="8dp"
             android:layout_marginVertical="5dp"
             android:background="?attr/cardBackground"
             android:clickable="true"

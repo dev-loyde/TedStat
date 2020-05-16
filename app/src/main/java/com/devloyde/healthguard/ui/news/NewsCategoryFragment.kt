@@ -1,26 +1,23 @@
 package com.devloyde.healthguard.ui.news
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import com.devloyde.healthguard.R
 import com.devloyde.healthguard.adapters.NewsCategoryAdapter
 import com.devloyde.healthguard.databinding.FragmentNewsCategoryBinding
-import com.devloyde.healthguard.models.CountryNews
-import com.devloyde.healthguard.models.NewsCard
-import com.devloyde.healthguard.models.NigeriaCountryNews
 import com.devloyde.healthguard.ui.news.NewsFragment.Companion.GLOBAL_NEWS
 import com.devloyde.healthguard.ui.news.NewsFragment.Companion.HEALTH_CARE_NEWS
 import com.devloyde.healthguard.ui.news.NewsFragment.Companion.LOCAL_NEWS
 import com.devloyde.healthguard.ui.news.NewsFragment.Companion.RECOMMENDED_NEWS
+
 
 /**
  * A simple [Fragment] subclass.
@@ -63,6 +60,20 @@ class NewsCategoryFragment : Fragment() {
         }
         getCategoryData(newsType)
     }
+
+//    fun itemCheck() {
+//        if (FirebaseUtil.mDeals.size() > 0) {
+//            progressBarList.setVisibility(View.GONE)
+//            emptyView.setVisibility(View.GONE)
+//        } else if (FirebaseUtil.mDeals.size() === 0 && !NetworkUtil.NetworkAvailable(this@ListActivity)) {
+//            progressBarList.setVisibility(View.GONE)
+//            emptyView.setVisibility(View.VISIBLE)
+//        } else {
+//            progressBarList.setVisibility(View.VISIBLE)
+//            emptyView.setVisibility(View.GONE)
+//        }
+//    }
+
 
     private fun getCategoryData(fragment: String) {
         when (fragment) {

@@ -74,15 +74,8 @@ class HomeFragment : Fragment() {
         //     HOME CAROUSEL INPUT
         val carouselItemList = Carousels(
             listOf(
-                Carousel(title = "Stay warm at all times", image = R.drawable.family),
-                Carousel(
-                    title = "Stay warm at all times",
-                    image = R.drawable.social_distance
-                ),
-                Carousel(
-                    title = "Healthy lifestyle increase life",
-                    image = R.drawable.warrior
-                )
+                Carousel(title = "Healthy lifestyle increase life", image = R.drawable.warrior),
+                Carousel(title = "Stay warm at all times", image = R.drawable.social_distance)
             )
         )
 
@@ -90,33 +83,46 @@ class HomeFragment : Fragment() {
         val safetyTipsList = VerticalRv(
             "Safety Tips", listOf(
                 HealthCard(
-                    title = "Sanitizers",
-                    description = "Regularly and thoroughly wash your " +
-                            "hands with soap and running water or use of alcohol-based" +
-                            " sanitizers if water is not available",
-                    image = R.drawable.antiseptic
-                ),
-                HealthCard(
-                    title = "Touch",
-                    description = "Avoid touching your eyes nose and mouth with unwashed" +
-                            " hands <br> Normal practices like greeting one another" +
-                            " with handshakes or hugging should be avoided",
-                    image = R.drawable.dont_touch
-                ),
-                HealthCard(
-                    title = "Face masks",
+                    title = "WEAR A FACE MASK",
                     description = "The wearing of face masks is recommended in order to prevent" +
                             "those who are infected from but asymptomatic from spreading the virus." +
                             " and others from contacting.Properly dispose of the mask in waste bins." +
                             "Improper handling could lead to infections",
-                    image = R.drawable.mask
+                    image = R.drawable.cover_your_nose
                 ),
                 HealthCard(
-                    title = "Disposable Tissue",
+                    title = "DONT TOUCH EYES NOSE OR MOUTH WITH UNWASHED HANDS",
+                    description = "Avoid touching your eyes nose and mouth with unwashed" +
+                            " hands <br> Normal practices like greeting one another" +
+                            " with handshakes or hugging should be avoided",
+                    image = R.drawable.touch_safety
+                ),
+                HealthCard(
+                    title = "WASH YOUR HANDS FREQUENTLY",
+                    description = "Regularly and thoroughly wash your " +
+                            "hands with soap and running water or use of alcohol-based" +
+                            " sanitizers if water is not available",
+                    image = R.drawable.wash_hands_safety_tip
+                ), HealthCard(
+                    title = "COUGH ETIQUETTE Cover your Mouth With Sleeve Or Elbow",
                     description = "If someone is coughing or sneezing, " +
                             "prompt them to cover their cough with a disposable tissue and " +
                             "discard in a waste bin and washing their hands or using their elbow bent",
-                    image = R.drawable.toilet_paper
+                    image = R.drawable.sneezing_safety
+                ),
+                HealthCard(
+                    title = "CLEAN AND DISINFECT",
+                    description = "If someone is coughing or sneezing, " +
+                            "prompt them to cover their cough with a disposable tissue and " +
+                            "discard in a waste bin and washing their hands or using their elbow bent",
+                    image = R.drawable.disinfectant
+                ),
+                HealthCard(
+                    title = "AVOID CONTACT WITH SICK PEOPLE",
+                    description = "If someone is coughing or sneezing, " +
+                            "prompt them to cover their cough with a disposable tissue and " +
+                            "discard in a waste bin and washing their hands or using their elbow bent",
+                    image = R.drawable.avoid_contact_safety
                 )
             )
         )
@@ -125,45 +131,56 @@ class HomeFragment : Fragment() {
         val globalStat = GlobalStat("time", 2333, 222, 2, 445, 223, 200)
 
         // What you should know
-        val awareness = HorizontalSingle("what you should know about covid-19","coronavirus is a blah blah blah",R.raw.covid_virus)
+        val awareness = HorizontalSingle(
+            "what you should know about covid-19",
+            "coronavirus is a blah blah blah",
+            R.raw.covid_virus
+        )
 
-        // Transmission
-        val transmission = VerticalRv(
-            "Safety Tips", listOf(
-                HealthCard(
-                    title = "Sanitizers",
-                    description = "Regularly and thoroughly wash your " +
-                            "hands with soap and running water or use of alcohol-based" +
-                            " sanitizers if water is not available",
-                    image = R.drawable.antiseptic
-                ),
-                HealthCard(
-                    title = "Touch",
-                    description = "Avoid touching your eyes nose and mouth with unwashed" +
-                            " hands <br> Normal practices like greeting one another" +
-                            " with handshakes or hugging should be avoided",
-                    image = R.drawable.dont_touch
-                ),
-                HealthCard(
-                    title = "Face masks",
-                    description = "The wearing of face masks is recommended in order to prevent" +
-                            "those who are infected from but asymptomatic from spreading the virus." +
-                            " and others from contacting.Properly dispose of the mask in waste bins." +
-                            "Improper handling could lead to infections",
-                    image = R.drawable.mask
-                ),
-                HealthCard(
-                    title = "Disposable Tissue",
-                    description = "If someone is coughing or sneezing, " +
-                            "prompt them to cover their cough with a disposable tissue and " +
-                            "discard in a waste bin and washing their hands or using their elbow bent",
-                    image = R.drawable.mask
-                )
-            )
+        // What you should know about facemask
+        val facemask = HorizontalSingle(
+            "Guidelines to use on face mask",
+            "coronavirus is a blah blah blah",
+            R.raw.how_wear_mask
+        )
+
+        val symptoms = HorizontalBanner(
+            "Some Symptoms",
+            R.drawable.symptoms_covid
         )
 
         // Games for children
-        val games = HorizontalSingle("Games for children to keeps your home alive","coronavirus is a blah blah blah",R.raw.ninja_kids_istayhome)
+        val games = HorizontalSingle(
+            "Games for children to keeps your home alive",
+            "coronavirus is a blah blah blah",
+            R.raw.ninja_kids_istayhome
+        )
+
+        val advisory = InfoRv(
+            title = "Advisory",
+            infoItems = listOf(
+
+                "TRAVEL ADVICE",
+                "TRAVELLERS TO NIGERIA",
+                "ADVICE FOR HEALTH WORKERS",
+                "ADVICE FOR BUSSINESSES",
+                "HOW TO PROTECT YOUR SELF"
+            ),
+            source = "NCDC",
+            sourceLink = "www.ncdc.com"
+        )
+
+        val faq = InfoRv(
+            title = "FAQ",
+            infoItems = listOf(
+                "What is covid-19",
+                "What is the source of covid-19",
+                "is covid-19 airborne?",
+                "Are countries with covid-19 immune to covid-19"
+            ),
+            source = "NCDC",
+            sourceLink = "www.ncdc.com"
+        )
 
         allItems.addAll(
             listOf(
@@ -171,10 +188,15 @@ class HomeFragment : Fragment() {
                 safetyTipsList,
                 globalStat,
                 awareness,
-                games
+                symptoms,
+                facemask,
+                advisory,
+                games,
+                faq
             )
         )
 
         return allItems
     }
+
 }

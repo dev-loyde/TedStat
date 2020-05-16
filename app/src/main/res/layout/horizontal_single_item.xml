@@ -6,7 +6,7 @@
     <com.google.android.material.card.MaterialCardView
         style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="140dp"
         android:layout_margin="8dp"
         android:layout_marginVertical="5dp"
         android:clickable="true"
@@ -24,9 +24,8 @@
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/horizontal_img"
-                android:layout_width="120dp"
-                android:layout_height="100dp"
-                android:scaleType="centerCrop"
+                android:layout_width="130dp"
+                android:layout_height="125dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/horizontal_title"
                 app:layout_constraintHorizontal_weight="0.7"
@@ -34,9 +33,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
-                app:lottie_rawRes="@raw/wash_your_hands_covid_19"
                 app:lottie_scale="0.1"
-
                 />
 
             <TextView

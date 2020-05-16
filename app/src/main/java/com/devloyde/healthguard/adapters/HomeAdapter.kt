@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.airbnb.lottie.RenderMode
 import com.devloyde.healthguard.databinding.*
 import com.devloyde.healthguard.models.*
 import com.squareup.picasso.Picasso
@@ -20,6 +21,8 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
     private val horizontal: Int = 2
     private val banner: Int = 3
     private val globalStat: Int = 4
+    private val horizontalBanner: Int = 5
+    private val advisoryFaq: Int = 6
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -37,6 +40,11 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
                 holder = VerticalViewHolder(binding)
 
             }
+            horizontalBanner -> {
+                binding = HorizontalBannerItemBinding.inflate(inflater, parent, false)
+                holder = HorizontalBannerViewHolder(binding)
+
+            }
             globalStat -> {
                 binding = HomeGlobalStatBinding.inflate(inflater, parent, false)
                 holder = GlobalStatViewHolder(binding)
@@ -46,10 +54,14 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
                 binding = HorizontalSingleItemBinding.inflate(inflater, parent, false)
                 holder = HorizontalViewHolder(binding)
             }
+            advisoryFaq -> {
+                binding = InfoRvContainerBinding.inflate(inflater, parent, false)
+                holder = InfoViewHolder(binding)
+            }
 
             else -> {
-                binding = HorizontalSingleItemBinding.inflate(inflater, parent, false)
-                holder = HorizontalViewHolder(binding)
+                binding = InfoRvContainerBinding.inflate(inflater, parent, false)
+                holder = InfoViewHolder(binding)
             }
         }
 
@@ -61,7 +73,9 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
             banner -> bannerView(holder as BannerViewHolder, position)
             vertical -> verticalView(holder as VerticalViewHolder, position)
             horizontal -> horizontalView(holder as HorizontalViewHolder, position)
-globalStat -> globalStatView(holder as GlobalStatViewHolder,position)
+            horizontalBanner -> horizontalBannerView(holder as HorizontalBannerViewHolder, position)
+            globalStat -> globalStatView(holder as GlobalStatViewHolder, position)
+            advisoryFaq -> infoView(holder as InfoViewHolder, position)
         }
     }
 
@@ -76,6 +90,11 @@ globalStat -> globalStatView(holder as GlobalStatViewHolder,position)
         holder.bind(horizontalItems)
     }
 
+    private fun horizontalBannerView(holder: HorizontalBannerViewHolder, position: Int) {
+        val horizontalBannerItems = mItems[position] as HorizontalBanner
+        holder.bind(horizontalBannerItems)
+    }
+
     private fun bannerView(holder: BannerViewHolder, position: Int) {
         val bannerItems = mItems[position] as Carousels
         holder.bind(bannerItems)
@@ -85,6 +104,12 @@ globalStat -> globalStatView(holder as GlobalStatViewHolder,position)
     private fun globalStatView(holder: GlobalStatViewHolder, position: Int) {
         val globalStatItems = mItems[position] as GlobalStat
         holder.bind(globalStatItems)
+
+    }
+
+    private fun infoView(holder: InfoViewHolder, position: Int) {
+        val infoItems = mItems[position] as InfoRv
+        holder.bind(infoItems)
 
     }
 
@@ -106,6 +131,12 @@ globalStat -> globalStatView(holder as GlobalStatViewHolder,position)
         if (mItems[position] is GlobalStat) {
             return globalStat
         }
+        if (mItems[position] is HorizontalBanner) {
+            return horizontalBanner
+        }
+        if (mItems[position] is InfoRv) {
+            return advisoryFaq
+        }
         return -1
     }
 
@@ -113,10 +144,22 @@ globalStat -> globalStatView(holder as GlobalStatViewHolder,position)
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(items: HorizontalSingle) {
-            val horizontalItem: HorizontalSingle = items
             binding.horizontalTitle.text = items.title
             binding.horizontalImg.imageAssetsFolder = "images"
+            binding.horizontalImg.setRenderMode(RenderMode.SOFTWARE)
             binding.horizontalImg.setAnimation(items.image)
+
+        }
+    }
+
+    class HorizontalBannerViewHolder(private val binding: HorizontalBannerItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(items: HorizontalBanner) {
+            binding.horizontalBannerTitle.text = items.title
+            Picasso.with(binding.horizontalBannerTitle.context)
+                .load(items.image)
+                .into(binding.horizontalBannerImg)
 
         }
     }
@@ -139,7 +182,6 @@ globalStat -> globalStatView(holder as GlobalStatViewHolder,position)
             })
         }
     }
-
 
     class VerticalViewHolder(private var binding: VerticalRvContainerBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -174,4 +216,16 @@ globalStat -> globalStatView(holder as GlobalStatViewHolder,position)
         }
     }
 
+    class InfoViewHolder(private var binding: InfoRvContainerBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(items: InfoRv) {
+            binding.infoRvTitle.text = items.title
+            val infoItems: List<String> = items.infoItems.subList(0,3)
+            val infoAdapter = InfoAdapter(infoItems)
+            binding.infoRvContainer.layoutManager =
+                LinearLayoutManager(binding.infoRvContainer.context, RecyclerView.VERTICAL, false)
+            binding.infoRvContainer.adapter = infoAdapter
+        }
+    }
 }

@@ -88,6 +88,7 @@ class NewsCategoryAdapter :
         return mItems.size
     }
 
+
     inner class NewsCategoryViewHolder(val binding: NewsCategoryListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var image: ImageView
