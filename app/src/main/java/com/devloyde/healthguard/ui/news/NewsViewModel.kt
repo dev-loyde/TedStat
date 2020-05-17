@@ -11,11 +11,11 @@ import com.devloyde.healthguard.respositories.NewsRepository
 
 class NewsViewModel : ViewModel() {
 
-    private val newsRepository: NewsRepository = NewsRepository
+    private var newsRepository: NewsRepository = NewsRepository
 
-    var recommendedNews : LiveData<List<RecommendedNews>> = newsRepository.recommendedNewsRepo
-    var localNews: LiveData<List<LocalNews>> = newsRepository.localNewsRepo
-    var countryNews: LiveData<List<Any>> = newsRepository.countryNewsRepo
-    var globalNews: LiveData<List<GlobalNews>> = newsRepository.globalNewsRepo
+    var recommendedNews: LiveData<List<RecommendedNews>> = newsRepository.getRecommendedNews(1)
+    var localNews: LiveData<List<LocalNews>> = newsRepository.getLocalNews()
+    var countryNews: LiveData<List<Any>> = newsRepository.getCountryNews("NG")
+    var globalNews: LiveData<List<GlobalNews>> = newsRepository.getGlobalNews()
 
 }

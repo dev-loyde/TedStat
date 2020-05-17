@@ -12,18 +12,6 @@ import java.util.concurrent.Executors
 
 object NewsRepository {
 
-    lateinit var recommendedNewsRepo: MutableLiveData<List<RecommendedNews>>
-    lateinit var localNewsRepo: MutableLiveData<List<LocalNews>>
-    lateinit var globalNewsRepo: MutableLiveData<List<GlobalNews>>
-    lateinit var countryNewsRepo: MutableLiveData<List<Any>>
-
-    init {
-        recommendedNewsRepo = getRecommendedNews(1)
-        localNewsRepo = getLocalNews()
-        globalNewsRepo = getGlobalNews()
-        countryNewsRepo = getCountryNews("NG")
-    }
-
     private val newsExecutors = Executors.newFixedThreadPool(4)
 
     fun getRecommendedNews(page: Int): MutableLiveData<List<RecommendedNews>> {
@@ -34,7 +22,7 @@ object NewsRepository {
 
             call.enqueue(object : Callback<RecommendedNewsResponse> {
                 override fun onFailure(call: Call<RecommendedNewsResponse>, t: Throwable) {
-                    Log.d("RECOMMENDED NEWS", "Error fetching recommended news")
+                    Log.d("RECOMMENDED NEWS","Error fetching recommended news")
                 }
 
                 override fun onResponse(
@@ -43,7 +31,7 @@ object NewsRepository {
                 ) {
                     if (response.isSuccessful && !response.body()?.error!!) {
                         recommendedNews.value = response.body()!!.data
-                        Log.d("RECOMMENDED NEWS", "Success fetching recommended news")
+                        Log.d("RECOMMENDED NEWS","Success fetching recommended news")
                     }
                 }
             })
@@ -60,7 +48,7 @@ object NewsRepository {
 
             call.enqueue(object : Callback<LocalNewsResponse> {
                 override fun onFailure(call: Call<LocalNewsResponse>, t: Throwable) {
-                    Log.d("LOCAL NEWS", "Error fetching local news")
+                    Log.d("LOCAL NEWS","Error fetching local news")
                 }
 
                 override fun onResponse(
@@ -68,7 +56,7 @@ object NewsRepository {
                     response: Response<LocalNewsResponse>
                 ) {
                     if (response.isSuccessful && !response.body()?.error!!) {
-                        Log.d("LOCAL NEWS", "Success fetching local news")
+                        Log.d("LOCAL NEWS","Success fetching local news")
                         localNews.value = response.body()!!.data
                     }
                 }
@@ -86,7 +74,7 @@ object NewsRepository {
 
             call.enqueue(object : Callback<GlobalNewsResponse> {
                 override fun onFailure(call: Call<GlobalNewsResponse>, t: Throwable) {
-                    Log.d("GLOBAL NEWS", "Error fetching global news")
+                    Log.d("GLOBAL NEWS","Error fetching global news")
                 }
 
                 override fun onResponse(
@@ -94,7 +82,7 @@ object NewsRepository {
                     response: Response<GlobalNewsResponse>
                 ) {
                     if (response.isSuccessful && !response.body()!!.error) {
-                        Log.d("GLOBAL NEWS", "Success fetching global news")
+                        Log.d("GLOBAL NEWS","Success fetching global news")
                         globalNews.value = response.body()!!.data.news
                     }
                 }
@@ -112,7 +100,7 @@ object NewsRepository {
 
             call.enqueue(object : Callback<NigeriaNewsResponse> {
                 override fun onFailure(call: Call<NigeriaNewsResponse>, t: Throwable) {
-                    Log.d("COUNTRY NEWS", "Error fetching country news")
+                    Log.d("COUNTRY NEWS","Error fetching country news")
                 }
 
                 override fun onResponse(

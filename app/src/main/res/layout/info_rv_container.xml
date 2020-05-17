@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
@@ -25,9 +26,9 @@
                 android:layout_weight="2"
                 android:gravity="start|center_vertical"
                 android:padding="3dp"
-                tools:text="Latest Releases"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/textColor" />
+                android:textColor="@color/textColor"
+                tools:text="Latest Releases" />
 
             <TextView
                 android:id="@+id/info_rv_more_btn"
@@ -48,18 +49,26 @@
 
         </LinearLayout>
 
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.MaterialComponents.CardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginVertical="5dp"
+            android:background="?attr/cardBackground"
+            app:cardCornerRadius="3dp"
+          >
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/info_rv_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:nestedScrollingEnabled="false"
             android:padding="8dp"
-            android:layout_margin="8dp"
-            android:background="@color/cardBackground"
             tools:listitem="@layout/info_list_item">
 
         </androidx.recyclerview.widget.RecyclerView>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 
 

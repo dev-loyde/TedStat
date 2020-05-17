@@ -62,70 +62,70 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
-                        android:background="@color/colorAccent"
                         android:gravity="center_horizontal"
                         android:padding="2dp"
                         android:text="HEAD ACHE AND SOAR THROAT"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textSize="11sp" />
+                        android:textSize="12sp"
+                        />
 
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
-                        android:background="@color/colorAccent"
                         android:gravity="center"
                         android:padding="2dp"
                         android:text="FEVER"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textSize="11sp" />
+                        android:textSize="12sp"
+                        />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
-                        android:background="@color/colorAccent"
                         android:gravity="center_horizontal"
                         android:padding="2dp"
                         android:text="COUGH"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textSize="11sp" />
+                        android:textSize="12sp"
+                        />
 
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
-                        android:background="@color/colorAccent"
                         android:gravity="center"
                         android:padding="2dp"
                         android:text="SHORTNESS OF BREADTH"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textSize="11sp" />
+                        android:textSize="12sp"
+                        />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
-                        android:background="@color/colorAccent"
                         android:gravity="center_horizontal"
                         android:padding="2dp"
                         android:text="SHAKING CHILLS"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textSize="11sp" />
+                        android:textSize="12sp"
+                        />
 
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="2dp"
-                        android:background="@color/colorAccent"
                         android:gravity="center"
                         android:padding="2dp"
                         android:text="DHIARREA"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textSize="11sp" />
+                        android:textSize="12sp"
+                        />
 
 
                 </LinearLayout>
