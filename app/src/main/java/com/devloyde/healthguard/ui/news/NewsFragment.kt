@@ -24,7 +24,7 @@ class NewsFragment : Fragment() {
         const val RECOMMENDED_NEWS: String = "RECOMMENDED_NEWS"
         const val LOCAL_NEWS: String = "LOCAL_NEWS"
         const val GLOBAL_NEWS: String = "GLOBAL_NEWS"
-        const val HEALTH_CARE_NEWS: String = "HEALTH_CARE_NEWS"
+        const val COUNTRY_NEWS: String = "COUNTRY_NEWS"
     }
 
     private lateinit var viewModel: NewsViewModel
@@ -87,7 +87,7 @@ class NewsFragment : Fragment() {
     private var recommendedFragmentInstance = NewsCategoryFragment.newInstance(RECOMMENDED_NEWS)
     private var globalFragmentInstance = NewsCategoryFragment.newInstance(GLOBAL_NEWS)
     private var localFragmentInstance = NewsCategoryFragment.newInstance(LOCAL_NEWS)
-    private var healthCareFragmentInstance = NewsCategoryFragment.newInstance(HEALTH_CARE_NEWS)
+    private var healthCareFragmentInstance = NewsCategoryFragment.newInstance(COUNTRY_NEWS)
 
 
     private fun addNewsFragmentPagerData() {

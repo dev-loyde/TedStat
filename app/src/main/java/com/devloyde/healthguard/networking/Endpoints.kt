@@ -9,8 +9,8 @@ import retrofit2.http.Query
 
 interface NewsEndpoints {
 
-    @GET("/api/news/recommended/{page}")
-    fun getRecommendedNews(@Path("page")key: Int): Call<RecommendedNewsResponse>
+    @GET("/api/news/recommended")
+    fun getRecommendedNews(): Call<RecommendedNewsResponse>
 
     @GET("/api/news/local")
     fun getHealthCareNews(): Call<LocalNewsResponse>
@@ -19,7 +19,7 @@ interface NewsEndpoints {
     fun getGlobalNews(): Call<GlobalNewsResponse>
 
     @GET("/api/news/country/{isocode}")
-    fun getCountryNews(@Path("isocode")key: String): Call<NigeriaNewsResponse>
+    fun getCountryNews(@Path("isocode")key: String): Call<CountryNewsResponse>
 
 }
 

@@ -54,30 +54,20 @@ class NewsCategoryAdapter :
             is GlobalNews -> {
 
                 Picasso.with(holder.image.context)
-                    .load(news.image[0].url)
+                    .load(news.image)
                     .into(holder.image)
 
                 holder.title.text = news.title
-                holder.publisher.text = news.provider?.name
+                holder.publisher.text = news.provider
 
             }
-            is NigeriaCountryNews -> {
-
+            is CountryNews -> {
                 Picasso.with(holder.image.context)
                     .load(news.image)
                     .into(holder.image)
 
                 holder.title.text = news.title
-                holder.publisher.text = news.publisher
-
-            }
-            is CountryNews -> {
-                Picasso.with(holder.image.context)
-                    .load(news.image[0].url)
-                    .into(holder.image)
-
-                holder.title.text = news.title
-                holder.publisher.text = news.provider?.name
+                holder.publisher.text = news.provider
 
             }
         }

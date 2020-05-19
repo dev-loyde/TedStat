@@ -1,5 +1,8 @@
 package com.devloyde.healthguard.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 data class NewsCard(
     val image: String?,
     val title: String?,
@@ -7,8 +10,19 @@ data class NewsCard(
     val date: String?,
     val provider: String?
 )
+//3600000
+@Entity
+data class TimeoutCheck(
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
+    val timeout: Long = System.currentTimeMillis() + 120000,
+    val name: String
+)
 
+@Entity
 data class RecommendedNews(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
     val image: String?,
     val title: String?,
     val link: String?,
@@ -16,63 +30,36 @@ data class RecommendedNews(
     val provider: String? = "WHO"
 )
 
+@Entity
 data class GlobalNews(
-    val image: List<GlobalImage>,
-    val title: String,
-    val description: String,
-    val link: String,
-    val tags: List<String>,
-    val date: String,
-    val type: String,
-    val locale: String,
-    val topics: List<String>,
-    val provider: GlobalNewsProvider?
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
+    val image: String?,
+    val title: String?,
+    val link: String?,
+    val provider: String?
 )
 
-data class GlobalImage(
-    val url:String,
-    val width: String,
-    val height: String,
-    val title: String,
-    val attribution: String
-)
-
-data class GlobalNewsProvider(
-    val name: String,
-    val domain: String,
-    val images: String
-)
-
+@Entity
 data class LocalNews(
-    val image: String,
-    val title: String,
-    val shortDescription: String,
-    val link: String,
-    val date: String,
+     @PrimaryKey(autoGenerate = true)
+     val id: Int,
+    val image: String?,
+    val title: String?,
+    val link: String?,
+    val date: String?,
     val provider: String? = "NCDC"
 )
 
+@Entity
 data class CountryNews(
-    val image: List<GlobalImage>,
-    val title: String,
-    val description: String,
-    val link: String,
-    val tags: List<String>,
-    val date: String,
-    val type: String,
-    val locale: String,
-    val topics: List<String>,
-    val provider: GlobalNewsProvider?
+     @PrimaryKey(autoGenerate = true)
+     val id: Int,
+    val image: String?,
+    val title: String?,
+    val link: String?,
+    val provider: String?
 )
-
-data class NigeriaCountryNews(
-    val image: String,
-    val title: String,
-    val link: String,
-    val date: String,
-    val publisher: String?
-)
-
 
 // RETROFIT CALL RESPONSES
 
@@ -88,25 +75,14 @@ data class LocalNewsResponse(
     val data: List<LocalNews>
 )
 
-data class GlobalNewsData(
-    val updatedTime: String,
-    val news: List<GlobalNews>
-)
-
 data class GlobalNewsResponse(
     val error: Boolean,
     val message: String,
-    val data: GlobalNewsData
+    val data: List<GlobalNews>
 )
 
 data class CountryNewsResponse(
     val error: Boolean,
     val message: String,
     val data: List<CountryNews>
-)
-
-data class NigeriaNewsResponse(
-    val error: Boolean,
-    val message: String,
-    val data: List<NigeriaCountryNews>
 )

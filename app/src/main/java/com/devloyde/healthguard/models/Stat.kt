@@ -1,37 +1,43 @@
 package com.devloyde.healthguard.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class GlobalStat(
-    val updatedTime: String,
-    val totalConfirmedCases: Int,
-    val newlyConfirmedCases: Int,
-    val totalDeaths: Int,
-    val newDeaths: Int,
-    val totalRecoveredCases: Int,
-    val newlyRecoveredCases: Int
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
+    val updatedTime: String?,
+    val totalConfirmedCases: Int?,
+    val newlyConfirmedCases: Int?,
+    val totalDeaths: Int?,
+    val newDeaths: Int?,
+    val totalRecoveredCases: Int?,
+    val newlyRecoveredCases: Int?
 )
 
-data class StatLocation(
-    val long: Int,
-    val lat: Int,
-    val countryOrRegion: String,
-    val provinceOrState: String?,
-    val county: String?,
-    val isoCode: String
-    )
 
+@Entity
 data class StatCountries(
-    val location: StatLocation,
-    val totalConfirmedCases: Int,
-    val newlyConfirmedCases: Int,
-    val totalDeaths: Int,
-    val newDeaths: Int,
-    val totalRecoveredCases: Int,
-    val newlyRecoveredCases: Int
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
+    val countryOrRegion: String?,
+    val provinceOrState: String?,
+    val isoCode: String?,
+    val totalConfirmedCases: Int?,
+    val newlyConfirmedCases: Int?,
+    val totalDeaths: Int?,
+    val newDeaths: Int?,
+    val totalRecoveredCases: Int?,
+    val newlyRecoveredCases: Int?
 )
 
+@Entity
 data class StatHistory(
-    val date: String,
-    val confirmed: Int,
-    val deaths: Int,
-    val recovered: Int
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
+    val date: String?,
+    val confirmed: Int?,
+    val deaths: Int?,
+    val recovered: Int?
 )

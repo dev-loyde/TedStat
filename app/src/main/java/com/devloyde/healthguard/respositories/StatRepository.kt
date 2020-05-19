@@ -14,6 +14,7 @@ import java.util.concurrent.Executors
 object StatRepository {
     private val statExecutors: ExecutorService? = Executors.newFixedThreadPool(4)
 
+
     fun getGlobalStat(): MutableLiveData<GlobalStat> {
 
         lateinit var globalStat: MutableLiveData<GlobalStat>

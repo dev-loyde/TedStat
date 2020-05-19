@@ -1,121 +1,191 @@
 package com.devloyde.healthguard.respositories
 
+import android.app.Application
+import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.room.Room
+import com.devloyde.healthguard.db.HealthGuardDatabase
+
+import com.devloyde.healthguard.db.NewsDao
 import com.devloyde.healthguard.models.*
 import com.devloyde.healthguard.networking.NetworkServiceBuilder
 import com.devloyde.healthguard.networking.NewsEndpoints
+import com.devloyde.healthguard.ui.news.NewsFragment.Companion.COUNTRY_NEWS
+import com.devloyde.healthguard.ui.news.NewsFragment.Companion.GLOBAL_NEWS
+import com.devloyde.healthguard.ui.news.NewsFragment.Companion.LOCAL_NEWS
+import com.devloyde.healthguard.ui.news.NewsFragment.Companion.RECOMMENDED_NEWS
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-object NewsRepository {
+class NewsRespository(
+    val newsDao: NewsDao,
+    val newsExecutors: ExecutorService
+) {
 
-    private val newsExecutors = Executors.newFixedThreadPool(4)
+    private val request = NetworkServiceBuilder.buildService(NewsEndpoints::class.java)
 
-    fun getRecommendedNews(page: Int): MutableLiveData<List<RecommendedNews>> {
-        val recommendedNews = MutableLiveData<List<RecommendedNews>>()
+
+    fun getRecommendedNews(): LiveData<List<RecommendedNews>> {
         newsExecutors.execute {
-            val request = NetworkServiceBuilder.buildService(NewsEndpoints::class.java)
-            val call = request.getRecommendedNews(page)
+            val timeout = newsDao.checkTimeout(System.currentTimeMillis(), RECOMMENDED_NEWS)
+            if (timeout > 0) {
+                newsDao.deleteTimeout(RECOMMENDED_NEWS)
+                val request = NetworkServiceBuilder.buildService(NewsEndpoints::class.java)
+                val call = request.getRecommendedNews()
 
-            call.enqueue(object : Callback<RecommendedNewsResponse> {
-                override fun onFailure(call: Call<RecommendedNewsResponse>, t: Throwable) {
-                    Log.d("RECOMMENDED NEWS","Error fetching recommended news")
-                }
-
-                override fun onResponse(
-                    call: Call<RecommendedNewsResponse>,
-                    response: Response<RecommendedNewsResponse>
-                ) {
-                    if (response.isSuccessful && !response.body()?.error!!) {
-                        recommendedNews.value = response.body()!!.data
-                        Log.d("RECOMMENDED NEWS","Success fetching recommended news")
+                call.enqueue(object : Callback<RecommendedNewsResponse> {
+                    override fun onFailure(call: Call<RecommendedNewsResponse>, t: Throwable) {
+                        Log.d("RECOMMENDED NEWS", "Error fetching recommended news")
                     }
-                }
-            })
 
+                    override fun onResponse(
+                        call: Call<RecommendedNewsResponse>,
+                        response: Response<RecommendedNewsResponse>
+                    ) {
+                        if (response.isSuccessful && !response.body()?.error!!) {
+                            Log.d("RECOMMENDED NEWS", "Success fetching recommended news")
+                            newsExecutors.execute {
+                                Log.d("RECOMMENDED NEWS", "Success saving recommended news to db")
+                                newsDao.saveRecommendedNews(*response.body()!!.data.toTypedArray())
+                                newsDao.saveTimeout(
+                                    TimeoutCheck(
+                                        name = RECOMMENDED_NEWS
+                                    )
+                                )
+                            }
+                        }
+                    }
+                })
+            }
         }
-        return recommendedNews
+        return newsDao.loadRecommendedNews()
     }
 
-    fun getLocalNews(): MutableLiveData<List<LocalNews>> {
-        val localNews = MutableLiveData<List<LocalNews>>()
+
+    fun getLocalNews(): LiveData<List<LocalNews>> {
         newsExecutors.execute {
-            val request = NetworkServiceBuilder.buildService(NewsEndpoints::class.java)
-            val call = request.getHealthCareNews()
-
-            call.enqueue(object : Callback<LocalNewsResponse> {
-                override fun onFailure(call: Call<LocalNewsResponse>, t: Throwable) {
-                    Log.d("LOCAL NEWS","Error fetching local news")
-                }
-
-                override fun onResponse(
-                    call: Call<LocalNewsResponse>,
-                    response: Response<LocalNewsResponse>
-                ) {
-                    if (response.isSuccessful && !response.body()?.error!!) {
-                        Log.d("LOCAL NEWS","Success fetching local news")
-                        localNews.value = response.body()!!.data
+            val timeout = newsDao.checkTimeout(System.currentTimeMillis(), LOCAL_NEWS)
+            if (timeout > 0) {
+                val call = request.getHealthCareNews()
+                call.enqueue(object : Callback<LocalNewsResponse> {
+                    override fun onFailure(call: Call<LocalNewsResponse>, t: Throwable) {
+                        Log.d("LOCAL NEWS", "Error fetching local news")
                     }
-                }
-            })
 
+                    override fun onResponse(
+                        call: Call<LocalNewsResponse>,
+                        response: Response<LocalNewsResponse>
+                    ) {
+                        if (response.isSuccessful && !response.body()?.error!!) {
+                            Log.d("LOCAL NEWS", "Success fetching local news")
+                            newsExecutors.execute {
+                                newsDao.saveLocalNews(*response.body()!!.data.toTypedArray())
+                                newsDao.saveTimeout(
+                                    TimeoutCheck(
+                                        name = LOCAL_NEWS
+                                    )
+                                )
+                            }
+                        }
+                    }
+                })
+            }
         }
-        return localNews
+        return newsDao.loadLocalNews()
     }
 
-    fun getGlobalNews(): MutableLiveData<List<GlobalNews>> {
-        val globalNews = MutableLiveData<List<GlobalNews>>()
+    fun getGlobalNews(): LiveData<List<GlobalNews>> {
         newsExecutors.execute {
-            val request = NetworkServiceBuilder.buildService(NewsEndpoints::class.java)
-            val call = request.getGlobalNews()
-
-            call.enqueue(object : Callback<GlobalNewsResponse> {
-                override fun onFailure(call: Call<GlobalNewsResponse>, t: Throwable) {
-                    Log.d("GLOBAL NEWS","Error fetching global news")
-                }
-
-                override fun onResponse(
-                    call: Call<GlobalNewsResponse>,
-                    response: Response<GlobalNewsResponse>
-                ) {
-                    if (response.isSuccessful && !response.body()!!.error) {
-                        Log.d("GLOBAL NEWS","Success fetching global news")
-                        globalNews.value = response.body()!!.data.news
+            val timeout = newsDao.checkTimeout(System.currentTimeMillis(), GLOBAL_NEWS)
+            if (timeout > 0) {
+                val call = request.getGlobalNews()
+                call.enqueue(object : Callback<GlobalNewsResponse> {
+                    override fun onFailure(call: Call<GlobalNewsResponse>, t: Throwable) {
+                        Log.d(
+                            "GLOBAL NEWS",
+                            "Error fetching global news ${t.cause} ${t.stackTrace}"
+                        )
                     }
-                }
-            })
 
+                    override fun onResponse(
+                        call: Call<GlobalNewsResponse>,
+                        response: Response<GlobalNewsResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            Log.d("GLOBAL NEWS", "Success fetching global news")
+                            newsExecutors.execute {
+                                newsDao.saveGlobalNews(*response.body()!!.data.toTypedArray())
+                                newsDao.saveTimeout(
+                                    TimeoutCheck(
+                                        name = GLOBAL_NEWS
+                                    )
+                                )
+                            }
+                        }
+                    }
+
+                })
+            }
         }
-        return globalNews
+        return newsDao.loadGlobalNews()
     }
 
-    fun getCountryNews(countryIso: String): MutableLiveData<List<Any>> {
-        val countryNews = MutableLiveData<List<Any>>()
+    fun getCountryNews(countryIso: String):LiveData<List<CountryNews>>  {
         newsExecutors.execute {
-            val request = NetworkServiceBuilder.buildService(NewsEndpoints::class.java)
-            val call = request.getCountryNews(countryIso)
+            val timeout = newsDao.checkTimeout(System.currentTimeMillis(), COUNTRY_NEWS)
+            if (timeout > 0) {
+                val call = request.getCountryNews(countryIso)
 
-            call.enqueue(object : Callback<NigeriaNewsResponse> {
-                override fun onFailure(call: Call<NigeriaNewsResponse>, t: Throwable) {
-                    Log.d("COUNTRY NEWS","Error fetching country news")
-                }
-
-                override fun onResponse(
-                    call: Call<NigeriaNewsResponse>,
-                    response: Response<NigeriaNewsResponse>
-                ) {
-                    if (response.isSuccessful && !response.body()!!.error) {
-                        countryNews.value = response.body()!!.data
+                call.enqueue(object : Callback<CountryNewsResponse> {
+                    override fun onFailure(call: Call<CountryNewsResponse>, t: Throwable) {
+                        Log.d("COUNTRY NEWS", "Error fetching country news")
                     }
-                }
-            })
 
+                    override fun onResponse(
+                        call: Call<CountryNewsResponse>,
+                        response: Response<CountryNewsResponse>
+                    ) {
+                        if (response.isSuccessful && !response.body()!!.error) {
+                            newsExecutors.execute {
+                                newsDao.saveCountryNews(*response.body()!!.data.toTypedArray())
+                                newsDao.saveTimeout(
+                                    TimeoutCheck(
+                                        name = COUNTRY_NEWS
+                                    )
+                                )
+                            }
+                        }
+                    }
+                })
+            }
         }
-        return countryNews
-
+        return newsDao.loadCountryNews()
     }
 
+    companion object {
+        // Singleton prevents multiple instances of database opening at the
+        // same time.
+        @Volatile
+        private var INSTANCE: NewsRespository? = null
+
+        fun getNewsRepository(
+            newsDao: NewsDao,
+            newsExecutor: ExecutorService
+        ): NewsRespository {
+            val tempInstance = NewsRespository.INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
+            }
+            synchronized(this) {
+                val instance = NewsRespository(newsDao, newsExecutor)
+                NewsRespository.INSTANCE = instance
+                return instance
+            }
+        }
+    }
 }

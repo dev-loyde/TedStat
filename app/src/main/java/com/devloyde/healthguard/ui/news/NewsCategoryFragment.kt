@@ -14,7 +14,7 @@ import com.devloyde.healthguard.R
 import com.devloyde.healthguard.adapters.NewsCategoryAdapter
 import com.devloyde.healthguard.databinding.FragmentNewsCategoryBinding
 import com.devloyde.healthguard.ui.news.NewsFragment.Companion.GLOBAL_NEWS
-import com.devloyde.healthguard.ui.news.NewsFragment.Companion.HEALTH_CARE_NEWS
+import com.devloyde.healthguard.ui.news.NewsFragment.Companion.COUNTRY_NEWS
 import com.devloyde.healthguard.ui.news.NewsFragment.Companion.LOCAL_NEWS
 import com.devloyde.healthguard.ui.news.NewsFragment.Companion.RECOMMENDED_NEWS
 
@@ -87,13 +87,13 @@ class NewsCategoryFragment : Fragment() {
                     newsAdapter.addItems(globalNews)
                 }
             }
-            LOCAL_NEWS -> {
+            COUNTRY_NEWS  -> {
                 val isoCode = "NG"
                 viewModel.countryNews.observe(viewLifecycleOwner) { countryNews ->
                     newsAdapter.addItems(countryNews)
                 }
             }
-            HEALTH_CARE_NEWS -> {
+            LOCAL_NEWS -> {
                 viewModel.localNews.observe(viewLifecycleOwner) { localNews ->
                     newsAdapter.addItems(localNews)
                 }
