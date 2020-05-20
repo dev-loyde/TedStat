@@ -1,12 +1,7 @@
 package com.devloyde.healthguard.respositories
 
-import android.app.Application
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.room.Room
-import com.devloyde.healthguard.db.HealthGuardDatabase
 
 import com.devloyde.healthguard.db.NewsDao
 import com.devloyde.healthguard.models.*
@@ -32,36 +27,44 @@ class NewsRespository(
 
     fun getRecommendedNews(): LiveData<List<RecommendedNews>> {
         newsExecutors.execute {
-            val timeout = newsDao.checkTimeout(System.currentTimeMillis(), RECOMMENDED_NEWS)
-            if (timeout > 0) {
-                newsDao.deleteTimeout(RECOMMENDED_NEWS)
-                val request = NetworkServiceBuilder.buildService(NewsEndpoints::class.java)
-                val call = request.getRecommendedNews()
+            Log.d("RECOMMENDED NEWS", "checking db for recommended news")
+            val timeout = newsDao.checkTimeout(RECOMMENDED_NEWS)
+            if (timeout == null || timeout.timeout < System.currentTimeMillis()) {
+                Log.d("RECOMMENDED NEWS", "Not available in Db recommended news")
+                    newsDao.deleteTimeout(RECOMMENDED_NEWS)
+                    Log.d("RECOMMENDED NEWS", "Delete old recommended news timeout")
+                    val request = NetworkServiceBuilder.buildService(NewsEndpoints::class.java)
+                    val call = request.getRecommendedNews()
 
-                call.enqueue(object : Callback<RecommendedNewsResponse> {
-                    override fun onFailure(call: Call<RecommendedNewsResponse>, t: Throwable) {
-                        Log.d("RECOMMENDED NEWS", "Error fetching recommended news")
-                    }
+                    call.enqueue(object : Callback<RecommendedNewsResponse> {
+                        override fun onFailure(call: Call<RecommendedNewsResponse>, t: Throwable) {
+                            Log.d("RECOMMENDED NEWS", "Error fetching recommended news")
+                        }
 
-                    override fun onResponse(
-                        call: Call<RecommendedNewsResponse>,
-                        response: Response<RecommendedNewsResponse>
-                    ) {
-                        if (response.isSuccessful && !response.body()?.error!!) {
-                            Log.d("RECOMMENDED NEWS", "Success fetching recommended news")
-                            newsExecutors.execute {
-                                Log.d("RECOMMENDED NEWS", "Success saving recommended news to db")
-                                newsDao.saveRecommendedNews(*response.body()!!.data.toTypedArray())
-                                newsDao.saveTimeout(
-                                    TimeoutCheck(
-                                        name = RECOMMENDED_NEWS
+                        override fun onResponse(
+                            call: Call<RecommendedNewsResponse>,
+                            response: Response<RecommendedNewsResponse>
+                        ) {
+                            if (response.isSuccessful && !response.body()?.error!!) {
+                                Log.d("RECOMMENDED NEWS", "Success fetching recommended news")
+                                newsExecutors.execute {
+                                    Log.d(
+                                        "RECOMMENDED NEWS",
+                                        "Success saving recommended news to db"
                                     )
-                                )
+                                    newsDao.saveRecommendedNews(*response.body()!!.data.toTypedArray())
+                                    Log.d("RECOMMENDED NEWS", "Saving recommended news timeout")
+                                    newsDao.saveTimeout(
+                                        TimeoutCheck(
+                                            name = RECOMMENDED_NEWS
+                                        )
+                                    )
+                                }
                             }
                         }
-                    }
-                })
-            }
+                    })
+                }
+
         }
         return newsDao.loadRecommendedNews()
     }
@@ -69,8 +72,8 @@ class NewsRespository(
 
     fun getLocalNews(): LiveData<List<LocalNews>> {
         newsExecutors.execute {
-            val timeout = newsDao.checkTimeout(System.currentTimeMillis(), LOCAL_NEWS)
-            if (timeout > 0) {
+            val timeout = newsDao.checkTimeout(LOCAL_NEWS)
+            if (timeout == null || timeout.timeout < System.currentTimeMillis()) {
                 val call = request.getHealthCareNews()
                 call.enqueue(object : Callback<LocalNewsResponse> {
                     override fun onFailure(call: Call<LocalNewsResponse>, t: Throwable) {
@@ -101,8 +104,8 @@ class NewsRespository(
 
     fun getGlobalNews(): LiveData<List<GlobalNews>> {
         newsExecutors.execute {
-            val timeout = newsDao.checkTimeout(System.currentTimeMillis(), GLOBAL_NEWS)
-            if (timeout > 0) {
+            val timeout = newsDao.checkTimeout(GLOBAL_NEWS)
+            if (timeout == null || timeout.timeout < System.currentTimeMillis()) {
                 val call = request.getGlobalNews()
                 call.enqueue(object : Callback<GlobalNewsResponse> {
                     override fun onFailure(call: Call<GlobalNewsResponse>, t: Throwable) {
@@ -137,8 +140,8 @@ class NewsRespository(
 
     fun getCountryNews(countryIso: String):LiveData<List<CountryNews>>  {
         newsExecutors.execute {
-            val timeout = newsDao.checkTimeout(System.currentTimeMillis(), COUNTRY_NEWS)
-            if (timeout > 0) {
+            val timeout = newsDao.checkTimeout(COUNTRY_NEWS)
+            if (timeout == null || timeout.timeout < System.currentTimeMillis()) {
                 val call = request.getCountryNews(countryIso)
 
                 call.enqueue(object : Callback<CountryNewsResponse> {
@@ -171,19 +174,19 @@ class NewsRespository(
         // Singleton prevents multiple instances of database opening at the
         // same time.
         @Volatile
-        private var INSTANCE: NewsRespository? = null
+        private var NEWSRESPOSITORYINSTANCE: NewsRespository? = null
 
         fun getNewsRepository(
             newsDao: NewsDao,
             newsExecutor: ExecutorService
         ): NewsRespository {
-            val tempInstance = NewsRespository.INSTANCE
+            val tempInstance = NEWSRESPOSITORYINSTANCE
             if (tempInstance != null) {
                 return tempInstance
             }
             synchronized(this) {
                 val instance = NewsRespository(newsDao, newsExecutor)
-                NewsRespository.INSTANCE = instance
+                NEWSRESPOSITORYINSTANCE = instance
                 return instance
             }
         }

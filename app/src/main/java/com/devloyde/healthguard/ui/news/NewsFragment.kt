@@ -94,9 +94,8 @@ class NewsFragment : Fragment() {
 
         newsFragmentPagerAdapter.addFragment(recommendedFragmentInstance)
         newsFragmentPagerAdapter.addFragment(globalFragmentInstance)
-        newsFragmentPagerAdapter.addFragment(localFragmentInstance)
         newsFragmentPagerAdapter.addFragment(healthCareFragmentInstance)
-
+        newsFragmentPagerAdapter.addFragment(localFragmentInstance)
     }
 
 }

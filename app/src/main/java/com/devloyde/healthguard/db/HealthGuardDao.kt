@@ -50,8 +50,8 @@ interface NewsDao {
     @Insert(onConflict = REPLACE)
     fun saveTimeout( timeout: TimeoutCheck)
 
-    @Query("SELECT COUNT(*) FROM timeoutcheck WHERE name == :name AND timeout <= :currentTime")
-    fun checkTimeout(currentTime:Long, name: String) : Int
+    @Query("SELECT * FROM timeoutcheck WHERE name == :name")
+    fun checkTimeout(name: String) : TimeoutCheck?
 
     @Query("DELETE FROM timeoutcheck WHERE name == :name")
     fun deleteTimeout(name: String)

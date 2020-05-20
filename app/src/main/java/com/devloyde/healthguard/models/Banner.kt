@@ -1,5 +1,11 @@
 package com.devloyde.healthguard.models
 
+import androidx.fragment.app.Fragment
+
+data class FragmentTag(
+    val mFragment: Fragment,
+    val mTag: String
+)
 
 data class Banner(
     var id: Int,

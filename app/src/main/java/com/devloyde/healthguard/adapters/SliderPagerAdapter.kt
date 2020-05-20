@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.RenderMode
 import com.devloyde.healthguard.databinding.CarouselItemBinding
 import com.devloyde.healthguard.databinding.WelcomeItemBinding
 import com.devloyde.healthguard.models.Carousel
@@ -91,6 +92,7 @@ class SliderPagerAdapter(items: List<Any>) :
         fun bind(item: Welcome) {
             binding.item = item
             binding.welcomeImg.imageAssetsFolder = "images"
+            binding.welcomeImg.setRenderMode(RenderMode.SOFTWARE)
             binding.welcomeImg.setAnimation(item.img)
         }
     }

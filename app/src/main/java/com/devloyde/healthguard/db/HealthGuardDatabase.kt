@@ -18,10 +18,10 @@ import com.devloyde.healthguard.models.*
         GlobalNews::class,
         CountryNews::class,
         TimeoutCheck::class
-    ], version = 1.2.toInt(),
-     exportSchema = false
+    ], version = 3,
+    exportSchema = false
 )
-abstract class HealthGuardDatabase : RoomDatabase(){
+abstract class HealthGuardDatabase : RoomDatabase() {
     abstract fun newsDao(): NewsDao
 
     companion object {
@@ -36,11 +36,13 @@ abstract class HealthGuardDatabase : RoomDatabase(){
                 return tempInstance
             }
             synchronized(this) {
+
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     HealthGuardDatabase::class.java,
                     "health_guard_database"
-                ).build()
+                ).fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 return instance
             }
