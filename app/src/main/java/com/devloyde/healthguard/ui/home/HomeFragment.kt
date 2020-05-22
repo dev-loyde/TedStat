@@ -28,7 +28,11 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeRv: RecyclerView
-    lateinit var toolbar: Toolbar
+
+    companion object{
+       lateinit var toolbar: Toolbar
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,9 +50,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        toolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
     private fun bindViews() {

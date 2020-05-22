@@ -18,7 +18,7 @@ import com.devloyde.healthguard.models.*
         GlobalNews::class,
         CountryNews::class,
         TimeoutCheck::class
-    ], version = 3,
+    ], version = 4,
     exportSchema = false
 )
 abstract class HealthGuardDatabase : RoomDatabase() {

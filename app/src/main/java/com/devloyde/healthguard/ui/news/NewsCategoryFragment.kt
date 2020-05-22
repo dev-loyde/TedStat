@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devloyde.healthguard.R
 import com.devloyde.healthguard.adapters.NewsCategoryAdapter
 import com.devloyde.healthguard.databinding.FragmentNewsCategoryBinding
+import com.devloyde.healthguard.ui.news.NewsCategoryFragment.*
 import com.devloyde.healthguard.ui.news.NewsFragment.Companion.GLOBAL_NEWS
 import com.devloyde.healthguard.ui.news.NewsFragment.Companion.COUNTRY_NEWS
 import com.devloyde.healthguard.ui.news.NewsFragment.Companion.LOCAL_NEWS
@@ -101,6 +102,9 @@ class NewsCategoryFragment : Fragment() {
         }
     }
 
+    interface NewsItemClick {
+        fun onItemClick(url: String)
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of

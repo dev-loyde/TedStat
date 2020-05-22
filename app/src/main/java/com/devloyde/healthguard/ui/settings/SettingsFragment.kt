@@ -32,8 +32,11 @@ class SettingsFragment : Fragment() {
 
     private var listener: OnListFragmentInteractionListener? = null
     private lateinit var binding: FragmentSettingsItemListBinding
-    private lateinit var toolbar: Toolbar
     private lateinit var list: RecyclerView
+
+    companion object{
+       lateinit var toolbar: Toolbar
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,16 +54,6 @@ class SettingsFragment : Fragment() {
             list = settingsList
         }
 
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home,
-                R.id.navigation_news,
-                R.id.navigation_dashboard,
-                R.id.navigation_settings
-            )
-        )
-        toolbar.setupWithNavController(navController, appBarConfiguration)
         list.apply{
 
                 layoutManager = LinearLayoutManager(activity,RecyclerView.VERTICAL,false)

@@ -50,22 +50,34 @@ interface NewsDao {
     @Insert(onConflict = REPLACE)
     fun saveTimeout( timeout: TimeoutCheck)
 
-    @Query("SELECT * FROM timeoutcheck WHERE name == :name")
-    fun checkTimeout(name: String) : TimeoutCheck?
+    @Query("SELECT * FROM timeoutcheck WHERE id == :id")
+    fun checkTimeout(id: Int) : TimeoutCheck?
 
-    @Query("DELETE FROM timeoutcheck WHERE name == :name")
-    fun deleteTimeout(name: String)
+    @Query("DELETE FROM timeoutcheck WHERE id == :id")
+    fun deleteTimeout(id: Int)
 
     @Query("SELECT * FROM recommendednews")
      fun loadRecommendedNews(): LiveData<List<RecommendedNews>>
 
+    @Query("DELETE FROM recommendednews")
+    fun deleteRecommendedNews()
+
     @Query("SELECT * FROM localnews")
      fun loadLocalNews(): LiveData<List<LocalNews>>
+
+    @Query("DELETE FROM localnews")
+    fun deleteLocalNews()
 
     @Query("SELECT * FROM globalnews")
      fun loadGlobalNews(): LiveData<List<GlobalNews>>
 
+    @Query("DELETE FROM globalnews")
+    fun deleteGlobalNews()
+
     @Query("SELECT * FROM countrynews")
      fun loadCountryNews(): LiveData<List<CountryNews>>
+
+    @Query("DELETE FROM countrynews")
+    fun deleteCountryNews()
 
 }

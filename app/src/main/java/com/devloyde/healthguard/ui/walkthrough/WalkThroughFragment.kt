@@ -1,5 +1,6 @@
 package com.devloyde.healthguard.ui.walkthrough
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.viewpager2.widget.ViewPager2
+import com.devloyde.healthguard.MainActivity
 import com.devloyde.healthguard.R
 import com.devloyde.healthguard.adapters.SliderPagerAdapter
 import com.devloyde.healthguard.databinding.FragmentHomeBinding
@@ -91,7 +93,7 @@ class WalkThroughFragment : Fragment() {
     }
 
     private fun gotoHomeScreen(){
-        navController.navigate(R.id.action_walkThroughFragment_to_mainActivity)
-
+        val intent = Intent(activity, MainActivity::class.java)
+                startActivity(intent)
     }
 }
