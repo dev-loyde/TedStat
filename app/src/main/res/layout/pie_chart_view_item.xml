@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pie_chart_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:minHeight="200dp"
+    android:padding="8dp">
+
+        <TextView
+            android:id="@+id/pie_case_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Total Cases in Nigeria"
+            android:textAppearance="?textAppearanceBody1"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@id/pie_case_no"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/pie_chart"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/pie_case_no"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="6000"
+            android:textAppearance="?textAppearanceHeadline6"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/pie_chart"
+            app:layout_constraintTop_toBottomOf="@id/pie_case_title" />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie_chart"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintLeft_toRightOf="@id/pie_case_title"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

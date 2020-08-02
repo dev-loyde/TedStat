@@ -33,43 +33,52 @@ class SettingsFragment : Fragment() {
     private var listener: OnListFragmentInteractionListener? = null
     private lateinit var binding: FragmentSettingsItemListBinding
     private lateinit var list: RecyclerView
+    private lateinit var toolbar: Toolbar
 
-    companion object{
-       lateinit var toolbar: Toolbar
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_settings_item_list, container, false)
-        binding.apply{
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_settings_item_list,
+            container,
+            false
+        )
+        binding.apply {
             toolbar = settingsToolbar
             list = settingsList
         }
 
-        list.apply{
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home,
+                R.id.navigation_news,
+                R.id.navigation_dashboard,
+                R.id.navigation_settings
+            )
+        )
+        toolbar.setupWithNavController(navController, appBarConfiguration)
 
-                layoutManager = LinearLayoutManager(activity,RecyclerView.VERTICAL,false)
-                addItemDecoration(DividerItemDecoration(activity,RecyclerView.VERTICAL))
-                adapter = SettingsAdapter(
-                    listOf(
-                        SettingsListItem(R.drawable.ic_share_black_24dp, "Share App", null),
-                        SettingsListItem(R.drawable.ic_library, "Libraries", null),
-                        SettingsListItem(R.drawable.ic_about_us, "About", null),
-                        SettingsListItem(R.drawable.ic_dark_mode, "Night Mode", 1),
-                        SettingsListItem(R.drawable.ic_info_black_24dp, "Help",null),
-                        SettingsListItem(R.drawable.ic_star_black_24dp, "Rate Us", null)
-                        )
-                    , listener
+        list.apply {
+
+            layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+            addItemDecoration(DividerItemDecoration(activity, RecyclerView.VERTICAL))
+            adapter = SettingsAdapter(
+                listOf(
+                    SettingsListItem(R.drawable.ic_share_black_24dp, "Share App", null),
+                    SettingsListItem(R.drawable.ic_library, "Open Source Licenses", null),
+                    SettingsListItem(R.drawable.ic_about_us, "About", null),
+                    SettingsListItem(R.drawable.ic_dark_mode, "Night Mode", 1),
+                    SettingsListItem(R.drawable.ic_info_black_24dp, "Help", null),
+                    SettingsListItem(R.drawable.ic_star_black_24dp, "Rate Us", null)
                 )
-            }
+                , listener
+            )
+        }
 
         return binding.root
     }

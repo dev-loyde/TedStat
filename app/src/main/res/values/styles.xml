@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar.Bridge">
@@ -15,6 +15,9 @@
         <item name="tintColor">@color/tintColor</item>
         <item name="textColor">@color/textColor</item>
         <item name="android:textColorPrimary">@color/textColor</item>
+
+        <item name="android:navigationBarColor">@color/backgroundColor</item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

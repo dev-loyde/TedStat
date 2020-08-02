@@ -46,6 +46,9 @@ class WalkThroughFragment : Fragment() {
         binding.skipButton.setOnClickListener { _ ->
             gotoHomeScreen()
         }
+        binding.nextButton.setOnClickListener{
+            gotoNextScreen()
+        }
     }
 
     private fun initWalkThrough(items: Welcomes) {
@@ -95,5 +98,10 @@ class WalkThroughFragment : Fragment() {
     private fun gotoHomeScreen(){
         val intent = Intent(activity, MainActivity::class.java)
                 startActivity(intent)
+    }
+
+    private fun gotoNextScreen(){
+        val currPosition: Int = binding.welcomePager.currentItem
+        binding.welcomePager.setCurrentItem(currPosition + 1,true)
     }
 }

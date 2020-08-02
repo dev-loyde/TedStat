@@ -1,16 +1,15 @@
 package com.devloyde.healthguard.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
@@ -18,21 +17,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devloyde.healthguard.R
 import com.devloyde.healthguard.adapters.HomeAdapter
-import com.devloyde.healthguard.adapters.VerticalAdapter
 import com.devloyde.healthguard.databinding.FragmentHomeBinding
+import com.devloyde.healthguard.listeners.HomeDetailNavigationListener
 import com.devloyde.healthguard.models.*
-import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeRv: RecyclerView
-
-    companion object{
-       lateinit var toolbar: Toolbar
-
-    }
+    private lateinit var toolbar: Toolbar
+    private lateinit var navController: NavController
+    private var homeDetailNavigationListener: HomeDetailNavigationListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,14 +38,31 @@ class HomeFragment : Fragment() {
         homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-
         bindViews()
+        navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        toolbar.setupWithNavController(navController, appBarConfiguration)
+
         initRecyclerView()
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        when (context) {
+            is HomeDetailNavigationListener -> {
+                homeDetailNavigationListener = context
+            }
+            else -> {
+                throw RuntimeException("$context must implement navigateToPreventionDetailScreen")
+            }
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        homeDetailNavigationListener = null
     }
 
     private fun bindViews() {
@@ -76,25 +89,26 @@ class HomeFragment : Fragment() {
         val carouselItemList = Carousels(
             listOf(
                 Carousel(title = "Healthy lifestyle increase life", image = R.drawable.warrior),
+                Carousel(title = "Stay warm at all times", image = R.drawable.smiley),
                 Carousel(title = "Stay warm at all times", image = R.drawable.social_distance)
             )
         )
 
         //   SAFETY ITEMS INPUT
         val safetyTipsList = VerticalRv(
-            "Safety Tips", listOf(
+            "Prevention Safety Tips",
+            listOf(
                 HealthCard(
                     title = "WEAR A FACE MASK",
-                    description = "The wearing of face masks is recommended in order to prevent" +
+                    description = "The wearing of face masks is recommended in order to prevent " +
                             "those who are infected from but asymptomatic from spreading the virus." +
-                            " and others from contacting.Properly dispose of the mask in waste bins." +
-                            "Improper handling could lead to infections",
+                            " Improper handling could lead to infections",
                     image = R.drawable.cover_your_nose
                 ),
                 HealthCard(
                     title = "DONT TOUCH EYES NOSE OR MOUTH WITH UNWASHED HANDS",
                     description = "Avoid touching your eyes nose and mouth with unwashed" +
-                            " hands <br> Normal practices like greeting one another" +
+                            " hands Normal practices like greeting one another" +
                             " with handshakes or hugging should be avoided",
                     image = R.drawable.touch_safety
                 ),
@@ -125,24 +139,27 @@ class HomeFragment : Fragment() {
                             "discard in a waste bin and washing their hands or using their elbow bent",
                     image = R.drawable.avoid_contact_safety
                 )
-            )
+            ),
+            homeDetailNavigationListener
         )
 
         // GLOBAL STATISTICS
-        val globalStat = GlobalStat(3,"time", 2333, 222, 2, 445, 223, 200)
+        val globalStat = GlobalStat(3, "time", 2333, 222, 2, 445, 223, 200)
 
         // What you should know
         val awareness = HorizontalSingle(
             "what you should know about covid-19",
-            "coronavirus is a blah blah blah",
-            R.raw.covid_virus
+            "https://www.healthline.com/health/coronavirus-covid-19",
+            R.raw.covid_virus,
+            homeDetailNavigationListener
         )
 
-        // What you should know about facemask
-        val facemask = HorizontalSingle(
+        // What you should know about face mask
+        val faceMask = HorizontalSingle(
             "Guidelines to use on face mask",
-            "coronavirus is a blah blah blah",
-            R.raw.how_wear_mask
+            "http://www.facebook.com",
+            R.raw.how_wear_mask,
+            homeDetailNavigationListener
         )
 
         val symptoms = HorizontalBanner(
@@ -153,8 +170,9 @@ class HomeFragment : Fragment() {
         // Games for children
         val games = HorizontalSingle(
             "Games for children to keeps your home alive",
-            "coronavirus is a blah blah blah",
-            R.raw.ninja_kids_istayhome
+            "http://www.google.com",
+            R.raw.ninja_kids_istayhome,
+            homeDetailNavigationListener
         )
 
         val advisory = InfoRv(
@@ -164,7 +182,7 @@ class HomeFragment : Fragment() {
                 "TRAVEL ADVICE",
                 "TRAVELLERS TO NIGERIA",
                 "ADVICE FOR HEALTH WORKERS",
-                "ADVICE FOR BUSSINESSES",
+                "ADVICE FOR BUSINESSES",
                 "HOW TO PROTECT YOUR SELF"
             ),
             source = "NCDC",
@@ -190,7 +208,7 @@ class HomeFragment : Fragment() {
                 globalStat,
                 awareness,
                 symptoms,
-                facemask,
+                faceMask,
                 advisory,
                 games,
                 faq
@@ -199,5 +217,6 @@ class HomeFragment : Fragment() {
 
         return allItems
     }
+
 
 }

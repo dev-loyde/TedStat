@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.airbnb.lottie.RenderMode
 import com.devloyde.healthguard.databinding.*
+import com.devloyde.healthguard.listeners.HomeDetailNavigationListener
 import com.devloyde.healthguard.models.*
 import com.squareup.picasso.Picasso
 
@@ -23,6 +24,8 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
     private val globalStat: Int = 4
     private val horizontalBanner: Int = 5
     private val advisoryFaq: Int = 6
+
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -140,7 +143,7 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
         return -1
     }
 
-    class HorizontalViewHolder(private val binding: HorizontalSingleItemBinding) :
+    inner class HorizontalViewHolder(private val binding: HorizontalSingleItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(items: HorizontalSingle) {
@@ -148,11 +151,14 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
             binding.horizontalImg.imageAssetsFolder = "images"
             binding.horizontalImg.setRenderMode(RenderMode.SOFTWARE)
             binding.horizontalImg.setAnimation(items.image)
-
+            val listener = items.listener
+            binding.horizontalBtn.setOnClickListener{
+               listener?.launchCustomUrl(items.link!!)
+            }
         }
     }
 
-    class HorizontalBannerViewHolder(private val binding: HorizontalBannerItemBinding) :
+    inner class HorizontalBannerViewHolder(private val binding: HorizontalBannerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(items: HorizontalBanner) {
@@ -164,7 +170,7 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
         }
     }
 
-    class BannerViewHolder(val binding: BannerContainerBinding) :
+    inner class BannerViewHolder(val binding: BannerContainerBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(items: Carousels) {
@@ -183,32 +189,29 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
         }
     }
 
-    class VerticalViewHolder(private var binding: VerticalRvContainerBinding) :
+    inner class VerticalViewHolder(private var binding: VerticalRvContainerBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(items: VerticalRv, position: Int) {
             val verticalHeader: String = items.title
-            val verticalItems: List<HealthCard> = items.verticalItems
-            val adapter1 = VerticalAdapter(verticalItems)
+            val verticalItems: List<Any> = items.verticalItems
             val mContext = binding.verticalRvContainer.context
+            val listener = items.listener
+            val adapter1 = VerticalAdapter(verticalItems,listener)
 
             binding.verticalRvContainer.layoutManager =
                 LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false)
             binding.verticalRvTitle.text = verticalHeader
 
             binding.verticalRvMoreBtn.setOnClickListener {
-                Toast.makeText(
-                    mContext,
-                    "Hello this is a Vertical recyclerview at $position",
-                    Toast.LENGTH_LONG
-                ).show()
+                listener?.navigateToPreventionDetailScreen()
             }
 
             binding.verticalRvContainer.adapter = adapter1
         }
     }
 
-    class GlobalStatViewHolder(private var binding: HomeGlobalStatBinding) :
+    inner class GlobalStatViewHolder(private var binding: HomeGlobalStatBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(items: GlobalStat) {
@@ -216,7 +219,7 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
         }
     }
 
-    class InfoViewHolder(private var binding: InfoRvContainerBinding) :
+    inner class InfoViewHolder(private var binding: InfoRvContainerBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(items: InfoRv) {

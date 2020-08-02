@@ -6,13 +6,13 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:layout_width="match_parent"
-    android:layout_height="150dp">
+    android:layout_height="200dp">
 
     <com.github.florent37.shapeofview.shapes.ArcView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:elevation="4dp"
-        app:shape_arc_height="25dp"
+        app:shape_arc_height="22dp"
         app:shape_arc_position="bottom"
         android:background="?attr/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"

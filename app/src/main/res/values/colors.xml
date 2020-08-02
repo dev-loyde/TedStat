@@ -9,10 +9,15 @@
     <color name="backgroundColor">#f2f2f2</color>
     <color name="cardBackgroundTint">#ff008577</color>
     <color name="cardBackgroundPrimary">#37008577</color>
-    <!--    <color name="colorPrimaryDark">#008577</color>-->
+
+
+<!--    <color name="colorPrimary">#131217</color>-->
+<!--    <color name="colorPrimaryDark">#131217</color>-->
     <!--    <color name="colorAccent">#D81B60</color>-->
     <!--    <color name="textColor">#ffffff</color>-->
     <!--    <color name="tintColor">#000000</color>-->
-    <!--    <color name="cardBackgroundColor">#212121</color>-->
-    <!--    <color name="backgroundColor">#000000</color>-->
+    <!--    <color name="cardBackgroundColor">#232129</color>-->
+    <!--    <color name="backgroundColor">131217</color>-->
+<!--    <color name="cardBackgroundTint">#131217</color>-->
+<!--    <color name="cardBackground">#232129</color>-->
 </resources>

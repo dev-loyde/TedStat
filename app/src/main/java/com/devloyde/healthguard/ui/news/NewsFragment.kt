@@ -21,8 +21,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 class NewsFragment : Fragment() {
 
     companion object {
-       lateinit var toolbar: Toolbar
-
         const val RECOMMENDED_NEWS: String = "RECOMMENDED_NEWS"
         const val LOCAL_NEWS: String = "LOCAL_NEWS"
         const val GLOBAL_NEWS: String = "GLOBAL_NEWS"
@@ -34,6 +32,7 @@ class NewsFragment : Fragment() {
     private lateinit var newsFragmentPagerAdapter: NewsFragmentPagerAdapter
     private lateinit var newsTabLayout: TabLayout
     private lateinit var newsViewPager: ViewPager2
+    private lateinit var toolbar: Toolbar
 
 
     override fun onCreateView(
@@ -42,16 +41,26 @@ class NewsFragment : Fragment() {
     ): View? {
         viewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_news, container, false)
-        newsTabLayout = binding.newsTabLayout
+         newsTabLayout = binding.newsTabLayout
         newsViewPager = binding.newsViewPager
         toolbar = binding.newsToolbar
+
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home,
+                R.id.navigation_news,
+                R.id.navigation_dashboard,
+                R.id.navigation_settings
+            )
+        )
+        toolbar.setupWithNavController(navController, appBarConfiguration)
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initNewsFragmentPager()
 
 

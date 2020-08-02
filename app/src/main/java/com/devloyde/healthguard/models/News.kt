@@ -10,12 +10,12 @@ data class NewsCard(
     val date: String?,
     val provider: String?
 )
-//3600000
+
 @Entity
 data class TimeoutCheck(
     @PrimaryKey
     var id: Int,
-    val timeout: Long = System.currentTimeMillis() + 300000,
+    val timeout: Long = System.currentTimeMillis() + 3600000,
     val name: String
 )
 

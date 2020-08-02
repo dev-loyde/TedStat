@@ -37,6 +37,7 @@ class NewsCategoryAdapter :
 
                 Picasso.with(holder.image.context)
                     .load(news.image)
+                    .fit()
                     .into(holder.image)
 
                 holder.title.text = news.title
@@ -46,6 +47,7 @@ class NewsCategoryAdapter :
 
                 Picasso.with(holder.image.context)
                     .load(news.image)
+                    .fit()
                     .into(holder.image)
 
                 holder.title.text = news.title
@@ -55,6 +57,7 @@ class NewsCategoryAdapter :
 
                 Picasso.with(holder.image.context)
                     .load(news.image)
+                    .fit()
                     .into(holder.image)
 
                 holder.title.text = news.title
@@ -64,6 +67,7 @@ class NewsCategoryAdapter :
             is CountryNews -> {
                 Picasso.with(holder.image.context)
                     .load(news.image)
+                    .fit()
                     .into(holder.image)
 
                 holder.title.text = news.title
