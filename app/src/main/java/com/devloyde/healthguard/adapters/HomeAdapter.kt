@@ -3,7 +3,6 @@ package com.devloyde.healthguard.adapters
 import android.view.LayoutInflater
 
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +14,7 @@ import com.devloyde.healthguard.models.*
 import com.squareup.picasso.Picasso
 
 
-class HomeAdapter(private var mItems: ArrayList<Any>) :
+class HomeAdapter(private var mItems: ArrayList<Any>,private var listener: HomeDetailNavigationListener?) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val vertical: Int = 1
@@ -24,8 +23,6 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
     private val globalStat: Int = 4
     private val horizontalBanner: Int = 5
     private val advisoryFaq: Int = 6
-
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -41,18 +38,15 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
             vertical -> {
                 binding = VerticalRvContainerBinding.inflate(inflater, parent, false)
                 holder = VerticalViewHolder(binding)
-
-            }
+ }
             horizontalBanner -> {
                 binding = HorizontalBannerItemBinding.inflate(inflater, parent, false)
                 holder = HorizontalBannerViewHolder(binding)
-
-            }
+}
             globalStat -> {
                 binding = HomeGlobalStatBinding.inflate(inflater, parent, false)
                 holder = GlobalStatViewHolder(binding)
-
-            }
+   }
             horizontal -> {
                 binding = HorizontalSingleItemBinding.inflate(inflater, parent, false)
                 holder = HorizontalViewHolder(binding)
@@ -85,17 +79,17 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
 
     private fun verticalView(holder: VerticalViewHolder, position: Int) {
         val verticalItems = mItems[position] as VerticalRv
-        holder.bind(verticalItems, position)
+        holder.bind(verticalItems, position,listener)
     }
 
     private fun horizontalView(holder: HorizontalViewHolder, position: Int) {
         val horizontalItems = mItems[position] as HorizontalSingle
-        holder.bind(horizontalItems)
+        holder.bind(horizontalItems,listener)
     }
 
     private fun horizontalBannerView(holder: HorizontalBannerViewHolder, position: Int) {
         val horizontalBannerItems = mItems[position] as HorizontalBanner
-        holder.bind(horizontalBannerItems)
+        holder.bind(horizontalBannerItems,listener)
     }
 
     private fun bannerView(holder: BannerViewHolder, position: Int) {
@@ -146,12 +140,11 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
     inner class HorizontalViewHolder(private val binding: HorizontalSingleItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(items: HorizontalSingle) {
+        fun bind(items: HorizontalSingle,listener: HomeDetailNavigationListener?) {
             binding.horizontalTitle.text = items.title
             binding.horizontalImg.imageAssetsFolder = "images"
             binding.horizontalImg.setRenderMode(RenderMode.SOFTWARE)
             binding.horizontalImg.setAnimation(items.image)
-            val listener = items.listener
             binding.horizontalBtn.setOnClickListener{
                listener?.launchCustomUrl(items.link!!)
             }
@@ -161,12 +154,15 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
     inner class HorizontalBannerViewHolder(private val binding: HorizontalBannerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(items: HorizontalBanner) {
+        fun bind(items: HorizontalBanner,listener: HomeDetailNavigationListener?) {
             binding.horizontalBannerTitle.text = items.title
             Picasso.with(binding.horizontalBannerTitle.context)
                 .load(items.image)
                 .into(binding.horizontalBannerImg)
 
+            binding.horizontalBannerMoreBtn.setOnClickListener{
+                listener?.launchCustomUrl(items.link!!)
+            }
         }
     }
 
@@ -192,11 +188,10 @@ class HomeAdapter(private var mItems: ArrayList<Any>) :
     inner class VerticalViewHolder(private var binding: VerticalRvContainerBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(items: VerticalRv, position: Int) {
+        fun bind(items: VerticalRv, position: Int,listener: HomeDetailNavigationListener?) {
             val verticalHeader: String = items.title
             val verticalItems: List<Any> = items.verticalItems
             val mContext = binding.verticalRvContainer.context
-            val listener = items.listener
             val adapter1 = VerticalAdapter(verticalItems,listener)
 
             binding.verticalRvContainer.layoutManager =

@@ -73,7 +73,7 @@ class HomeFragment : Fragment() {
 
     private fun initRecyclerView() {
 
-        val homeAdapter = HomeAdapter(allItems())
+        val homeAdapter = HomeAdapter(allItems(),homeDetailNavigationListener)
         binding.homeRecyclerView.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         binding.homeRecyclerView.setHasFixedSize(false)
@@ -139,31 +139,30 @@ class HomeFragment : Fragment() {
                             "discard in a waste bin and washing their hands or using their elbow bent",
                     image = R.drawable.avoid_contact_safety
                 )
-            ),
-            homeDetailNavigationListener
+            )
         )
 
         // GLOBAL STATISTICS
-        val globalStat = GlobalStat(3, "time", 2333, 222, 2, 445, 223, 200)
+        val globalStat = GlobalStat(3, "time", 2333,
+            222, 2, 445, 223, 200)
 
         // What you should know
         val awareness = HorizontalSingle(
             "what you should know about covid-19",
             "https://www.healthline.com/health/coronavirus-covid-19",
-            R.raw.covid_virus,
-            homeDetailNavigationListener
+            R.raw.covid_virus
         )
 
         // What you should know about face mask
         val faceMask = HorizontalSingle(
-            "Guidelines to use on face mask",
-            "http://www.facebook.com",
-            R.raw.how_wear_mask,
-            homeDetailNavigationListener
+            "Guidelines to use of face mask",
+            "https://cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/cloth-face-cover-guidance.html",
+            R.raw.how_wear_mask
         )
 
         val symptoms = HorizontalBanner(
-            "Some Symptoms",
+            "Symptoms",
+            "https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html",
             R.drawable.symptoms_covid
         )
 
@@ -171,8 +170,7 @@ class HomeFragment : Fragment() {
         val games = HorizontalSingle(
             "Games for children to keeps your home alive",
             "http://www.google.com",
-            R.raw.ninja_kids_istayhome,
-            homeDetailNavigationListener
+            R.raw.ninja_kids_istayhome
         )
 
         val advisory = InfoRv(

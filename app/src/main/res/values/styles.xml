@@ -15,7 +15,7 @@
         <item name="tintColor">@color/tintColor</item>
         <item name="textColor">@color/textColor</item>
         <item name="android:textColorPrimary">@color/textColor</item>
-
+        <item name="android:windowBackground">@drawable/splash_screen_bg</item>
         <item name="android:navigationBarColor">@color/backgroundColor</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
     </style>

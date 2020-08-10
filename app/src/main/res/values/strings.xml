@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">NijaGuard</string>
-    <string name="title_home">NijaGuard</string>
+    <string name="app_name">Nija Guard</string>
+    <string name="title_home">Nija Guard</string>
     <string name="title_news">News</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_settings">Settings</string>
@@ -9,6 +9,8 @@
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+
+    <string name="welcome_msg">Join in the fight today by staying informed with up to date information,latest news,statistics and happenings to reduce the spread and keep yourself and family safe.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -29,4 +31,5 @@
     <string name="title_activity_tab">tabActivity</string>
 
     <string name="sample_prevention_detail">The wearing of face masks is recommended in order to prevent those who are infected from but asymptomatic from spreading the virus and others from contacting.Properly dispose of the mask in waste bins. Improper handling could lead to infections</string>
+    <string name="welcome_msg_title">Fight against covid19</string>
 </resources>

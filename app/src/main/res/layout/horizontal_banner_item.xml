@@ -27,6 +27,21 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/textColor" />
 
+            <TextView
+                android:id="@+id/horizontal_banner_more_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_more"
+                android:drawableRight="@drawable/ic_more"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="end|end"
+                android:padding="3dp"
+                android:text="see All"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+
+                tools:text="more" />
         </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView

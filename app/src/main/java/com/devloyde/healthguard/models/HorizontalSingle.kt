@@ -5,11 +5,11 @@ import com.devloyde.healthguard.listeners.HomeDetailNavigationListener
 data class HorizontalSingle(
     var title: String,
     var link: String?,
-    var image: Int,
-    var listener: HomeDetailNavigationListener?
+    var image: Int
 )
 
 data class HorizontalBanner(
     var title: String,
+    var link: String?,
     var image: Int
 )
