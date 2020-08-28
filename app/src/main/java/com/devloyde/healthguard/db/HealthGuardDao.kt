@@ -50,7 +50,6 @@ interface StatDao {
     fun deleteTimeout(id: Int)
 }
 
-
 @Dao
 interface NewsDao {
     @Insert(onConflict = REPLACE)
@@ -98,4 +97,34 @@ interface NewsDao {
     @Query("DELETE FROM countrynews")
     fun deleteCountryNews()
 
+}
+
+@Dao
+interface InfoDao {
+    @Insert(onConflict = REPLACE)
+    fun saveAdvisory(vararg news: Info)
+
+    @Insert(onConflict = REPLACE)
+    fun saveFaq(vararg news: Info)
+
+    @Query("SELECT * FROM advisory")
+    fun loadAdvisory(): LiveData<List<Info>>
+
+    @Query("DELETE FROM advisory")
+    fun deleteAdvisory()
+
+    @Query("SELECT * FROM faq")
+    fun loadFaq(): LiveData<List<Info>>
+
+    @Query("DELETE FROM faq")
+    fun deleteFaq()
+
+    @Insert(onConflict = REPLACE)
+    fun saveTimeout( timeout: TimeoutCheck)
+
+    @Query("SELECT * FROM timeoutcheck WHERE id == :id")
+    fun checkTimeout(id: Int) : TimeoutCheck?
+
+    @Query("DELETE FROM timeoutcheck WHERE id == :id")
+    fun deleteTimeout(id: Int)
 }

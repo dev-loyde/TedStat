@@ -39,7 +39,7 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
 
                 call.enqueue(object : Callback<GlobalStatResponse> {
                     override fun onFailure(call: Call<GlobalStatResponse>, t: Throwable) {
-                        Log.d(GLOBAL_STAT_TAG, "Error fetching recommended news")
+                        Log.d(GLOBAL_STAT_TAG, "Error fetching global stat")
                     }
 
                     override fun onResponse(

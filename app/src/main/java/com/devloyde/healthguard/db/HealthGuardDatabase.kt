@@ -17,12 +17,17 @@ import com.devloyde.healthguard.models.*
         LocalNews::class,
         GlobalNews::class,
         CountryNews::class,
+        // For Info
+        Info::class,
+        // For Timeout
         TimeoutCheck::class
-    ], version = 4,
+    ], version = 5,
     exportSchema = false
 )
 abstract class HealthGuardDatabase : RoomDatabase() {
     abstract fun newsDao(): NewsDao
+    abstract fun statDao(): StatDao
+    abstract fun infoDao(): InfoDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the

@@ -33,3 +33,11 @@ interface StatEndpoints {
     @GET("/api/stat/history")
     fun getHistoryStat(): Call<HistoryStatResponse>
 }
+
+interface InfoEndpoints {
+    @GET("/api/info/advisory")
+    fun getAdvisoryInfo(): Call<InfoResponse>
+
+    @GET("/api/info/faq")
+    fun getFaqInfo(): Call<InfoResponse>
+}

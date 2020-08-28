@@ -8,9 +8,3 @@ data class Info(
     val title: String,
     val description: String
 )
-
-data class InfoResponse(
-    val error: Boolean,
-    val message: String,
-    val data: List<Info>
-)

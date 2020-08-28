@@ -20,3 +20,10 @@ data class HistoryStatResponse(
     val message: String,
     val data: List<StatHistory>
 )
+
+// ADVISORY/FAQ NETWORK RESPONSE OBJECT
+data class InfoResponse(
+    val error: Boolean,
+    val message: String,
+    val data: List<Info>
+)
