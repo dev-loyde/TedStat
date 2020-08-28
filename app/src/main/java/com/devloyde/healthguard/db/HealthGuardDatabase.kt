@@ -18,10 +18,11 @@ import com.devloyde.healthguard.models.*
         GlobalNews::class,
         CountryNews::class,
         // For Info
-        Info::class,
+        AdvisoryInfo::class,
+        FaqInfo::class,
         // For Timeout
         TimeoutCheck::class
-    ], version = 5,
+    ], version = 6,
     exportSchema = false
 )
 abstract class HealthGuardDatabase : RoomDatabase() {
@@ -46,8 +47,7 @@ abstract class HealthGuardDatabase : RoomDatabase() {
                     context.applicationContext,
                     HealthGuardDatabase::class.java,
                     "health_guard_database"
-                ).fallbackToDestructiveMigration()
-                    .build()
+                ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 return instance
             }

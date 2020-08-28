@@ -24,7 +24,7 @@ class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) {
     private val advisoryTimeout: Int = 10
     private val faqTimeout: Int = 11
 
-    fun getAdvisoryInfo(): LiveData<List<Info>> {
+    fun getAdvisoryInfo(): LiveData<List<AdvisoryInfo>> {
         infoExecutors.execute {
             Log.d(ADVISORY_INFO_TAG, "checking db for advisory info")
             val timeout = infoDao.checkTimeout(advisoryTimeout)
@@ -32,14 +32,14 @@ class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) {
                 Log.d(ADVISORY_INFO_TAG, "user eligible to fetch advisory info from server")
                 val call = request.getAdvisoryInfo()
 
-                call.enqueue(object : Callback<InfoResponse> {
-                    override fun onFailure(call: Call<InfoResponse>, t: Throwable) {
+                call.enqueue(object : Callback<AdvisoryResponse> {
+                    override fun onFailure(call: Call<AdvisoryResponse>, t: Throwable) {
                         Log.d(ADVISORY_INFO_TAG, "Error fetching advisory info")
                     }
 
                     override fun onResponse(
-                        call: Call<InfoResponse>,
-                        response: Response<InfoResponse>
+                        call: Call<AdvisoryResponse>,
+                        response: Response<AdvisoryResponse>
                     ) {
                         if (response.isSuccessful && !response.body()?.error!!) {
                             Log.d(ADVISORY_INFO_TAG, "Success fetching advisory info")
@@ -66,7 +66,7 @@ class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) {
         return infoDao.loadAdvisory()
     }
 
-    fun getFaqInfo(): LiveData<List<Info>> {
+    fun getFaqInfo(): LiveData<List<FaqInfo>> {
         infoExecutors.execute {
             Log.d(FAQ_INFO_TAG, "checking db for faq info")
             val timeout = infoDao.checkTimeout(faqTimeout)
@@ -74,14 +74,14 @@ class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) {
                 Log.d(FAQ_INFO_TAG, "user eligible to fetch faq info from server")
                 val call = request.getFaqInfo()
 
-                call.enqueue(object : Callback<InfoResponse> {
-                    override fun onFailure(call: Call<InfoResponse>, t: Throwable) {
+                call.enqueue(object : Callback<FaqResponse> {
+                    override fun onFailure(call: Call<FaqResponse>, t: Throwable) {
                         Log.d(FAQ_INFO_TAG, "Error fetching faq info")
                     }
 
                     override fun onResponse(
-                        call: Call<InfoResponse>,
-                        response: Response<InfoResponse>
+                        call: Call<FaqResponse>,
+                        response: Response<FaqResponse>
                     ) {
                         if (response.isSuccessful && !response.body()?.error!!) {
                             Log.d(FAQ_INFO_TAG, "Success fetching faq info")

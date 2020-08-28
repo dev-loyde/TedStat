@@ -47,8 +47,8 @@ class HomeFragment : Fragment() {
         toolbar.setupWithNavController(navController, appBarConfiguration)
 
         initRecyclerView()
-        homeViewModel.globalStat.observe(viewLifecycleOwner){ globalStat ->
-            Log.d("HOME_FRAGMENT", globalStat.toString())
+        homeViewModel.countriesStat.observe(viewLifecycleOwner){ countriesStat ->
+            Log.d("HOME_FRAGMENT", "fetched global stat")
         }
         return binding.root
     }

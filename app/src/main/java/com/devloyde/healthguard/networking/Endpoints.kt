@@ -36,8 +36,8 @@ interface StatEndpoints {
 
 interface InfoEndpoints {
     @GET("/api/info/advisory")
-    fun getAdvisoryInfo(): Call<InfoResponse>
+    fun getAdvisoryInfo(): Call<AdvisoryResponse>
 
     @GET("/api/info/faq")
-    fun getFaqInfo(): Call<InfoResponse>
+    fun getFaqInfo(): Call<FaqResponse>
 }

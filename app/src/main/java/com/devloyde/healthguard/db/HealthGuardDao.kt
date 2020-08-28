@@ -102,21 +102,21 @@ interface NewsDao {
 @Dao
 interface InfoDao {
     @Insert(onConflict = REPLACE)
-    fun saveAdvisory(vararg news: Info)
+    fun saveAdvisory(vararg news: AdvisoryInfo)
 
     @Insert(onConflict = REPLACE)
-    fun saveFaq(vararg news: Info)
+    fun saveFaq(vararg news: FaqInfo)
 
-    @Query("SELECT * FROM advisory")
-    fun loadAdvisory(): LiveData<List<Info>>
+    @Query("SELECT * FROM advisoryInfo")
+    fun loadAdvisory(): LiveData<List<AdvisoryInfo>>
 
-    @Query("DELETE FROM advisory")
+    @Query("DELETE FROM advisoryInfo")
     fun deleteAdvisory()
 
-    @Query("SELECT * FROM faq")
-    fun loadFaq(): LiveData<List<Info>>
+    @Query("SELECT * FROM faqInfo")
+    fun loadFaq(): LiveData<List<FaqInfo>>
 
-    @Query("DELETE FROM faq")
+    @Query("DELETE FROM faqInfo")
     fun deleteFaq()
 
     @Insert(onConflict = REPLACE)

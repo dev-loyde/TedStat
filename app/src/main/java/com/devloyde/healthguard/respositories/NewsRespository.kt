@@ -75,7 +75,6 @@ class NewsRespository(
         return newsDao.loadRecommendedNews()
     }
 
-
     fun getLocalNews(): LiveData<List<LocalNews>> {
         newsExecutors.execute {
             val timeout = newsDao.checkTimeout(localNewsTimeout)

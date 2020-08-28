@@ -28,7 +28,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application){
     var globalStat: LiveData<GlobalStat> = statRespository.getGlobalStat()
     var countriesStat: LiveData<List<StatCountries>> = statRespository.getCountriesStat()
     var historyStat: LiveData<List<StatHistory>> = statRespository.getHistoryStat()
-    var advisoryInfo: LiveData<List<Info>> = infoRepository.getAdvisoryInfo()
-    var faqInfo: LiveData<List<Info>> = infoRepository.getFaqInfo()
+    var advisoryInfo: LiveData<List<AdvisoryInfo>> = infoRepository.getAdvisoryInfo()
+    var faqInfo: LiveData<List<FaqInfo>> = infoRepository.getFaqInfo()
 
 }

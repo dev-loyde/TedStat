@@ -22,8 +22,14 @@ data class HistoryStatResponse(
 )
 
 // ADVISORY/FAQ NETWORK RESPONSE OBJECT
-data class InfoResponse(
+data class AdvisoryResponse(
     val error: Boolean,
     val message: String,
-    val data: List<Info>
+    val data: List<AdvisoryInfo>
+)
+
+data class FaqResponse(
+    val error: Boolean,
+    val message: String,
+    val data: List<FaqInfo>
 )
