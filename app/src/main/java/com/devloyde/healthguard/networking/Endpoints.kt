@@ -25,11 +25,11 @@ interface NewsEndpoints {
 
 interface StatEndpoints {
     @GET("/api/stat/global")
-    fun getGlobalStat(): Call<GlobalStat>
+    fun getGlobalStat(): Call<GlobalStatResponse>
 
     @GET("/api/stat/countries")
-    fun getCountryStat(): Call<List<StatCountries>>
+    fun getCountryStat(): Call<CountryStatResponse>
 
     @GET("/api/stat/history")
-    fun getHistoryStat(): Call<List<StatHistory>>
+    fun getHistoryStat(): Call<HistoryStatResponse>
 }

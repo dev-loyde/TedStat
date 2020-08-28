@@ -29,7 +29,7 @@
                     android:background="@color/colorPrimary"
                     app:layout_scrollFlags="scroll|enterAlways"
                     app:popupTheme="@style/AppTheme.PopupOverlay"
-                    app:title="Health Guard" />
+                    app:title="@string/app_name" />
 
             </com.google.android.material.appbar.AppBarLayout>
 

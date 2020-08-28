@@ -20,9 +20,6 @@ class WelcomeActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_welcome)
 
         val navController = findNavController(R.id.welcome_host_fragment)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-
     }
 
 }

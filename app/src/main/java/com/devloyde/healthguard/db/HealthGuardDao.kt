@@ -14,13 +14,13 @@ interface StatDao {
     fun saveGlobalStat(globalStat: GlobalStat)
 
     @Insert(onConflict = REPLACE)
-    fun saveStatCountries(countries: StatCountries)
+    fun saveStatCountries(vararg countries: StatCountries)
 
     @Insert(onConflict = REPLACE)
-    fun saveStatHistory(history: StatHistory)
+    fun saveStatHistory(vararg history: StatHistory)
 
     @Query("SELECT * FROM globalstat")
-    fun loadGlobalStat(): LiveData<List<GlobalStat>>
+    fun loadGlobalStat(): LiveData<GlobalStat>
 
     @Query("SELECT * FROM statcountries")
     fun loadCountriesStat(): LiveData<List<StatCountries>>
@@ -30,6 +30,24 @@ interface StatDao {
 
     @Query("SELECT * FROM stathistory")
     fun loadHistoryStat(): LiveData<List<StatHistory>>
+
+    @Query("DELETE FROM globalstat")
+    fun deleteGlobalStat()
+
+    @Query("SELECT * FROM statcountries")
+    fun deleteCountriesStat(): LiveData<List<CountryNews>>
+
+    @Query("DELETE FROM stathistory")
+    fun deleteHistoryStat()
+
+    @Insert(onConflict = REPLACE)
+    fun saveTimeout( timeout: TimeoutCheck)
+
+    @Query("SELECT * FROM timeoutcheck WHERE id == :id")
+    fun checkTimeout(id: Int) : TimeoutCheck?
+
+    @Query("DELETE FROM timeoutcheck WHERE id == :id")
+    fun deleteTimeout(id: Int)
 }
 
 
