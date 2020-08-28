@@ -38,10 +38,6 @@ class NewsRespository(
             val timeout = newsDao.checkTimeout(recommendedNewsTimeout)
             if (timeout == null || timeout.timeout < System.currentTimeMillis()) {
                 Log.d("RECOMMENDED NEWS", "Not available in Db recommended news")
-                newsDao.deleteTimeout(recommendedNewsTimeout)
-                newsDao.deleteRecommendedNews()
-                Log.d("RECOMMENDED NEWS", "Delete old recommended news timeout")
-                val request = NetworkServiceBuilder.buildService(NewsEndpoints::class.java)
                 val call = request.getRecommendedNews()
 
                 call.enqueue(object : Callback<RecommendedNewsResponse> {
@@ -55,11 +51,12 @@ class NewsRespository(
                     ) {
                         if (response.isSuccessful && !response.body()?.error!!) {
                             Log.d("RECOMMENDED NEWS", "Success fetching recommended news")
+                            newsDao.deleteTimeout(recommendedNewsTimeout)
+                            newsDao.deleteRecommendedNews()
+                            Log.d("RECOMMENDED NEWS", "Delete old recommended news timeout")
+
                             newsExecutors.execute {
-                                Log.d(
-                                    "RECOMMENDED NEWS",
-                                    "Success saving recommended news to db"
-                                )
+                                Log.d("RECOMMENDED NEWS","Success saving recommended news to db")
                                 newsDao.saveRecommendedNews(*response.body()!!.data.toTypedArray())
                                 Log.d("RECOMMENDED NEWS", "Saving recommended news timeout")
                                 newsDao.saveTimeout(
@@ -83,8 +80,6 @@ class NewsRespository(
         newsExecutors.execute {
             val timeout = newsDao.checkTimeout(localNewsTimeout)
             if (timeout == null || timeout.timeout < System.currentTimeMillis()) {
-                newsDao.deleteTimeout(localNewsTimeout)
-                newsDao.deleteLocalNews()
                 val call = request.getHealthCareNews()
                 call.enqueue(object : Callback<LocalNewsResponse> {
                     override fun onFailure(call: Call<LocalNewsResponse>, t: Throwable) {
@@ -97,6 +92,9 @@ class NewsRespository(
                     ) {
                         if (response.isSuccessful && !response.body()?.error!!) {
                             Log.d("LOCAL NEWS", "Success fetching local news")
+                            newsDao.deleteTimeout(localNewsTimeout)
+                            newsDao.deleteLocalNews()
+
                             newsExecutors.execute {
                                 newsDao.saveLocalNews(*response.body()!!.data.toTypedArray())
                                 newsDao.saveTimeout(
@@ -118,8 +116,6 @@ class NewsRespository(
         newsExecutors.execute {
             val timeout = newsDao.checkTimeout(globalNewsTimeout)
             if (timeout == null || timeout.timeout < System.currentTimeMillis()) {
-                newsDao.deleteTimeout(globalNewsTimeout)
-                newsDao.deleteGlobalNews()
                 val call = request.getGlobalNews()
                 call.enqueue(object : Callback<GlobalNewsResponse> {
                     override fun onFailure(call: Call<GlobalNewsResponse>, t: Throwable) {
@@ -135,6 +131,9 @@ class NewsRespository(
                     ) {
                         if (response.isSuccessful) {
                             Log.d("GLOBAL NEWS", "Success fetching global news")
+                            newsDao.deleteTimeout(globalNewsTimeout)
+                            newsDao.deleteGlobalNews()
+
                             newsExecutors.execute {
                                 newsDao.saveGlobalNews(*response.body()!!.data.toTypedArray())
                                 newsDao.saveTimeout(
@@ -157,8 +156,6 @@ class NewsRespository(
         newsExecutors.execute {
             val timeout = newsDao.checkTimeout(countryNewsTimeout)
             if (timeout == null || timeout.timeout < System.currentTimeMillis()) {
-                newsDao.deleteTimeout(countryNewsTimeout)
-                newsDao.deleteCountryNews()
                 val call = request.getCountryNews(countryIso)
 
                 call.enqueue(object : Callback<CountryNewsResponse> {
@@ -171,6 +168,9 @@ class NewsRespository(
                         response: Response<CountryNewsResponse>
                     ) {
                         if (response.isSuccessful && !response.body()!!.error) {
+                            newsDao.deleteTimeout(countryNewsTimeout)
+                            newsDao.deleteCountryNews()
+
                             newsExecutors.execute {
                                 newsDao.saveCountryNews(*response.body()!!.data.toTypedArray())
                                 newsDao.saveTimeout(
