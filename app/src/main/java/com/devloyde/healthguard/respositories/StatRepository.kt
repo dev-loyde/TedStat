@@ -23,12 +23,6 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
     private val countriesStatTimeout: Int = 6
     private val historyStaTimeout: Int = 7
 
-    companion object {
-        const val GLOBAL_STAT_TAG = "GLOBAL STAT"
-        const val COUNTRY_STAT_TAG = "COUNTRY STAT"
-        const val HISTORY_STAT_TAG = "HISTORY STAT"
-    }
-
     fun getGlobalStat(): LiveData<GlobalStat> {
         statExecutors.execute {
             Log.d(GLOBAL_STAT_TAG, "checking db for global stat")
@@ -166,4 +160,30 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
         return statDao.loadHistoryStat()
     }
 
+    companion object {
+        // Singleton prevents multiple instances of database opening at the
+        // same time.
+
+        const val GLOBAL_STAT_TAG = "GLOBAL STAT"
+        const val COUNTRY_STAT_TAG = "COUNTRY STAT"
+        const val HISTORY_STAT_TAG = "HISTORY STAT"
+
+        @Volatile
+        private var STAT_RESPOSITORY_INSTANCE: StatRepository? = null
+
+        fun getStatRepository(
+            statDao: StatDao,
+            executor: ExecutorService
+        ): StatRepository {
+            val tempInstance = STAT_RESPOSITORY_INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
+            }
+            synchronized(this) {
+                val instance = StatRepository(statDao, executor)
+                STAT_RESPOSITORY_INSTANCE = instance
+                return instance
+            }
+        }
+    }
 }

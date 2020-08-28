@@ -24,11 +24,6 @@ class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) {
     private val advisoryTimeout: Int = 10
     private val faqTimeout: Int = 11
 
-    companion object {
-        const val ADVISORY_INFO_TAG = "ADVISORY INFO"
-        const val FAQ_INFO_TAG = "FAQ INFO"
-    }
-
     fun getAdvisoryInfo(): LiveData<List<Info>> {
         infoExecutors.execute {
             Log.d(ADVISORY_INFO_TAG, "checking db for advisory info")
@@ -113,4 +108,29 @@ class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) {
         return infoDao.loadFaq()
     }
 
+    companion object {
+        // Singleton prevents multiple instances of database opening at the
+        // same time.
+
+        const val ADVISORY_INFO_TAG = "ADVISORY INFO"
+        const val FAQ_INFO_TAG = "FAQ INFO"
+
+        @Volatile
+        private var INFO_RESPOSITORY_INSTANCE: InfoRepository? = null
+
+        fun getStatRepository(
+            infoDao: InfoDao,
+            executor: ExecutorService
+        ): InfoRepository {
+            val tempInstance = INFO_RESPOSITORY_INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
+            }
+            synchronized(this) {
+                val instance = InfoRepository(infoDao, executor)
+                INFO_RESPOSITORY_INSTANCE = instance
+                return instance
+            }
+        }
+    }
 }
