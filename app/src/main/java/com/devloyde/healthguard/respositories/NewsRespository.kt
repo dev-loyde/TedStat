@@ -26,10 +26,10 @@ class NewsRespository(
     private val request = NetworkServiceBuilder.buildService(NewsEndpoints::class.java)
 
     // Database Timeout id for all news
-    private val recommendedNewsTimeout: Int  = 0
+    private val recommendedNewsTimeout: Int = 0
     private val localNewsTimeout: Int = 1
-    private val globalNewsTimeout : Int = 2
-    private val countryNewsTimeout : Int  = 3
+    private val globalNewsTimeout: Int = 2
+    private val countryNewsTimeout: Int = 3
 
 
     fun getRecommendedNews(): LiveData<List<RecommendedNews>> {
@@ -50,21 +50,26 @@ class NewsRespository(
                         response: Response<RecommendedNewsResponse>
                     ) {
                         if (response.isSuccessful && !response.body()?.error!!) {
-                            Log.d("RECOMMENDED NEWS", "Success fetching recommended news")
-                            newsDao.deleteTimeout(recommendedNewsTimeout)
-                            newsDao.deleteRecommendedNews()
-                            Log.d("RECOMMENDED NEWS", "Delete old recommended news timeout")
+                            if (!response.body()!!.error) {
+                                newsExecutors.execute {
+                                    Log.d("RECOMMENDED NEWS", "Success fetching recommended news")
+                                    newsDao.deleteTimeout(recommendedNewsTimeout)
+                                    newsDao.deleteRecommendedNews()
+                                    Log.d("RECOMMENDED NEWS", "Delete old recommended news timeout")
 
-                            newsExecutors.execute {
-                                Log.d("RECOMMENDED NEWS","Success saving recommended news to db")
-                                newsDao.saveRecommendedNews(*response.body()!!.data.toTypedArray())
-                                Log.d("RECOMMENDED NEWS", "Saving recommended news timeout")
-                                newsDao.saveTimeout(
-                                    TimeoutCheck(
-                                        id = recommendedNewsTimeout,
-                                        name = RECOMMENDED_NEWS
+                                    Log.d(
+                                        "RECOMMENDED NEWS",
+                                        "Success saving recommended news to db"
                                     )
-                                )
+                                    newsDao.saveRecommendedNews(*response.body()!!.data.toTypedArray())
+                                    Log.d("RECOMMENDED NEWS", "Saving recommended news timeout")
+                                    newsDao.saveTimeout(
+                                        TimeoutCheck(
+                                            id = recommendedNewsTimeout,
+                                            name = RECOMMENDED_NEWS
+                                        )
+                                    )
+                                }
                             }
                         }
                     }
@@ -90,18 +95,20 @@ class NewsRespository(
                         response: Response<LocalNewsResponse>
                     ) {
                         if (response.isSuccessful && !response.body()?.error!!) {
-                            Log.d("LOCAL NEWS", "Success fetching local news")
-                            newsDao.deleteTimeout(localNewsTimeout)
-                            newsDao.deleteLocalNews()
+                            if (!response.body()!!.error) {
+                                newsExecutors.execute {
+                                    Log.d("LOCAL NEWS", "Success fetching local news")
+                                    newsDao.deleteTimeout(localNewsTimeout)
+                                    newsDao.deleteLocalNews()
 
-                            newsExecutors.execute {
-                                newsDao.saveLocalNews(*response.body()!!.data.toTypedArray())
-                                newsDao.saveTimeout(
-                                    TimeoutCheck(
-                                        id = localNewsTimeout,
-                                        name = LOCAL_NEWS
+                                    newsDao.saveLocalNews(*response.body()!!.data.toTypedArray())
+                                    newsDao.saveTimeout(
+                                        TimeoutCheck(
+                                            id = localNewsTimeout,
+                                            name = LOCAL_NEWS
+                                        )
                                     )
-                                )
+                                }
                             }
                         }
                     }
@@ -129,19 +136,18 @@ class NewsRespository(
                         response: Response<GlobalNewsResponse>
                     ) {
                         if (response.isSuccessful) {
-                            Log.d("GLOBAL NEWS", "Success fetching global news")
-                            newsDao.deleteTimeout(globalNewsTimeout)
-                            newsDao.deleteGlobalNews()
-
-                            newsExecutors.execute {
-                                newsDao.saveGlobalNews(*response.body()!!.data.toTypedArray())
-                                newsDao.saveTimeout(
-                                    TimeoutCheck(
-                                        id= globalNewsTimeout,
-                                        name = GLOBAL_NEWS
+                            if (!response.body()!!.error) {
+                                newsExecutors.execute {
+                                    Log.d("GLOBAL NEWS", "Success fetching global news")
+                                    newsDao.deleteTimeout(globalNewsTimeout)
+                                    newsDao.deleteGlobalNews()
+                                    newsDao.saveGlobalNews(*response.body()!!.data.toTypedArray())
+                                    newsDao.saveTimeout(
+                                        TimeoutCheck(id = globalNewsTimeout, name = GLOBAL_NEWS)
                                     )
-                                )
+                                }
                             }
+
                         }
                     }
 
@@ -167,17 +173,19 @@ class NewsRespository(
                         response: Response<CountryNewsResponse>
                     ) {
                         if (response.isSuccessful && !response.body()!!.error) {
-                            newsDao.deleteTimeout(countryNewsTimeout)
-                            newsDao.deleteCountryNews()
+                            if (!response.body()!!.error) {
+                                newsExecutors.execute {
+                                    newsDao.deleteTimeout(countryNewsTimeout)
+                                    newsDao.deleteCountryNews()
 
-                            newsExecutors.execute {
-                                newsDao.saveCountryNews(*response.body()!!.data.toTypedArray())
-                                newsDao.saveTimeout(
-                                    TimeoutCheck(
-                                        id = countryNewsTimeout,
-                                        name = COUNTRY_NEWS
+                                    newsDao.saveCountryNews(*response.body()!!.data.toTypedArray())
+                                    newsDao.saveTimeout(
+                                        TimeoutCheck(
+                                            id = countryNewsTimeout,
+                                            name = COUNTRY_NEWS
+                                        )
                                     )
-                                )
+                                }
                             }
                         }
                     }

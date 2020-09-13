@@ -9,7 +9,6 @@ import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.devloyde.healthguard.databinding.ActivityWelcomeBinding
 
-
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeBinding
     lateinit var pager: ViewPager2

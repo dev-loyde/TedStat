@@ -40,25 +40,26 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
                         call: Call<GlobalStatResponse>,
                         response: Response<GlobalStatResponse>
                     ) {
-                        if (response.isSuccessful && !response.body()?.error!!) {
-                            Log.d(GLOBAL_STAT_TAG, "Success fetching global stat")
-
-                            Log.d(
-                                GLOBAL_STAT_TAG,
-                                "delete timeout and previous global stat data only on success"
-                            )
-                            statDao.deleteTimeout(globalStatsTimeout)
-                            statDao.deleteGlobalStat()
-                            statExecutors.execute {
-                                Log.d(GLOBAL_STAT_TAG, "Success saving global stats to db")
-                                statDao.saveGlobalStat(response.body()!!.data)
-                                Log.d(GLOBAL_STAT_TAG, "Saving recommended news timeout")
-                                statDao.saveTimeout(
-                                    TimeoutCheck(
-                                        id = globalStatsTimeout,
-                                        name = "GLOBAL_STAT"
+                        if (response.isSuccessful) {
+                            if (!response.body()!!.error) {
+                                statExecutors.execute {
+                                    Log.d(GLOBAL_STAT_TAG, "Success fetching global stat")
+                                    Log.d(
+                                        GLOBAL_STAT_TAG,
+                                        "delete timeout and previous global stat data only on success"
                                     )
-                                )
+                                    statDao.deleteTimeout(globalStatsTimeout)
+                                    statDao.deleteGlobalStat()
+                                    Log.d(GLOBAL_STAT_TAG, "Success saving global stats to db")
+                                    statDao.saveGlobalStat(response.body()!!.data)
+                                    Log.d(GLOBAL_STAT_TAG, "Saving recommended news timeout")
+                                    statDao.saveTimeout(
+                                        TimeoutCheck(
+                                            id = globalStatsTimeout,
+                                            name = "GLOBAL_STAT"
+                                        )
+                                    )
+                                }
                             }
                         }
                     }
@@ -86,24 +87,26 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
                         call: Call<CountryStatResponse>,
                         response: Response<CountryStatResponse>
                     ) {
-                        if (response.isSuccessful && !response.body()?.error!!) {
-                            Log.d(COUNTRY_STAT_TAG, "Success fetching countries stat")
-                            Log.d(
-                                COUNTRY_STAT_TAG,
-                                "delete timeout and previous global stat data only on success"
-                            )
-                            statDao.deleteTimeout(countriesStatTimeout)
-                            statDao.deleteCountriesStat()
-                            statExecutors.execute {
-                                Log.d(COUNTRY_STAT_TAG, "Success saving countries stats to db")
-                                statDao.saveStatCountries(*response.body()!!.data.toTypedArray())
-                                Log.d(COUNTRY_STAT_TAG, "Saving countries stat timeout")
-                                statDao.saveTimeout(
-                                    TimeoutCheck(
-                                        id = countriesStatTimeout,
-                                        name = "COUNTRIES_STAT"
+                        if (response.isSuccessful) {
+                            if (!response.body()!!.error) {
+                                statExecutors.execute {
+                                    Log.d(COUNTRY_STAT_TAG, "Success fetching countries stat")
+                                    Log.d(
+                                        COUNTRY_STAT_TAG,
+                                        "delete timeout and previous global stat data only on success"
                                     )
-                                )
+                                    statDao.deleteTimeout(countriesStatTimeout)
+                                    statDao.deleteCountriesStat()
+                                    Log.d(COUNTRY_STAT_TAG, "Success saving countries stats to db")
+                                    statDao.saveStatCountries(*response.body()!!.data.toTypedArray())
+                                    Log.d(COUNTRY_STAT_TAG, "Saving countries stat timeout")
+                                    statDao.saveTimeout(
+                                        TimeoutCheck(
+                                            id = countriesStatTimeout,
+                                            name = "COUNTRIES_STAT"
+                                        )
+                                    )
+                                }
                             }
                         }
                     }
@@ -131,25 +134,27 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
                         call: Call<HistoryStatResponse>,
                         response: Response<HistoryStatResponse>
                     ) {
-                        if (response.isSuccessful && !response.body()?.error!!) {
-                            Log.d(HISTORY_STAT_TAG, "Success fetching history stat")
-
-                            Log.d(
-                                HISTORY_STAT_TAG,
-                                "delete timeout and previous history stat data only on success"
-                            )
-                            statDao.deleteTimeout(historyStaTimeout)
-                            statDao.deleteHistoryStat()
-                            statExecutors.execute {
-                                Log.d(HISTORY_STAT_TAG, "Success saving history stats to db")
-                                statDao.saveStatHistory(*response.body()!!.data.toTypedArray())
-                                Log.d(HISTORY_STAT_TAG, "Saving history news timeout")
-                                statDao.saveTimeout(
-                                    TimeoutCheck(
-                                        id = historyStaTimeout,
-                                        name = "HISTORY_STAT"
+                        if (response.isSuccessful) {
+                            if (!response.body()!!.error) {
+                                statExecutors.execute {
+                                    Log.d(HISTORY_STAT_TAG, "Success fetching history stat")
+                                    Log.d(
+                                        HISTORY_STAT_TAG,
+                                        "delete timeout and previous history stat data only on success"
                                     )
-                                )
+                                    statDao.deleteTimeout(historyStaTimeout)
+                                    statDao.deleteHistoryStat()
+
+                                    Log.d(HISTORY_STAT_TAG, "Success saving history stats to db")
+                                    statDao.saveStatHistory(*response.body()!!.data.toTypedArray())
+                                    Log.d(HISTORY_STAT_TAG, "Saving history news timeout")
+                                    statDao.saveTimeout(
+                                        TimeoutCheck(
+                                            id = historyStaTimeout,
+                                            name = "HISTORY_STAT"
+                                        )
+                                    )
+                                }
                             }
                         }
                     }
