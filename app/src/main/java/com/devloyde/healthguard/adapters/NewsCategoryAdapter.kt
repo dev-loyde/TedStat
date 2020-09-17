@@ -40,6 +40,7 @@ class NewsCategoryAdapter :
                 Picasso.with(context)
                     .load(news.image)
                     .fit()
+                    .placeholder(R.drawable.placeholder_logo)
                     .into(holder.image)
 
                 holder.title.text = news.title
@@ -50,6 +51,7 @@ class NewsCategoryAdapter :
                 Picasso.with(context)
                     .load(news.image)
                     .fit()
+                    .placeholder(R.drawable.placeholder_logo)
                     .into(holder.image)
 
                 holder.title.text = news.title
@@ -60,6 +62,7 @@ class NewsCategoryAdapter :
                 Picasso.with(context)
                     .load(news.image)
                     .fit()
+                    .placeholder(R.drawable.placeholder_logo)
                     .into(holder.image)
 
                 holder.title.text = news.title
@@ -70,6 +73,7 @@ class NewsCategoryAdapter :
                 Picasso.with(context)
                     .load(news.image)
                     .fit()
+                    .placeholder(R.drawable.placeholder_logo)
                     .into(holder.image)
 
                 holder.title.text = news.title
