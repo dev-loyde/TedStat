@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/news_card"
@@ -13,31 +15,30 @@
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="false"
         app:rippleColor="#eeffffff"
-        android:background="@color/cardBackground">
+        android:background="?attr/cardBackground">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
+            <View
                 android:id="@+id/news_img"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/teens"
-                android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/news_title"
                 app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/rectangle_shimmer"
                 />
 
             <TextView
                 android:id="@+id/news_title"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Sample Title"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:layout_margin="5dp"
+                android:background="@drawable/rectangle_shimmer"
                 app:layout_constraintBottom_toTopOf="@id/news_publisher"
                 app:layout_constraintLeft_toRightOf="@id/news_img"
                 app:layout_constraintRight_toRightOf="parent"
@@ -48,14 +49,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:padding="15dp"
-                android:text="BBC News"
-                android:textSize="15sp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:padding="5dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/rectangle_shimmer"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/news_img"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/news_title" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
-</layout>
+</LinearLayout>

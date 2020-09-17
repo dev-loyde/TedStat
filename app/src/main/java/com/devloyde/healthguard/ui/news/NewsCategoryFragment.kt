@@ -1,5 +1,6 @@
 package com.devloyde.healthguard.ui.news
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -59,43 +60,46 @@ class NewsCategoryFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
             adapter = newsAdapter
         }
+        binding.shimmerEffectFrame.startShimmer()
         getCategoryData(newsType)
     }
-
-//    fun itemCheck() {
-//        if (FirebaseUtil.mDeals.size() > 0) {
-//            progressBarList.setVisibility(View.GONE)
-//            emptyView.setVisibility(View.GONE)
-//        } else if (FirebaseUtil.mDeals.size() === 0 && !NetworkUtil.NetworkAvailable(this@ListActivity)) {
-//            progressBarList.setVisibility(View.GONE)
-//            emptyView.setVisibility(View.VISIBLE)
-//        } else {
-//            progressBarList.setVisibility(View.VISIBLE)
-//            emptyView.setVisibility(View.GONE)
-//        }
-//    }
-
 
     private fun getCategoryData(fragment: String) {
         when (fragment) {
             RECOMMENDED_NEWS -> {
                 viewModel.recommendedNews.observe(viewLifecycleOwner) { recommendedNews ->
-                   newsAdapter.addItems(recommendedNews)
+                     if(recommendedNews.isNotEmpty()){
+                        binding.shimmerEffectFrame.stopShimmer()
+                         binding.shimmerEffectFrame.visibility = View.GONE
+                    }
+                    newsAdapter.addItems(recommendedNews)
                 }
             }
             GLOBAL_NEWS -> {
                 viewModel.globalNews.observe(viewLifecycleOwner) { globalNews ->
+                    if(globalNews.isNotEmpty()){
+                        binding.shimmerEffectFrame.stopShimmer()
+                        binding.shimmerEffectFrame.visibility = View.GONE
+                    }
                     newsAdapter.addItems(globalNews)
                 }
             }
             COUNTRY_NEWS  -> {
                 val isoCode = "NG"
                 viewModel.countryNews.observe(viewLifecycleOwner) { countryNews ->
+                     if(countryNews.isNotEmpty()){
+                        binding.shimmerEffectFrame.stopShimmer()
+                         binding.shimmerEffectFrame.visibility = View.GONE
+                    }
                     newsAdapter.addItems(countryNews)
                 }
             }
             LOCAL_NEWS -> {
                 viewModel.localNews.observe(viewLifecycleOwner) { localNews ->
+                     if(localNews.isNotEmpty()){
+                        binding.shimmerEffectFrame.stopShimmer()
+                         binding.shimmerEffectFrame.visibility = View.GONE
+                    }
                     newsAdapter.addItems(localNews)
                 }
             }
