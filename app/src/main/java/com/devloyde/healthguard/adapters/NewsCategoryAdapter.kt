@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.lifecycle.observe
 
 import androidx.recyclerview.widget.RecyclerView
+import com.devloyde.healthguard.R
 import com.devloyde.healthguard.databinding.NewsCategoryListItemBinding
 import com.devloyde.healthguard.models.*
 import com.devloyde.healthguard.ui.news.NewsFragment
@@ -32,46 +33,47 @@ class NewsCategoryAdapter :
     }
 
     override fun onBindViewHolder(holder: NewsCategoryViewHolder, position: Int) {
+        val context = holder.image.context
         when (val news = mItems[position]) {
             is RecommendedNews -> {
 
-                Picasso.with(holder.image.context)
+                Picasso.with(context)
                     .load(news.image)
                     .fit()
                     .into(holder.image)
 
                 holder.title.text = news.title
-                holder.publisher.text = "WHO"
+                holder.publisher.text = "source: WHO"
             }
             is LocalNews -> {
 
-                Picasso.with(holder.image.context)
+                Picasso.with(context)
                     .load(news.image)
                     .fit()
                     .into(holder.image)
 
                 holder.title.text = news.title
-                holder.publisher.text = "NCDC"
+                holder.publisher.text = "source: NCDC"
             }
             is GlobalNews -> {
 
-                Picasso.with(holder.image.context)
+                Picasso.with(context)
                     .load(news.image)
                     .fit()
                     .into(holder.image)
 
                 holder.title.text = news.title
-                holder.publisher.text = news.provider
+                holder.publisher.text = context.getString(R.string.news_item_source_text, news.provider)
 
             }
             is CountryNews -> {
-                Picasso.with(holder.image.context)
+                Picasso.with(context)
                     .load(news.image)
                     .fit()
                     .into(holder.image)
 
                 holder.title.text = news.title
-                holder.publisher.text = news.provider
+                holder.publisher.text = context.getString(R.string.news_item_source_text, news.provider)
 
             }
         }
