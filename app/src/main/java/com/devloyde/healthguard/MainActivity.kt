@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.devloyde.healthguard.databinding.ActivityMainBinding
-import com.devloyde.healthguard.listeners.HomeDetailNavigationListener
+import com.devloyde.healthguard.listeners.NavigationListeners
 import com.devloyde.healthguard.models.SettingsListItem
 import com.devloyde.healthguard.ui.home.PreventionDetailFragment
 import com.devloyde.healthguard.ui.news.NewsCategoryFragment
@@ -19,8 +19,7 @@ import com.devloyde.healthguard.ui.settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class MainActivity : AppCompatActivity(), SettingsFragment.OnListFragmentInteractionListener,
-    NewsCategoryFragment.NewsItemClick, HomeDetailNavigationListener {
+class MainActivity : AppCompatActivity(), SettingsFragment.OnListFragmentInteractionListener,NavigationListeners.HomeDetailNavigationListener,NavigationListeners.NewsItemUrlNavigationListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
     private val tag: String = "MainActivity"
@@ -54,11 +53,6 @@ class MainActivity : AppCompatActivity(), SettingsFragment.OnListFragmentInterac
 
     override fun onListFragmentInteraction(item: SettingsListItem?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    // Navigation listener for every menu item click in bottom navigation
-    override fun onItemClick(url: String) {
-
     }
 
     private fun launchCustomBrowser(url: String) {
@@ -95,6 +89,11 @@ class MainActivity : AppCompatActivity(), SettingsFragment.OnListFragmentInterac
     }
 
     override fun launchCustomUrl(url: String) {
+        Toast.makeText(this@MainActivity, url, Toast.LENGTH_SHORT).show()
+        launchCustomBrowser(url)
+    }
+
+    override fun launchNewsUrl(url: String) {
         Toast.makeText(this@MainActivity, url, Toast.LENGTH_SHORT).show()
         launchCustomBrowser(url)
     }

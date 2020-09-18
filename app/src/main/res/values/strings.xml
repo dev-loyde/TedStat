@@ -33,4 +33,6 @@
 
     <string name="sample_prevention_detail">The wearing of face masks is recommended in order to prevent those who are infected from but asymptomatic from spreading the virus and others from contacting.Properly dispose of the mask in waste bins. Improper handling could lead to infections</string>
     <string name="welcome_msg_title">Fight against covid19</string>
+    <string name="recommended_news_source">source: WHO</string>
+    <string name="health_care_news_source">source: NCDC</string>
 </resources>

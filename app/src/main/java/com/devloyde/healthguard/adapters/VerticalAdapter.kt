@@ -3,16 +3,13 @@ package com.devloyde.healthguard.adapters
 import android.view.LayoutInflater
 
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 
 import androidx.recyclerview.widget.RecyclerView
-import com.devloyde.healthguard.databinding.BannerContainerBinding
 import com.devloyde.healthguard.databinding.PreventionDetailsItemBinding
-import com.devloyde.healthguard.databinding.VerticalRvContainerBinding
 
 import com.devloyde.healthguard.databinding.VerticalSingleItemBinding
-import com.devloyde.healthguard.listeners.HomeDetailNavigationListener
+import com.devloyde.healthguard.listeners.NavigationListeners.HomeDetailNavigationListener
 import com.devloyde.healthguard.models.*
 import com.squareup.picasso.Picasso
 

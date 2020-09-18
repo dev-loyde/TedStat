@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.airbnb.lottie.RenderMode
 import com.devloyde.healthguard.databinding.*
-import com.devloyde.healthguard.listeners.HomeDetailNavigationListener
+import com.devloyde.healthguard.listeners.NavigationListeners.HomeDetailNavigationListener
+
 import com.devloyde.healthguard.models.*
 import com.squareup.picasso.Picasso
 

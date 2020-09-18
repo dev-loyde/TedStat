@@ -1,22 +1,20 @@
 package com.devloyde.healthguard.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.observe
 
 import androidx.recyclerview.widget.RecyclerView
 import com.devloyde.healthguard.R
 import com.devloyde.healthguard.databinding.NewsCategoryListItemBinding
+import com.devloyde.healthguard.listeners.NavigationListeners.NewsItemUrlNavigationListener
 import com.devloyde.healthguard.models.*
-import com.devloyde.healthguard.ui.news.NewsFragment
 import com.squareup.picasso.Picasso
 
 
-class NewsCategoryAdapter :
+class NewsCategoryAdapter(val listener: NewsItemUrlNavigationListener?) :
     RecyclerView.Adapter<NewsCategoryAdapter.NewsCategoryViewHolder>() {
 
     private var mItems = ArrayList<Any>()
@@ -44,7 +42,12 @@ class NewsCategoryAdapter :
                     .into(holder.image)
 
                 holder.title.text = news.title
-                holder.publisher.text = "source: WHO"
+                holder.publisher.text = context.getString(R.string.recommended_news_source)
+                holder.itemView.setOnClickListener {
+                    news.link?.let { link ->
+                        listener?.launchNewsUrl(link)
+                    }
+                }
             }
             is LocalNews -> {
 
@@ -55,7 +58,10 @@ class NewsCategoryAdapter :
                     .into(holder.image)
 
                 holder.title.text = news.title
-                holder.publisher.text = "source: NCDC"
+                holder.publisher.text = context.getString(R.string.health_care_news_source)
+                holder.itemView.setOnClickListener {
+                    news.link?.let { link -> listener?.launchNewsUrl(link) }
+                }
             }
             is GlobalNews -> {
 
@@ -67,7 +73,9 @@ class NewsCategoryAdapter :
 
                 holder.title.text = news.title
                 holder.publisher.text = context.getString(R.string.news_item_source_text, news.provider)
-
+                holder.itemView.setOnClickListener {
+                    news.link?.let { link -> listener?.launchNewsUrl(link) }
+                }
             }
             is CountryNews -> {
                 Picasso.with(context)
@@ -78,7 +86,9 @@ class NewsCategoryAdapter :
 
                 holder.title.text = news.title
                 holder.publisher.text = context.getString(R.string.news_item_source_text, news.provider)
-
+                holder.itemView.setOnClickListener {
+                    news.link?.let { link -> listener?.launchNewsUrl(link) }
+                }
             }
         }
 

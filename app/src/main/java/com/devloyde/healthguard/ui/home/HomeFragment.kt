@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.NavController
@@ -21,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devloyde.healthguard.R
 import com.devloyde.healthguard.adapters.HomeAdapter
 import com.devloyde.healthguard.databinding.FragmentHomeBinding
-import com.devloyde.healthguard.listeners.HomeDetailNavigationListener
+import com.devloyde.healthguard.listeners.NavigationListeners
 import com.devloyde.healthguard.models.*
 
 class HomeFragment : Fragment() {
@@ -31,7 +30,7 @@ class HomeFragment : Fragment() {
     private lateinit var homeRv: RecyclerView
     private lateinit var toolbar: Toolbar
     private lateinit var navController: NavController
-    private var homeDetailNavigationListener: HomeDetailNavigationListener? = null
+    private var navigationListeners: NavigationListeners.HomeDetailNavigationListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,8 +55,8 @@ class HomeFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         when (context) {
-            is HomeDetailNavigationListener -> {
-                homeDetailNavigationListener = context
+            is NavigationListeners.HomeDetailNavigationListener -> {
+                navigationListeners = context
             }
             else -> {
                 throw RuntimeException("$context must implement navigateToPreventionDetailScreen")
@@ -67,7 +66,7 @@ class HomeFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        homeDetailNavigationListener = null
+        navigationListeners = null
     }
 
     private fun bindViews() {
@@ -78,7 +77,7 @@ class HomeFragment : Fragment() {
 
     private fun initRecyclerView() {
 
-        val homeAdapter = HomeAdapter(allItems(),homeDetailNavigationListener)
+        val homeAdapter = HomeAdapter(allItems(),navigationListeners)
         binding.homeRecyclerView.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         binding.homeRecyclerView.setHasFixedSize(false)

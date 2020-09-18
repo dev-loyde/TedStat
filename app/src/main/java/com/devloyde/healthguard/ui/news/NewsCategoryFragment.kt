@@ -1,6 +1,6 @@
 package com.devloyde.healthguard.ui.news
 
-import android.opengl.Visibility
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devloyde.healthguard.R
 import com.devloyde.healthguard.adapters.NewsCategoryAdapter
 import com.devloyde.healthguard.databinding.FragmentNewsCategoryBinding
-import com.devloyde.healthguard.ui.news.NewsCategoryFragment.*
+import com.devloyde.healthguard.listeners.NavigationListeners
+import com.devloyde.healthguard.listeners.NavigationListeners.NewsItemUrlNavigationListener
 import com.devloyde.healthguard.ui.news.NewsFragment.Companion.GLOBAL_NEWS
 import com.devloyde.healthguard.ui.news.NewsFragment.Companion.COUNTRY_NEWS
 import com.devloyde.healthguard.ui.news.NewsFragment.Companion.LOCAL_NEWS
@@ -31,6 +32,8 @@ class NewsCategoryFragment : Fragment() {
     private lateinit var binding: FragmentNewsCategoryBinding
     private lateinit var viewModel: NewsViewModel
     private lateinit var newsAdapter: NewsCategoryAdapter
+    private var newsItemUrlNavigationListener: NewsItemUrlNavigationListener? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,13 +58,31 @@ class NewsCategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        newsAdapter = NewsCategoryAdapter()
+        newsAdapter = NewsCategoryAdapter(newsItemUrlNavigationListener)
         binding.newsCategoryRecyclerView.apply {
             layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
             adapter = newsAdapter
         }
         binding.shimmerEffectFrame.startShimmer()
         getCategoryData(newsType)
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        when (context) {
+            is NewsItemUrlNavigationListener -> {
+                newsItemUrlNavigationListener = context
+            }
+            else -> {
+                throw RuntimeException("$context must implement newsItemUrlNavigationListener")
+            }
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        newsItemUrlNavigationListener = null
     }
 
     private fun getCategoryData(fragment: String) {
