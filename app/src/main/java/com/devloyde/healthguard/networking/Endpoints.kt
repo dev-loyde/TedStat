@@ -30,8 +30,6 @@ interface StatEndpoints {
     @GET("/api/stat/countries")
     fun getCountryStat(): Call<CountryStatResponse>
 
-    @GET("/api/stat/history")
-    fun getHistoryStat(): Call<HistoryStatResponse>
 }
 
 interface InfoEndpoints {

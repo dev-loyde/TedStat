@@ -9,6 +9,7 @@
     <color name="backgroundColor">#f2f2f2</color>
     <color name="cardBackgroundTint">#ff008577</color>
     <color name="cardBackgroundPrimary">#37008577</color>
+    <color name="colorBlue">#ff33b5e5</color>
 
 
 <!--    <color name="colorPrimary">#131217</color>-->

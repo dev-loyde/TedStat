@@ -7,13 +7,9 @@ import androidx.room.PrimaryKey
 data class GlobalStat(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val updatedTime: String?,
-    val totalConfirmedCases: Int?,
-    val newlyConfirmedCases: Int?,
-    val totalDeaths: Int?,
-    val newDeaths: Int?,
-    val totalRecoveredCases: Int?,
-    val newlyRecoveredCases: Int?
+    val cases: String?,
+    val recovered: String?,
+    val deaths: String?
 )
 
 
@@ -21,23 +17,10 @@ data class GlobalStat(
 data class StatCountries(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val countryOrRegion: String?,
-    val provinceOrState: String?,
-    val isoCode: String?,
-    val totalConfirmedCases: Int?,
-    val newlyConfirmedCases: Int?,
-    val totalDeaths: Int?,
-    val newDeaths: Int?,
-    val totalRecoveredCases: Int?,
-    val newlyRecoveredCases: Int?
+    val flag: String?,
+    val country: String?,
+    val cases: String?,
+    val recovered: String?,
+    val deaths: String?
 )
 
-@Entity
-data class StatHistory(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    val date: String?,
-    val confirmed: Int?,
-    val deaths: Int?,
-    val recovered: Int?
-)

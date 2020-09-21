@@ -77,7 +77,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
-                    android:minHeight="180dp"
+                    android:minHeight="150dp"
                     app:cardCornerRadius="3dp"
                     app:rippleColor="#eeffffff">
 
@@ -97,29 +97,29 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
+
                             <ProgressBar
-                                android:id="@+id/progressBar3"
+                                android:id="@+id/global_cases_progress"
                                 style="?android:attr/progressBarStyleHorizontal"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:progress="100"
+                                android:progressDrawable="@drawable/progress_drawable2" />
+
+                            <ProgressBar
+                                android:id="@+id/global_recovered_progress"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
                                 android:progressDrawable="@drawable/progress_drawable3" />
 
-                            <ProgressBar
-                                android:id="@+id/progressBar"
-                                style="?android:attr/progressBarStyleHorizontal"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:progress="80"
-                                android:progressDrawable="@drawable/progress_drawable" />
+
 
                             <ProgressBar
-                                android:id="@+id/progressBar2"
+                                android:id="@+id/global_deaths_progress"
                                 style="?android:attr/progressBarStyleHorizontal"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:progress="50"
-                                android:progressDrawable="@drawable/progress_drawable2" />
+                                android:progressDrawable="@drawable/progress_drawable" />
 
                         </FrameLayout>
 
@@ -139,18 +139,18 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
                                     android:gravity="start|center_vertical"
-                                    android:text="Newly Confirmed Cases"
+                                    android:text="Confirmed Cases"
                                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                                     android:textSize="14sp" />
 
                                 <TextView
-                                    android:id="@+id/newly_confirmed_value"
+                                    android:id="@+id/global_cases_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical|end"
                                     android:layout_weight="1"
                                     android:gravity="center_vertical|end"
-                                    android:text="2340"
+                                    android:text="loading"
                                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                                     android:textSize="15sp" />
                             </LinearLayout>
@@ -165,44 +165,20 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
                                     android:gravity="start|center_vertical"
-                                    android:text="Total Confirmed Cases"
+                                    android:text="Recovered Cases"
                                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                                     android:textSize="14sp" />
 
 
                                 <TextView
-                                    android:id="@+id/total_confirmed_value"
+                                    android:id="@+id/recovered_cases_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="end"
-                                    android:text="242"
+                                    android:text="loading"
                                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                                     android:textSize="15sp" />
 
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="5dp">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="2"
-                                    android:gravity="start|center_vertical"
-                                    android:text="New Deaths"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                                    android:textSize="14sp" />
-
-                                <TextView
-                                    android:id="@+id/new_deaths_value"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="end"
-                                    android:text="2560"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                                    android:textSize="15sp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -219,66 +195,14 @@
                                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                                     android:textSize="14sp" />
 
-
                                 <TextView
-                                    android:id="@+id/total_deaths_value"
+                                    android:id="@+id/deaths_cases_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="end"
-                                    android:text="1200"
+                                    android:text="loading"
                                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                                     android:textSize="15sp" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="5dp">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="2"
-                                    android:gravity="start|center_vertical"
-                                    android:text="Newly Recovered"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                                    android:textSize="14sp" />
-
-                                <TextView
-                                    android:id="@+id/newly_recovered_value"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="end"
-                                    android:text="1200"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                                    android:textSize="15sp" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="5dp">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="2"
-                                    android:gravity="start|center_vertical"
-                                    android:text="Total Recovered"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                                    android:textSize="14sp" />
-
-                                <TextView
-                                    android:id="@+id/total_recovered_value"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="end"
-                                    android:text="2560"
-                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                                    android:textSize="15sp" />
-
                             </LinearLayout>
 
                         </LinearLayout>

@@ -14,13 +14,6 @@ data class CountryStatResponse(
     val data: List<StatCountries>
 )
 
-// COUNTRY STATISTICS NETWORK RESPONSE OBJECT
-data class HistoryStatResponse(
-    val error: Boolean,
-    val message: String,
-    val data: List<StatHistory>
-)
-
 // ADVISORY/FAQ NETWORK RESPONSE OBJECT
 data class AdvisoryResponse(
     val error: Boolean,

@@ -147,8 +147,8 @@ class HomeFragment : Fragment() {
         )
 
         // GLOBAL STATISTICS
-        val globalStat = GlobalStat(3, "time", 2333,
-            222, 2, 445, 223, 200)
+        val globalStat = GlobalStat(3, "time", "2333",
+            "222")
 
         // What you should know
         val awareness = HorizontalSingle(

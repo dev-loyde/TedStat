@@ -5,8 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
 import com.devloyde.healthguard.models.*
-import okio.Timeout
-
 
 @Dao
 interface StatDao {
@@ -16,29 +14,21 @@ interface StatDao {
     @Insert(onConflict = REPLACE)
     fun saveStatCountries(vararg countries: StatCountries)
 
-    @Insert(onConflict = REPLACE)
-    fun saveStatHistory(vararg history: StatHistory)
-
     @Query("SELECT * FROM globalstat")
-    fun loadGlobalStat(): LiveData<GlobalStat>
+    fun loadGlobalStat(): LiveData<List<GlobalStat>>
 
     @Query("SELECT * FROM statcountries")
     fun loadCountriesStat(): LiveData<List<StatCountries>>
 
-    @Query("SELECT * FROM statcountries WHERE statcountries.isoCode = :isoCode ")
-    fun loadOneCountriesStat(isoCode: String): LiveData<StatCountries>
+    @Query("SELECT * FROM statcountries WHERE statcountries.country = :country ")
+    fun loadOneCountriesStat(country: String): LiveData<StatCountries>
 
-    @Query("SELECT * FROM stathistory")
-    fun loadHistoryStat(): LiveData<List<StatHistory>>
 
     @Query("DELETE FROM globalstat")
     fun deleteGlobalStat()
 
     @Query("SELECT * FROM statcountries")
     fun deleteCountriesStat(): LiveData<List<CountryNews>>
-
-    @Query("DELETE FROM stathistory")
-    fun deleteHistoryStat()
 
     @Insert(onConflict = REPLACE)
     fun saveTimeout( timeout: TimeoutCheck)

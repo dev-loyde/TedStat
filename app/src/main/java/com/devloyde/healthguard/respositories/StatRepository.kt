@@ -21,9 +21,8 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
     private val request = NetworkServiceBuilder.buildService(StatEndpoints::class.java)
     private val globalStatsTimeout: Int = 5
     private val countriesStatTimeout: Int = 6
-    private val historyStaTimeout: Int = 7
 
-    fun getGlobalStat(): LiveData<GlobalStat> {
+    fun getGlobalStat(): LiveData<List<GlobalStat>> {
         statExecutors.execute {
             Log.d(GLOBAL_STAT_TAG, "checking db for global stat")
             val timeout = statDao.checkTimeout(globalStatsTimeout)
@@ -117,61 +116,12 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
         return statDao.loadCountriesStat()
     }
 
-    fun getHistoryStat(): LiveData<List<StatHistory>> {
-        statExecutors.execute {
-            Log.d(HISTORY_STAT_TAG, "checking db for history stat")
-            val timeout = statDao.checkTimeout(historyStaTimeout)
-            if (timeout == null || timeout.timeout < System.currentTimeMillis()) {
-                Log.d(HISTORY_STAT_TAG, "user eligible to fetch new stat from server")
-                val call = request.getHistoryStat()
-
-                call.enqueue(object : Callback<HistoryStatResponse> {
-                    override fun onFailure(call: Call<HistoryStatResponse>, t: Throwable) {
-                        Log.d(HISTORY_STAT_TAG, "Error fetching history statistics")
-                    }
-
-                    override fun onResponse(
-                        call: Call<HistoryStatResponse>,
-                        response: Response<HistoryStatResponse>
-                    ) {
-                        if (response.isSuccessful) {
-                            if (!response.body()!!.error) {
-                                statExecutors.execute {
-                                    Log.d(HISTORY_STAT_TAG, "Success fetching history stat")
-                                    Log.d(
-                                        HISTORY_STAT_TAG,
-                                        "delete timeout and previous history stat data only on success"
-                                    )
-                                    statDao.deleteTimeout(historyStaTimeout)
-                                    statDao.deleteHistoryStat()
-
-                                    Log.d(HISTORY_STAT_TAG, "Success saving history stats to db")
-                                    statDao.saveStatHistory(*response.body()!!.data.toTypedArray())
-                                    Log.d(HISTORY_STAT_TAG, "Saving history news timeout")
-                                    statDao.saveTimeout(
-                                        TimeoutCheck(
-                                            id = historyStaTimeout,
-                                            name = "HISTORY_STAT"
-                                        )
-                                    )
-                                }
-                            }
-                        }
-                    }
-                })
-            }
-
-        }
-        return statDao.loadHistoryStat()
-    }
-
     companion object {
         // Singleton prevents multiple instances of database opening at the
         // same time.
 
         const val GLOBAL_STAT_TAG = "GLOBAL STAT"
         const val COUNTRY_STAT_TAG = "COUNTRY STAT"
-        const val HISTORY_STAT_TAG = "HISTORY STAT"
 
         @Volatile
         private var STAT_RESPOSITORY_INSTANCE: StatRepository? = null

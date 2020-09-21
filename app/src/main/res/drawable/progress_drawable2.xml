@@ -7,7 +7,7 @@
     <item>
         <clip>
             <shape>
-                <solid android:color="@color/colorPrimary"/>
+                <solid android:color="@color/colorBlue"/>
             </shape>
         </clip>
     </item>

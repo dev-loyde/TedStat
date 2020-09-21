@@ -3,7 +3,7 @@ package com.devloyde.healthguard.models
 
 data class ImpactStat(
     val name: String,
-    val count: Int
+    val count: String?
 )
 
 data class Banner(

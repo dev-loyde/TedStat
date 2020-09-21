@@ -11,7 +11,6 @@ import com.devloyde.healthguard.models.*
         // For Statistics
         GlobalStat::class,
         StatCountries::class,
-        StatHistory::class,
         // For News
         RecommendedNews::class,
         LocalNews::class,
@@ -22,7 +21,7 @@ import com.devloyde.healthguard.models.*
         FaqInfo::class,
         // For Timeout
         TimeoutCheck::class
-    ], version = 6,
+    ], version = 7,
     exportSchema = false
 )
 abstract class HealthGuardDatabase : RoomDatabase() {

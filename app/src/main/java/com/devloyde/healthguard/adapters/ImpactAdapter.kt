@@ -6,9 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devloyde.healthguard.databinding.ImpactStatItemBinding
 import com.devloyde.healthguard.models.ImpactStat
 
-class ImpactAdapter(
-    private var mItems: List<ImpactStat>
-) : RecyclerView.Adapter<ImpactAdapter.ImpactStatViewHolder>() {
+class ImpactAdapter: RecyclerView.Adapter<ImpactAdapter.ImpactStatViewHolder>() {
+    private var mItems = ArrayList<ImpactStat>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -17,6 +16,11 @@ class ImpactAdapter(
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
         val binding = ImpactStatItemBinding.inflate(inflater, parent, false)
         return ImpactStatViewHolder(binding)
+    }
+
+    fun addItems(items: ArrayList<ImpactStat>) {
+        mItems = items
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
