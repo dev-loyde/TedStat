@@ -112,6 +112,7 @@ class MainActivity : AppCompatActivity(), SettingsFragment.OnListFragmentInterac
     override fun showCountrySelectionDialog() {
         CountryListDialogFragment().apply {
             show(supportFragmentManager, "country_selection_dialog")
+            enterTransition = R.anim.fragment_open_enter
         }
     }
 

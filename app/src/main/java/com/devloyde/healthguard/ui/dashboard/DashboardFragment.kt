@@ -130,7 +130,7 @@ class DashboardFragment : Fragment() {
 
     }
 
-    private fun insertChartData(pieDataValues: List<PieEntry>) {
+    private fun insertChartData(pieDataValues: ArrayList<PieEntry>) {
         countryPieChart.animateY(1000, EaseOutCirc)
 
         val pieDataSet = PieDataSet(pieDataValues, "chart")
@@ -162,13 +162,17 @@ class DashboardFragment : Fragment() {
                 currentCountryName.text = getString(R.string.dashboard_cases_country_header,defaultCountry.country)
                 binding.pieCaseNo.text = defaultCountry.cases
                 binding.dashboardCountryBtn.text = defaultCountry.country?.toUpperCase(Locale.getDefault())
-                insertChartData(
-                    listOf(
-                        PieEntry(parseFloatStat(defaultCountry.recovered!!) + 10000.0.toFloat(),"R-C"),
-                        PieEntry(parseFloatStat(defaultCountry.cases!!) - 10000.0.toFloat(), "C-C"),
-                        PieEntry(parseFloatStat(defaultCountry.deaths!!) - 10000.0.toFloat(), "T-D")
-                    )
-                )
+                val countriesData = ArrayList<PieEntry>()
+                if(defaultCountry.recovered!! != "No data") {
+                    countriesData.add(PieEntry(parseFloatStat(defaultCountry.recovered) + 10000.0.toFloat(),"R-C"))
+                }
+                if(defaultCountry.cases!! != "No data") {
+                    countriesData.add(PieEntry(parseFloatStat(defaultCountry.cases) - 10000.0.toFloat(), "C-C"))
+                }
+                if (defaultCountry.deaths!! != "No data") {
+                    countriesData.add( PieEntry(parseFloatStat(defaultCountry.deaths) - 10000.0.toFloat(), "T-D"))
+                }
+                insertChartData(countriesData)
                 val list = ArrayList<ImpactStat>()
                 list.add(ImpactStat(name = "Confirmed Cases(CC)", count = defaultCountry.cases))
                 list.add(ImpactStat(name = "Recovered Cases (RC)",count = defaultCountry.recovered))
@@ -182,13 +186,17 @@ class DashboardFragment : Fragment() {
                currentCountryName.text = getString(R.string.dashboard_cases_country_header,selectedCountry.country)
                binding.pieCaseNo.text = selectedCountry.cases
                binding.dashboardCountryBtn.text = selectedCountry.country?.toUpperCase(Locale.getDefault())
-               insertChartData(
-                   listOf(
-                       PieEntry(parseFloatStat(selectedCountry.recovered!!) + 10000.0.toFloat(),"R-C"),
-                       PieEntry(parseFloatStat(selectedCountry.cases!!) - 10000.0.toFloat(), "C-C"),
-                       PieEntry(parseFloatStat(selectedCountry.deaths!!) - 10000.0.toFloat(), "T-D")
-                   )
-               )
+               val countriesData = ArrayList<PieEntry>()
+               if(selectedCountry.recovered!! != "No data") {
+                   countriesData.add(PieEntry(parseFloatStat(selectedCountry.recovered) + 10000.0.toFloat(),"R-C"))
+               }
+               if(selectedCountry.cases!! != "No data") {
+                   countriesData.add(PieEntry(parseFloatStat(selectedCountry.cases) - 10000.0.toFloat(), "C-C"))
+               }
+               if (selectedCountry.deaths!! != "No data") {
+                   countriesData.add( PieEntry(parseFloatStat(selectedCountry.deaths) - 10000.0.toFloat(), "T-D"))
+               }
+               insertChartData(countriesData)
                val list = ArrayList<ImpactStat>()
                list.add(ImpactStat(name = "Confirmed Cases(CC)", count = selectedCountry.cases))
                list.add(ImpactStat(name = "Recovered Cases (RC)",count = selectedCountry.recovered))

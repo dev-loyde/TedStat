@@ -1,6 +1,5 @@
 package com.devloyde.healthguard.ui.dashboard
 
-import android.content.Context
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,12 +15,13 @@ import com.devloyde.healthguard.adapters.CountryAdapter
 import com.devloyde.healthguard.databinding.FragmentCountryListDialogBinding
 import com.devloyde.healthguard.listeners.DisplayListener
 import com.devloyde.healthguard.models.StatCountries
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class CountryListDialogFragment : BottomSheetDialogFragment(),
     DisplayListener.UpdateCountrySelection {
 
     private lateinit var dashboardViewModel: DashboardViewModel
-    private var updateCountryListener: DisplayListener.UpdateCountrySelection? = null
 
     lateinit var binding: FragmentCountryListDialogBinding
     override fun onCreateView(
@@ -34,11 +34,12 @@ class CountryListDialogFragment : BottomSheetDialogFragment(),
             container,
             false
         )
-
+        loadCountriesList()
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+    private fun loadCountriesList() {
         binding.countryList.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         val adapter = CountryAdapter(this)
