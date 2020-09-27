@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/health_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:background="?attr/cardBackground"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="3dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="false"
+        >
+<TextView
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/country_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="32dp"
+    android:paddingTop="16dp"
+    android:paddingRight="@dimen/list_item_spacing"
+    android:paddingBottom="16dp"
+    android:textColor="@color/textColor"
+    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+    tools:text="Hello" />
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

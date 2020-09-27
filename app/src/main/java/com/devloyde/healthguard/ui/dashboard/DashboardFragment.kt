@@ -1,12 +1,13 @@
 package com.devloyde.healthguard.ui.dashboard
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -22,8 +23,10 @@ import com.devloyde.healthguard.R
 import com.devloyde.healthguard.adapters.ImpactAdapter
 import com.devloyde.healthguard.databinding.FragmentDashboardBinding
 import com.devloyde.healthguard.listeners.AppBarStateListener
+import com.devloyde.healthguard.listeners.DisplayListener
 import com.devloyde.healthguard.models.GlobalStat
 import com.devloyde.healthguard.models.ImpactStat
+import com.devloyde.healthguard.models.StatCountries
 import com.github.mikephil.charting.animation.Easing.EaseOutCirc
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
@@ -32,6 +35,8 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DashboardFragment : Fragment() {
 
@@ -42,6 +47,7 @@ class DashboardFragment : Fragment() {
     private lateinit var impactRv: RecyclerView
     private lateinit var collapsingToolbar: CollapsingToolbarLayout
     private lateinit var appBar: AppBarLayout
+    private lateinit var currentCountryName: TextView
 
     private lateinit var globalCases: TextView
     private lateinit var globalRecovered: TextView
@@ -52,15 +58,13 @@ class DashboardFragment : Fragment() {
     private lateinit var globalDeathsProgress: ProgressBar
 
     private lateinit var impactAdapter: ImpactAdapter
+    private var countrySelectionListener: DisplayListener.CountrySelection? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
         dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+            ViewModelProvider(requireActivity()).get(DashboardViewModel::class.java)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard, container, false)
+        binding.lifecycleOwner = this
         bindViews()
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(
@@ -81,17 +85,23 @@ class DashboardFragment : Fragment() {
                 }
                 if (state.name == "COLLAPSED") {
                     collapsingToolbar.isTitleEnabled = true
-                    collapsingToolbar.title = "Nigeria"
+                    collapsingToolbar.title = binding.dashboardCountryBtn.text
                 }
             }
         })
+        binding.dashboardCountryBtn.setOnClickListener {
+            countrySelectionListener?.showCountrySelectionDialog()
+        }
+        setUpCountryStat()
+        setUpImpactStat()
+        loadSelectedCountry()
         return binding.root
     }
-
 
     private fun bindViews() {
         binding.apply {
             countryPieChart = pieChart
+            currentCountryName = pieCaseTitle
             toolbar = dashboardToolbar
             impactRv = dashboardContent.dashboardImpactRecyclerView
             collapsingToolbar = dashboardCollapsingToolbar
@@ -107,14 +117,6 @@ class DashboardFragment : Fragment() {
             globalRecoveredProgress = dashboardContent.globalRecoveredProgress
             globalDeathsProgress = dashboardContent.globalDeathsProgress
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setUpCountryStat()
-        setUpImpactStat()
-
-        loadSelectedCountry()
     }
 
     private fun setUpCountryStat() {
@@ -155,36 +157,67 @@ class DashboardFragment : Fragment() {
     }
 
     private fun loadSelectedCountry() {
-        dashboardViewModel.getCountry("Nigeria").observe(viewLifecycleOwner, Observer { country ->
-            if (country != null) {
-                binding.pieCaseNo.text = country.cases
+        dashboardViewModel.getDefaultCountry().observe(viewLifecycleOwner, Observer { defaultCountry ->
+            if(defaultCountry is StatCountries) {
+                currentCountryName.text = getString(R.string.dashboard_cases_country_header,defaultCountry.country)
+                binding.pieCaseNo.text = defaultCountry.cases
+                binding.dashboardCountryBtn.text = defaultCountry.country?.toUpperCase(Locale.getDefault())
                 insertChartData(
                     listOf(
-                        PieEntry(parseFloatStat(country.recovered!!) + 10000.0.toFloat(), "R-C"),
-                        PieEntry(parseFloatStat(country.cases!!) - 10000.0.toFloat(), "C-C"),
-                        PieEntry(parseFloatStat(country.deaths!!) - 10000.0.toFloat(), "T-D")
+                        PieEntry(parseFloatStat(defaultCountry.recovered!!) + 10000.0.toFloat(),"R-C"),
+                        PieEntry(parseFloatStat(defaultCountry.cases!!) - 10000.0.toFloat(), "C-C"),
+                        PieEntry(parseFloatStat(defaultCountry.deaths!!) - 10000.0.toFloat(), "T-D")
                     )
                 )
                 val list = ArrayList<ImpactStat>()
-                list.add(ImpactStat(name = "Confirmed Cases(CC)", count = country.cases))
-                list.add(ImpactStat(name = "Recovered Cases (RC)", count = country.recovered))
-                list.add(ImpactStat(name = "Total Deaths (TD)", count = country.deaths))
+                list.add(ImpactStat(name = "Confirmed Cases(CC)", count = defaultCountry.cases))
+                list.add(ImpactStat(name = "Recovered Cases (RC)",count = defaultCountry.recovered))
+                list.add(ImpactStat(name = "Total Deaths (TD)", count = defaultCountry.deaths))
                 impactAdapter.addItems(list)
-
             }
         })
+
+        dashboardViewModel.getCurrentCountry().observe(viewLifecycleOwner, Observer { selectedCountry ->
+           if(selectedCountry is StatCountries) {
+               currentCountryName.text = getString(R.string.dashboard_cases_country_header,selectedCountry.country)
+               binding.pieCaseNo.text = selectedCountry.cases
+               binding.dashboardCountryBtn.text = selectedCountry.country?.toUpperCase(Locale.getDefault())
+               insertChartData(
+                   listOf(
+                       PieEntry(parseFloatStat(selectedCountry.recovered!!) + 10000.0.toFloat(),"R-C"),
+                       PieEntry(parseFloatStat(selectedCountry.cases!!) - 10000.0.toFloat(), "C-C"),
+                       PieEntry(parseFloatStat(selectedCountry.deaths!!) - 10000.0.toFloat(), "T-D")
+                   )
+               )
+               val list = ArrayList<ImpactStat>()
+               list.add(ImpactStat(name = "Confirmed Cases(CC)", count = selectedCountry.cases))
+               list.add(ImpactStat(name = "Recovered Cases (RC)",count = selectedCountry.recovered))
+               list.add(ImpactStat(name = "Total Deaths (TD)", count = selectedCountry.deaths))
+               impactAdapter.addItems(list)
+           }
+        })
+
         dashboardViewModel.globalStat.observe(viewLifecycleOwner, Observer { globalStat ->
-            if(globalStat != null) {
+            if (globalStat is List<GlobalStat>) {
                 val globalStatistics: GlobalStat = globalStat[0]
                 globalCases.text = globalStatistics.cases
                 globalRecovered.text = globalStatistics.recovered
                 globalDeaths.text = globalStatistics.deaths
 
-                val total = parseIntegerStat(globalStatistics.cases!!) + parseIntegerStat(globalStatistics.recovered!!) +
-                                 parseIntegerStat(globalStatistics.deaths!!)
-                globalCasesProgress.progress = parseGlobalStat(globalStatistics.cases, total) + parseGlobalStat(globalStatistics.deaths, total) +
-                                               parseGlobalStat(globalStatistics.recovered, total)
-                globalRecoveredProgress.progress = parseGlobalStat(globalStatistics.recovered, total) + parseGlobalStat(globalStatistics.deaths, total) + 10
+                val total =
+                    parseIntegerStat(globalStatistics.cases!!) + parseIntegerStat(globalStatistics.recovered!!) +
+                            parseIntegerStat(globalStatistics.deaths!!)
+                globalCasesProgress.progress =
+                    parseGlobalStat(globalStatistics.cases, total) + parseGlobalStat(
+                        globalStatistics.deaths,
+                        total
+                    ) +
+                            parseGlobalStat(globalStatistics.recovered, total)
+                globalRecoveredProgress.progress =
+                    parseGlobalStat(globalStatistics.recovered, total) + parseGlobalStat(
+                        globalStatistics.deaths,
+                        total
+                    ) + 10
                 globalDeathsProgress.progress = parseGlobalStat(globalStatistics.deaths, total) + 20
             }
         })
@@ -198,7 +231,20 @@ class DashboardFragment : Fragment() {
         return text.replace(Regex(","), "").toFloat()
     }
 
-    private fun parseGlobalStat(stat: String,total: Int): Int {
-        return  ((parseFloatStat(stat)/total)* 100).toInt()
+    private fun parseGlobalStat(stat: String, total: Int): Int {
+        return ((parseFloatStat(stat) / total) * 100).toInt()
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        when (context) {
+            is DisplayListener.CountrySelection -> {
+                countrySelectionListener = context
+            }
+            else -> {
+                throw RuntimeException("$context must implement countrySelectionListener Dialog")
+            }
+        }
+    }
+
 }

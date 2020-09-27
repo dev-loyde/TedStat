@@ -20,9 +20,8 @@ interface StatDao {
     @Query("SELECT * FROM statcountries")
     fun loadCountriesStat(): LiveData<List<StatCountries>>
 
-    @Query("SELECT * FROM statcountries WHERE statcountries.country = :country ")
+    @Query("SELECT * FROM statcountries WHERE country = :country ")
     fun loadOneCountriesStat(country: String): LiveData<StatCountries>
-
 
     @Query("DELETE FROM globalstat")
     fun deleteGlobalStat()

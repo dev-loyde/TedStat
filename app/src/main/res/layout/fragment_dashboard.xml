@@ -44,7 +44,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="Total Cases in Nigeria"
+                        android:text="@string/dashboard_total_cases_placeholder"
                         android:textAppearance="?textAppearanceHeadline6"
                         android:textColor="@android:color/white"
                         app:layout_constraintBottom_toTopOf="@id/pie_case_no"
@@ -88,11 +88,11 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 >
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/signup_btn"
+                    android:id="@+id/dashboard_country_btn"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nigeria"
+                    android:text="Country"
                     android:layout_gravity="end"
                     android:layout_marginEnd="5dp"
                     app:strokeColor="@android:color/white"

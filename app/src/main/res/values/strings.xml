@@ -10,6 +10,7 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="news_item_source_text">source: %1$s</string>
+    <string name="dashboard_cases_country_header">Total Cases in %1$s</string>
 
     <string name="welcome_msg">Join in the fight today by staying informed with up to date information,latest news,statistics and happenings to reduce the spread and keep yourself and family safe.</string>
 
@@ -35,4 +36,5 @@
     <string name="welcome_msg_title">Fight against covid19</string>
     <string name="recommended_news_source">source: WHO</string>
     <string name="health_care_news_source">source: NCDC</string>
+    <string name="dashboard_total_cases_placeholder">Total Cases</string>
 </resources>

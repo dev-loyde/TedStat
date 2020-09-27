@@ -7,24 +7,32 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.devloyde.healthguard.databinding.ActivityMainBinding
+import com.devloyde.healthguard.listeners.DisplayListener
 import com.devloyde.healthguard.listeners.NavigationListeners
 import com.devloyde.healthguard.models.SettingsListItem
+import com.devloyde.healthguard.models.StatCountries
+import com.devloyde.healthguard.ui.dashboard.CountryListDialogFragment
+import com.devloyde.healthguard.ui.dashboard.DashboardViewModel
 import com.devloyde.healthguard.ui.home.PreventionDetailFragment
 import com.devloyde.healthguard.ui.news.NewsCategoryFragment
 import com.devloyde.healthguard.ui.settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class MainActivity : AppCompatActivity(), SettingsFragment.OnListFragmentInteractionListener,NavigationListeners.HomeDetailNavigationListener,NavigationListeners.NewsItemUrlNavigationListener {
+class MainActivity : AppCompatActivity(), SettingsFragment.OnListFragmentInteractionListener,
+    NavigationListeners.HomeDetailNavigationListener,
+    NavigationListeners.NewsItemUrlNavigationListener,
+    DisplayListener.CountrySelection{
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
     private val tag: String = "MainActivity"
     private lateinit var navController: NavController
-
+    private lateinit var dashboardViewModel: DashboardViewModel
 
     companion object {
         const val HOMEPAGE_FRAGMENT: String = "HOME_FRAGMENT"
@@ -38,6 +46,9 @@ class MainActivity : AppCompatActivity(), SettingsFragment.OnListFragmentInterac
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        dashboardViewModel =
+            ViewModelProvider(this).get(DashboardViewModel::class.java)
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.apply {
             bottomNavigationView = navView
@@ -97,5 +108,12 @@ class MainActivity : AppCompatActivity(), SettingsFragment.OnListFragmentInterac
         Toast.makeText(this@MainActivity, url, Toast.LENGTH_SHORT).show()
         launchCustomBrowser(url)
     }
+
+    override fun showCountrySelectionDialog() {
+        CountryListDialogFragment().apply {
+            show(supportFragmentManager, "country_selection_dialog")
+        }
+    }
+
 
 }
