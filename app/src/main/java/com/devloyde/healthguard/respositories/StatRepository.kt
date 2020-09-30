@@ -26,7 +26,7 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
         statExecutors.execute {
             Log.d(GLOBAL_STAT_TAG, "checking db for global stat")
             val timeout = statDao.checkTimeout(globalStatsTimeout)
-            if (timeout == null || timeout.timeout < System.currentTimeMillis()) {
+            if (timeout == null || timeout.timeout > System.currentTimeMillis()) {
                 Log.d(GLOBAL_STAT_TAG, "user eligible to fetch new stat from server")
                 val call = request.getGlobalStat()
 
@@ -73,7 +73,7 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
         statExecutors.execute {
             Log.d(COUNTRY_STAT_TAG, "checking db for countries stat list")
             val timeout = statDao.checkTimeout(countriesStatTimeout)
-            if (timeout == null || timeout.timeout < System.currentTimeMillis()) {
+            if (timeout == null || timeout.timeout > System.currentTimeMillis()) {
                 Log.d(COUNTRY_STAT_TAG, "user eligible to fetch new stat from server")
                 val call = request.getCountryStat()
 

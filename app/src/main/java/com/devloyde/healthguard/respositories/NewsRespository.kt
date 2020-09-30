@@ -36,7 +36,7 @@ class NewsRespository(
         newsExecutors.execute {
             Log.d("RECOMMENDED NEWS", "checking db for recommended news")
             val timeout = newsDao.checkTimeout(recommendedNewsTimeout)
-            if (timeout == null || timeout.timeout < System.currentTimeMillis()) {
+            if (timeout == null || timeout.timeout > System.currentTimeMillis()) {
                 Log.d("RECOMMENDED NEWS", "Not available in Db recommended news")
                 val call = request.getRecommendedNews()
 
@@ -83,7 +83,7 @@ class NewsRespository(
     fun getLocalNews(): LiveData<List<LocalNews>> {
         newsExecutors.execute {
             val timeout = newsDao.checkTimeout(localNewsTimeout)
-            if (timeout == null || timeout.timeout < System.currentTimeMillis()) {
+            if (timeout == null || timeout.timeout > System.currentTimeMillis()) {
                 val call = request.getHealthCareNews()
                 call.enqueue(object : Callback<LocalNewsResponse> {
                     override fun onFailure(call: Call<LocalNewsResponse>, t: Throwable) {
@@ -121,7 +121,7 @@ class NewsRespository(
     fun getGlobalNews(): LiveData<List<GlobalNews>> {
         newsExecutors.execute {
             val timeout = newsDao.checkTimeout(globalNewsTimeout)
-            if (timeout == null || timeout.timeout < System.currentTimeMillis()) {
+            if (timeout == null || timeout.timeout > System.currentTimeMillis()) {
                 val call = request.getGlobalNews()
                 call.enqueue(object : Callback<GlobalNewsResponse> {
                     override fun onFailure(call: Call<GlobalNewsResponse>, t: Throwable) {
@@ -160,7 +160,7 @@ class NewsRespository(
     fun getCountryNews(countryIso: String): LiveData<List<CountryNews>> {
         newsExecutors.execute {
             val timeout = newsDao.checkTimeout(countryNewsTimeout)
-            if (timeout == null || timeout.timeout < System.currentTimeMillis()) {
+            if (timeout == null || timeout.timeout > System.currentTimeMillis()) {
                 val call = request.getCountryNews(countryIso)
 
                 call.enqueue(object : Callback<CountryNewsResponse> {
