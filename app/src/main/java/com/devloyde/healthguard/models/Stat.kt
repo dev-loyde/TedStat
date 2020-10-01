@@ -9,7 +9,10 @@ data class GlobalStat(
     val id: Int,
     val cases: String?,
     val recovered: String?,
-    val deaths: String?
+    val deaths: String?,
+    val casesProgress: Int? = 0,
+    val recoveredProgress: Int? = 0,
+    val deathsProgress: Int? = 0
 )
 
 

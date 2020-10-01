@@ -21,7 +21,7 @@ import com.devloyde.healthguard.models.*
         FaqInfo::class,
         // For Timeout
         TimeoutCheck::class
-    ], version = 7,
+    ], version = 8,
     exportSchema = false
 )
 abstract class HealthGuardDatabase : RoomDatabase() {

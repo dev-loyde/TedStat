@@ -22,7 +22,7 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
     private val globalStatsTimeout: Int = 5
     private val countriesStatTimeout: Int = 6
 
-    fun getGlobalStat(): LiveData<List<GlobalStat>> {
+    fun getGlobalStat(): LiveData<GlobalStat> {
         statExecutors.execute {
             Log.d(GLOBAL_STAT_TAG, "checking db for global stat")
             val timeout = statDao.checkTimeout(globalStatsTimeout)

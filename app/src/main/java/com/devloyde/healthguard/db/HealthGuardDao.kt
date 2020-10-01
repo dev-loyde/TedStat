@@ -15,7 +15,7 @@ interface StatDao {
     fun saveStatCountries(vararg countries: StatCountries)
 
     @Query("SELECT * FROM globalstat")
-    fun loadGlobalStat(): LiveData<List<GlobalStat>>
+    fun loadGlobalStat(): LiveData<GlobalStat>
 
     @Query("SELECT * FROM statcountries")
     fun loadCountriesStat(): LiveData<List<StatCountries>>
