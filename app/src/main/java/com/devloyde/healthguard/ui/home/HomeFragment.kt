@@ -91,7 +91,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadItems() {
-        var items = arrayListOf<Any>()
+        val items = arrayListOf<Any?>()
         //     HOME CAROUSEL INPUT
         val carouselItemList = Carousels(
             listOf(

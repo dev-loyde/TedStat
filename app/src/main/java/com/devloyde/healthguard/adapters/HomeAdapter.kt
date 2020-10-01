@@ -17,13 +17,14 @@ import com.squareup.picasso.Picasso
 
 class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var mItems = arrayListOf<Any>()
+    private var mItems = arrayListOf<Any?>()
     private val vertical: Int = 1
     private val horizontal: Int = 2
     private val banner: Int = 3
     private val globalStat: Int = 4
     private val horizontalBanner: Int = 5
     private val advisoryFaq: Int = 6
+    private val impactStat: Int = 7
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -56,6 +57,10 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
                 binding = InfoRvContainerBinding.inflate(inflater, parent, false)
                 holder = InfoViewHolder(binding)
             }
+            impactStat -> {
+                binding = ImpactRvContainerBinding.inflate(inflater, parent, false)
+                holder = ImpactStatViewHolder(binding)
+            }
 
             else -> {
                 binding = InfoRvContainerBinding.inflate(inflater, parent, false)
@@ -74,10 +79,11 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
             horizontalBanner -> horizontalBannerView(holder as HorizontalBannerViewHolder, position)
             globalStat -> globalStatView(holder as GlobalStatViewHolder, position)
             advisoryFaq -> infoView(holder as InfoViewHolder, position)
+            impactStat -> impactStatView(holder as ImpactStatViewHolder,position)
         }
     }
 
-    fun addItem(items: ArrayList<Any>) {
+    fun addItem(items: ArrayList<Any?>) {
             mItems = items
             notifyDataSetChanged()
     }
@@ -115,6 +121,11 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
 
     }
 
+    private fun impactStatView(holder: ImpactStatViewHolder, position: Int) {
+        val impactItems = mItems[position] as ImpactStats
+        holder.bind(impactItems)
+    }
+
     override fun getItemCount(): Int {
         return mItems.size
     }
@@ -138,6 +149,9 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
         }
         if (mItems[position] is InfoRv) {
             return advisoryFaq
+        }
+        if (mItems[position] is ImpactStats) {
+            return impactStat
         }
         return -1
     }
@@ -241,6 +255,18 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
             binding.infoRvContainer.layoutManager =
                 LinearLayoutManager(binding.infoRvContainer.context, RecyclerView.VERTICAL, false)
             binding.infoRvContainer.adapter = infoAdapter
+            binding.executePendingBindings()
+        }
+    }
+
+    inner class ImpactStatViewHolder(private val binding: ImpactRvContainerBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(item: ImpactStats){
+            val impactAdapter = ImpactAdapter(item)
+            binding.impactRecyclerView.layoutManager =
+                LinearLayoutManager(binding.impactRecyclerView.context, RecyclerView.HORIZONTAL, false)
+            binding.impactRecyclerView.adapter = impactAdapter
             binding.executePendingBindings()
         }
     }

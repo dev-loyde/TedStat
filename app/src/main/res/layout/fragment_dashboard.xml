@@ -104,11 +104,10 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-
         <include
             android:id="@+id/dashboard_content"
             layout="@layout/content_dashboard"
-            app:foo="@{ 1 }"/>
+           />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

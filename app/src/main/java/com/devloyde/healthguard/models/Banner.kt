@@ -20,6 +20,7 @@ data class Carousel(
 
 data class Carousels(var carousels: List<Carousel>)
 
+data class ImpactStats(var impacts: List<ImpactStat>)
 
 data class Welcomes(var welcomes: List<Welcome>)
 
