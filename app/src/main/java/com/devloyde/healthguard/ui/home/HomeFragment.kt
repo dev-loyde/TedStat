@@ -22,15 +22,18 @@ import com.devloyde.healthguard.adapters.HomeAdapter
 import com.devloyde.healthguard.databinding.FragmentHomeBinding
 import com.devloyde.healthguard.listeners.NavigationListeners
 import com.devloyde.healthguard.models.*
+import com.devloyde.healthguard.ui.dashboard.DashboardViewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var dashboardViewModel: DashboardViewModel
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeRv: RecyclerView
     private lateinit var toolbar: Toolbar
     private lateinit var navController: NavController
     private var navigationListeners: NavigationListeners.HomeDetailNavigationListener? = null
+    private lateinit var homeAdapter: HomeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +42,8 @@ class HomeFragment : Fragment() {
     ): View? {
         homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
+        dashboardViewModel =
+            ViewModelProvider(this).get(DashboardViewModel::class.java)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         bindViews()
         navController = findNavController()
@@ -46,7 +51,7 @@ class HomeFragment : Fragment() {
         toolbar.setupWithNavController(navController, appBarConfiguration)
 
         initRecyclerView()
-        homeViewModel.countriesStat.observe(viewLifecycleOwner){ countriesStat ->
+        homeViewModel.countriesStat.observe(viewLifecycleOwner) { countriesStat ->
             Log.d("HOME_FRAGMENT", "fetched global stat")
         }
         return binding.root
@@ -77,18 +82,16 @@ class HomeFragment : Fragment() {
 
     private fun initRecyclerView() {
 
-        val homeAdapter = HomeAdapter(allItems(),navigationListeners)
+        homeAdapter = HomeAdapter(navigationListeners)
         binding.homeRecyclerView.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         binding.homeRecyclerView.setHasFixedSize(false)
         binding.homeRecyclerView.adapter = homeAdapter
-
+        loadItems()
     }
 
-    private fun allItems(): ArrayList<Any> {
-
-        val allItems: ArrayList<Any> = ArrayList()
-
+    private fun loadItems() {
+        var items = arrayListOf<Any>()
         //     HOME CAROUSEL INPUT
         val carouselItemList = Carousels(
             listOf(
@@ -97,7 +100,7 @@ class HomeFragment : Fragment() {
                 Carousel(title = "Stay warm at all times", image = R.drawable.social_distance)
             )
         )
-
+        items.add(carouselItemList)
         //   SAFETY ITEMS INPUT
         val safetyTipsList = VerticalRv(
             "Prevention Safety Tips",
@@ -145,10 +148,39 @@ class HomeFragment : Fragment() {
                 )
             )
         )
+        items.add(safetyTipsList)
 
-        // GLOBAL STATISTICS
-        val globalStat = GlobalStat(3, "time", "2333",
-            "222")
+        dashboardViewModel.globalStat.observe(viewLifecycleOwner) { globalStat ->
+            // GLOBAL STATISTICS
+            if (globalStat is GlobalStat) {
+                val total =
+                    parseIntegerStat(globalStat.cases!!) + parseIntegerStat(globalStat.recovered!!) +
+                            parseIntegerStat(globalStat.deaths!!)
+                val globalCasesProgress =
+                    parseGlobalStat(globalStat.cases, total) + parseGlobalStat(
+                        globalStat.deaths, total
+                    ) +
+                            parseGlobalStat(globalStat.recovered, total)
+                val globalRecoveredProgress =
+                    parseGlobalStat(globalStat.recovered, total) + parseGlobalStat(
+                        globalStat.deaths, total
+                    ) + 15
+                val globalDeathsProgress = parseGlobalStat(globalStat.deaths, total) + 20
+
+                val globalStatistics = GlobalStat(
+                    globalStat.id,
+                    globalStat.cases,
+                    globalStat.recovered,
+                    globalStat.deaths,
+                    globalCasesProgress,
+                    globalRecoveredProgress,
+                    globalDeathsProgress
+                )
+                items.add(3, globalStatistics)
+              //  homeAdapter.addItem(items)
+                homeAdapter.notifyDataSetChanged()
+            }
+        }
 
         // What you should know
         val awareness = HorizontalSingle(
@@ -156,6 +188,7 @@ class HomeFragment : Fragment() {
             "https://www.healthline.com/health/coronavirus-covid-19",
             R.raw.covid_virus
         )
+        items.add( awareness)
 
         // What you should know about face mask
         val faceMask = HorizontalSingle(
@@ -163,62 +196,51 @@ class HomeFragment : Fragment() {
             "https://cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/cloth-face-cover-guidance.html",
             R.raw.how_wear_mask
         )
+        items.add(faceMask)
 
         val symptoms = HorizontalBanner(
             "Symptoms",
             "https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html",
             R.drawable.symptoms_covid
         )
-
-        // Games for children
-        val games = HorizontalSingle(
-            "Games for children to keeps your home alive",
-            "http://www.google.com",
-            R.raw.ninja_kids_istayhome
-        )
+        items.add(symptoms)
 
         val advisory = InfoRv(
             title = "Advisory",
             infoItems = listOf(
-
-                "TRAVEL ADVICE",
-                "TRAVELLERS TO NIGERIA",
-                "ADVICE FOR HEALTH WORKERS",
-                "ADVICE FOR BUSINESSES",
-                "HOW TO PROTECT YOUR SELF"
+                "TRAVEL ADVICE", "TRAVELLERS TO NIGERIA", "ADVICE FOR HEALTH WORKERS",
+                "ADVICE FOR BUSINESSES", "HOW TO PROTECT YOUR SELF"
             ),
             source = "NCDC",
             sourceLink = "www.ncdc.com"
         )
+        items.add(advisory)
 
         val faq = InfoRv(
             title = "FAQ",
             infoItems = listOf(
-                "What is covid-19",
-                "What is the source of covid-19",
-                "is covid-19 airborne?",
-                "Are countries with covid-19 immune to covid-19"
+                "What is covid-19", "What is the source of covid-19",
+                "is covid-19 airborne?", "Are countries with covid-19 immune to covid-19"
             ),
             source = "NCDC",
             sourceLink = "www.ncdc.com"
         )
+        items.add(faq)
 
-        allItems.addAll(
-            listOf(
-                carouselItemList,
-                safetyTipsList,
-                globalStat,
-                awareness,
-                symptoms,
-                faceMask,
-                advisory,
-                games,
-                faq
-            )
-        )
-
-        return allItems
+        homeAdapter.addItem(items)
     }
 
+
+    private fun parseIntegerStat(text: String): Int {
+        return text.replace(Regex(","), "").toInt()
+    }
+
+    private fun parseFloatStat(text: String): Float {
+        return text.replace(Regex(","), "").toFloat()
+    }
+
+    private fun parseGlobalStat(stat: String, total: Int): Int {
+        return ((parseFloatStat(stat) / total) * 100).toInt()
+    }
 
 }

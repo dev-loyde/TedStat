@@ -21,13 +21,13 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
     var countriesStat: LiveData<List<StatCountries>> = MutableLiveData()
 
     init{
-        Log.d("dash-viewmodel","view model initialized")
+        Log.d("dash-view-model","view model initialized")
         statRespository = StatRepository.getStatRepository(statDao,executor)
         countriesStat = statRespository.getCountriesStat()
 
     }
 
-    var globalStat: LiveData<List<GlobalStat>> = statRespository.getGlobalStat()
+    var globalStat: LiveData<GlobalStat> = statRespository.getGlobalStat()
 
     fun setCurrentCountry(country: StatCountries) {
         Toast.makeText(getApplication(),"set "+country.country, Toast.LENGTH_SHORT).show()

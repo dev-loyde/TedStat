@@ -205,9 +205,8 @@ class DashboardFragment : Fragment() {
            }
         })
 
-        dashboardViewModel.globalStat.observe(viewLifecycleOwner, Observer { globalStat ->
-            if (globalStat is List<GlobalStat>) {
-                val globalStatistics: GlobalStat = globalStat[0]
+        dashboardViewModel.globalStat.observe(viewLifecycleOwner, Observer { globalStatistics ->
+            if (globalStatistics is GlobalStat) {
                 globalCases.text = globalStatistics.cases
                 globalRecovered.text = globalStatistics.recovered
                 globalDeaths.text = globalStatistics.deaths
