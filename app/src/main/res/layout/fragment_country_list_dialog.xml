@@ -3,42 +3,61 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-        <LinearLayout
-            android:id="@+id/country_bottom_sheet"
+    <LinearLayout
+        android:id="@+id/country_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="70dp"
+            android:layout_height="3dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/darker_gray" />
+
+        <EditText
+            android:id="@+id/country_search"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/search_bg"
+            android:drawableStart="@drawable/ic_search"
+            android:drawableLeft="@drawable/ic_search"
+            android:drawablePadding="4dp"
+            android:drawableTint="@color/textColor"
+            android:hint="Search Country here"
+            android:imeOptions="actionNone"
+            android:inputType="text"
+            android:lines="1"
+            android:paddingLeft="8dp"
+            android:paddingTop="4dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="4dp"
+            android:textSize="16sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/country_list"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/curve_top_rect"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/list_item_spacing_half"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            tools:context=".ui.dashboard.CountryListDialogFragment"
+            tools:listitem="@layout/country_list_dialog_item" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/country_close_btn"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <View
-                android:layout_width="70dp"
-                android:layout_height="3dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"
-                android:background="@android:color/darker_gray" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/country_list"
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/curve_top_rect"
-                android:clipToPadding="false"
-                android:paddingBottom="@dimen/list_item_spacing_half"
-                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-                tools:context=".ui.dashboard.CountryListDialogFragment"
-                tools:listitem="@layout/country_list_dialog_item" />
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/country_close_btn"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="@color/colorAccent"
-                android:backgroundTint="@color/colorAccent"
-                android:text="Close" />
-        </LinearLayout>
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/colorAccent"
+            android:backgroundTint="@color/colorAccent"
+            android:text="Close" />
+    </LinearLayout>
 </layout>
