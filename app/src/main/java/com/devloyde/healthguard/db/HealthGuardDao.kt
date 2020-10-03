@@ -26,7 +26,7 @@ interface StatDao {
     @Query("DELETE FROM globalstat")
     fun deleteGlobalStat()
 
-    @Query("SELECT * FROM statcountries")
+    @Query("DELETE FROM statcountries")
     fun deleteCountriesStat(): LiveData<List<CountryNews>>
 
     @Insert(onConflict = REPLACE)

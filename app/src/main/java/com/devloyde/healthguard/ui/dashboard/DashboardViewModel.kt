@@ -30,12 +30,10 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
     var globalStat: LiveData<GlobalStat> = statRespository.getGlobalStat()
 
     fun setCurrentCountry(country: StatCountries) {
-        Toast.makeText(getApplication(),"set "+country.country, Toast.LENGTH_SHORT).show()
         currentCountry.value = country
     }
 
     fun getCurrentCountry(): LiveData<StatCountries> {
-        Toast.makeText(getApplication(),"triggered get ", Toast.LENGTH_SHORT).show()
         return currentCountry
     }
 

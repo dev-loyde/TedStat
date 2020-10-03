@@ -29,13 +29,11 @@ class CountryAdapter(val listener: DisplayListener.UpdateCountrySelection?) :
         holder.bind(country,listener)
     }
 
-
     fun addItems(items: ArrayList<StatCountries>) {
         mItems = items
         mItemsAll = ArrayList(items)
         notifyDataSetChanged()
     }
-
 
     override fun getItemCount(): Int {
         return mItems.size
