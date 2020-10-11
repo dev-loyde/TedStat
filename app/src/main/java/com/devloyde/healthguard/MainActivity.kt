@@ -104,6 +104,10 @@ class MainActivity : AppCompatActivity(), SettingsFragment.OnListFragmentInterac
         launchCustomBrowser(url)
     }
 
+    override fun navigateToInfoDetailScreen(position: Int?) {
+
+    }
+
     override fun launchNewsUrl(url: String) {
         Toast.makeText(this@MainActivity, url, Toast.LENGTH_SHORT).show()
         launchCustomBrowser(url)

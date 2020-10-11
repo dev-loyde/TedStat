@@ -10,6 +10,7 @@
     <color name="cardBackgroundTint">#ff008577</color>
     <color name="cardBackgroundPrimary">#37008577</color>
     <color name="colorBlue">#ff33b5e5</color>
+    <color name="loadingBackgroundTint">#00998A</color>
 
 
 <!--    <color name="colorPrimary">#131217</color>-->

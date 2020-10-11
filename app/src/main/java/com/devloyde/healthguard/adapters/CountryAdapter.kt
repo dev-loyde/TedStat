@@ -7,8 +7,6 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.devloyde.healthguard.databinding.CountryListDialogItemBinding
 import com.devloyde.healthguard.listeners.DisplayListener
-import com.devloyde.healthguard.listeners.NavigationListeners
-import com.devloyde.healthguard.models.ImpactStat
 import com.devloyde.healthguard.models.StatCountries
 import java.util.*
 import kotlin.collections.ArrayList

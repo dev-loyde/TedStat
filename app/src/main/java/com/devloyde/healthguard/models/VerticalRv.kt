@@ -5,3 +5,7 @@ data class VerticalRv(
     var verticalItems: List<HealthCard>
 )
 
+data class CountriesVerticalRv(
+    var title: String,
+    var countries: List<StatCountries>
+)

@@ -11,20 +11,23 @@ import com.devloyde.healthguard.db.StatDao
 import com.devloyde.healthguard.models.GlobalStat
 import com.devloyde.healthguard.models.StatCountries
 import com.devloyde.healthguard.respositories.StatRepository
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class DashboardViewModel(application: Application) : AndroidViewModel(application){
+class DashboardViewModel(application: Application) : AndroidViewModel(application) {
     private val statRespository: StatRepository
-    val executor = Executors.newFixedThreadPool(2)
-    val statDao : StatDao = HealthGuardDatabase.getDatabase(application).statDao()
-    private var currentCountry :MutableLiveData<StatCountries> = MutableLiveData()
+    private val executor: ExecutorService = Executors.newFixedThreadPool(2)
+    private val statDao: StatDao = HealthGuardDatabase.getDatabase(application).statDao()
+    private var currentCountry: MutableLiveData<StatCountries> = MutableLiveData()
     var countriesStat: LiveData<List<StatCountries>> = MutableLiveData()
+    var topAffectedCountriesStat: LiveData<List<StatCountries>> = MutableLiveData()
 
-    init{
-        Log.d("dash-view-model","view model initialized")
-        statRespository = StatRepository.getStatRepository(statDao,executor)
+
+    init {
+        Log.d("dash-view-model", "view model initialized")
+        statRespository = StatRepository.getStatRepository(statDao, executor)
         countriesStat = statRespository.getCountriesStat()
-
+        topAffectedCountriesStat = statDao.loadTopAffectedCountriesStat()
     }
 
     var globalStat: LiveData<GlobalStat> = statRespository.getGlobalStat()
@@ -40,4 +43,5 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
     fun getDefaultCountry(): LiveData<StatCountries> {
         return statDao.loadOneCountriesStat("Nigeria")
     }
+
 }

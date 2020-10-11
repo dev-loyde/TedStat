@@ -25,10 +25,7 @@ import com.devloyde.healthguard.databinding.FragmentDashboardBinding
 import com.devloyde.healthguard.listeners.AppBarStateListener
 import com.devloyde.healthguard.listeners.DisplayListener
 import com.devloyde.healthguard.listeners.NavigationListeners
-import com.devloyde.healthguard.models.GlobalStat
-import com.devloyde.healthguard.models.ImpactStat
-import com.devloyde.healthguard.models.ImpactStats
-import com.devloyde.healthguard.models.StatCountries
+import com.devloyde.healthguard.models.*
 import com.github.mikephil.charting.animation.Easing.EaseOutCirc
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
@@ -139,9 +136,10 @@ class DashboardFragment : Fragment() {
     }
 
     private fun loadItems() {
-        val items = ArrayList<Any?>()
-        items.add(null)
-        items.add(null)
+        val items = ArrayList<Any>()
+        items.add(Loading(true))
+        items.add(Loading(true))
+        items.add(Loading(true))
 
         dashboardViewModel.getDefaultCountry()
             .observe(viewLifecycleOwner, Observer { defaultCountry ->
@@ -270,6 +268,17 @@ class DashboardFragment : Fragment() {
                 items[1] = globalStatistics
                 //  homeAdapter.addItem(items)
                 viewsAdapter.notifyDataSetChanged()
+            }
+        }
+
+        dashboardViewModel.topAffectedCountriesStat.observe(viewLifecycleOwner) { countries ->
+            // GLOBAL STATISTICS
+            if (countries is List<StatCountries>) {
+                val countriesStat = CountriesVerticalRv(
+                    title = "Top Affected Countries",
+                    countries = countries
+                )
+                items[2] = countriesStat
             }
         }
 

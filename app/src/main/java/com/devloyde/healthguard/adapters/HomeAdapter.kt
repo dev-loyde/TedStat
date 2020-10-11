@@ -17,7 +17,8 @@ import com.squareup.picasso.Picasso
 
 class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var mItems = arrayListOf<Any?>()
+    private var mItems = arrayListOf<Any>()
+    private val loading: Int = 0
     private val vertical: Int = 1
     private val horizontal: Int = 2
     private val banner: Int = 3
@@ -25,6 +26,7 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
     private val horizontalBanner: Int = 5
     private val advisoryFaq: Int = 6
     private val impactStat: Int = 7
+    private val countryShowcase: Int = 8
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -33,6 +35,10 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
         val binding: ViewDataBinding
 
         when (viewType) {
+            loading -> {
+                binding = LoadingPlaceholderViewBinding.inflate(inflater, parent, false)
+                holder = LoadingViewHolder(binding)
+            }
             banner -> {
                 binding = BannerContainerBinding.inflate(inflater, parent, false)
                 holder = BannerViewHolder(binding)
@@ -61,10 +67,13 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
                 binding = ImpactRvContainerBinding.inflate(inflater, parent, false)
                 holder = ImpactStatViewHolder(binding)
             }
-
+            countryShowcase -> {
+                binding = VerticalRvContainerBinding.inflate(inflater, parent, false)
+                holder = CountriesStatViewHolder(binding)
+            }
             else -> {
-                binding = InfoRvContainerBinding.inflate(inflater, parent, false)
-                holder = InfoViewHolder(binding)
+                binding = LoadingPlaceholderViewBinding.inflate(inflater, parent, false)
+                holder = LoadingViewHolder(binding)
             }
         }
 
@@ -79,18 +88,24 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
             horizontalBanner -> horizontalBannerView(holder as HorizontalBannerViewHolder, position)
             globalStat -> globalStatView(holder as GlobalStatViewHolder, position)
             advisoryFaq -> infoView(holder as InfoViewHolder, position)
-            impactStat -> impactStatView(holder as ImpactStatViewHolder,position)
+            impactStat -> impactStatView(holder as ImpactStatViewHolder, position)
+            countryShowcase -> countriesVerticalView(holder as CountriesStatViewHolder,position)
         }
     }
 
-    fun addItem(items: ArrayList<Any?>) {
-            mItems = items
-            notifyDataSetChanged()
+    fun addItem(items: ArrayList<Any>) {
+        mItems = items
+        notifyDataSetChanged()
     }
 
     private fun verticalView(holder: VerticalViewHolder, position: Int) {
         val verticalItems = mItems[position] as VerticalRv
         holder.bind(verticalItems, position, listener)
+    }
+
+    private fun countriesVerticalView(holder: CountriesStatViewHolder, position: Int) {
+        val countriesList = mItems[position] as CountriesVerticalRv
+        holder.bind(countriesList)
     }
 
     private fun horizontalView(holder: HorizontalViewHolder, position: Int) {
@@ -131,7 +146,9 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
     }
 
     override fun getItemViewType(position: Int): Int {
-
+        if (mItems[position] is Loading) {
+            return loading
+        }
         if (mItems[position] is VerticalRv) {
             return vertical
         }
@@ -153,8 +170,14 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
         if (mItems[position] is ImpactStats) {
             return impactStat
         }
+        if (mItems[position] is CountriesVerticalRv) {
+            return countryShowcase
+        }
         return -1
     }
+
+     class LoadingViewHolder(private val binding: LoadingPlaceholderViewBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     inner class HorizontalViewHolder(private val binding: HorizontalSingleItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -229,6 +252,29 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
         }
     }
 
+    inner class CountriesStatViewHolder(private var binding: VerticalRvContainerBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(items: CountriesVerticalRv) {
+            val verticalHeader: String = items.title
+            val countries = items.countries
+            val mContext = binding.verticalRvContainer.context
+            val countriesListAdapter = DashboardCountryAdapter()
+            countriesListAdapter.addItems(countries.toCollection(ArrayList()))
+
+            binding.verticalRvContainer.layoutManager =
+                LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false)
+            binding.verticalRvTitle.text = verticalHeader
+
+            binding.verticalRvMoreBtn.setOnClickListener {
+             //to do
+            }
+
+            binding.verticalRvContainer.adapter = countriesListAdapter
+            binding.executePendingBindings()
+        }
+    }
+
     inner class GlobalStatViewHolder(private var binding: HomeGlobalStatBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -250,8 +296,8 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
 
         fun bind(items: InfoRv) {
             binding.infoRvTitle.text = items.title
-            val infoItems: List<String> = items.infoItems.subList(0, 3)
-            val infoAdapter = InfoAdapter(infoItems)
+            val infoItems: List<Any> = items.infoItems.subList(0, 3)
+            val infoAdapter = InfoAdapter(infoItems,listener!!)
             binding.infoRvContainer.layoutManager =
                 LinearLayoutManager(binding.infoRvContainer.context, RecyclerView.VERTICAL, false)
             binding.infoRvContainer.adapter = infoAdapter
@@ -262,10 +308,14 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
     inner class ImpactStatViewHolder(private val binding: ImpactRvContainerBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: ImpactStats){
+        fun bind(item: ImpactStats) {
             val impactAdapter = ImpactAdapter(item)
             binding.impactRecyclerView.layoutManager =
-                LinearLayoutManager(binding.impactRecyclerView.context, RecyclerView.HORIZONTAL, false)
+                LinearLayoutManager(
+                    binding.impactRecyclerView.context,
+                    RecyclerView.HORIZONTAL,
+                    false
+                )
             binding.impactRecyclerView.adapter = impactAdapter
             binding.executePendingBindings()
         }

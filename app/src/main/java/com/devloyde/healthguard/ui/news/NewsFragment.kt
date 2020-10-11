@@ -39,7 +39,7 @@ class NewsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(NewsViewModel::class.java)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_news, container, false)
          newsTabLayout = binding.newsTabLayout
         newsViewPager = binding.newsViewPager

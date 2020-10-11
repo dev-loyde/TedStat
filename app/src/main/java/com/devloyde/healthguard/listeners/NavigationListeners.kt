@@ -8,6 +8,8 @@ class NavigationListeners {
         fun navigateToPreventionDetailScreen(position: Int? = null)
 
         fun launchCustomUrl(url: String)
+
+        fun navigateToInfoDetailScreen(position: Int? = null)
     }
 
     interface NewsItemUrlNavigationListener {

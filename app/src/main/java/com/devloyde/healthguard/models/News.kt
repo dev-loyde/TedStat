@@ -15,7 +15,7 @@ data class NewsCard(
 data class TimeoutCheck(
     @PrimaryKey
     var id: Int,
-    val timeout: Long = System.currentTimeMillis() + 120000, //3600000,
+    val timeout: Long = System.currentTimeMillis() + 3600000,
     val name: String
 )
 

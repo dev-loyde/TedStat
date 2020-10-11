@@ -20,6 +20,9 @@ interface StatDao {
     @Query("SELECT * FROM statcountries")
     fun loadCountriesStat(): LiveData<List<StatCountries>>
 
+    @Query("SELECT * FROM statcountries LIMIT 20")
+    fun loadTopAffectedCountriesStat(): LiveData<List<StatCountries>>
+
     @Query("SELECT * FROM statcountries WHERE country = :country ")
     fun loadOneCountriesStat(country: String): LiveData<StatCountries>
 
@@ -27,7 +30,7 @@ interface StatDao {
     fun deleteGlobalStat()
 
     @Query("DELETE FROM statcountries")
-    fun deleteCountriesStat(): LiveData<List<CountryNews>>
+    fun deleteCountriesStat()
 
     @Insert(onConflict = REPLACE)
     fun saveTimeout( timeout: TimeoutCheck)

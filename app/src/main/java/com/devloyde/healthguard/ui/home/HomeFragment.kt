@@ -41,9 +41,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+            ViewModelProvider(requireActivity()).get(HomeViewModel::class.java)
         dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+            ViewModelProvider(requireActivity()).get(DashboardViewModel::class.java)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         bindViews()
         navController = findNavController()
@@ -91,7 +91,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadItems() {
-        val items = arrayListOf<Any?>()
+        val items = arrayListOf<Any>()
         //     HOME CAROUSEL INPUT
         val carouselItemList = Carousels(
             listOf(
@@ -150,6 +150,7 @@ class HomeFragment : Fragment() {
         )
         items.add(safetyTipsList)
 
+        items.add(Loading(true))
         dashboardViewModel.globalStat.observe(viewLifecycleOwner) { globalStat ->
             // GLOBAL STATISTICS
             if (globalStat is GlobalStat) {
@@ -176,9 +177,8 @@ class HomeFragment : Fragment() {
                     globalRecoveredProgress,
                     globalDeathsProgress
                 )
-                items.add(3, globalStatistics)
-              //  homeAdapter.addItem(items)
-                homeAdapter.notifyDataSetChanged()
+                items[2] = globalStatistics
+                homeAdapter.notifyItemChanged(2)
             }
         }
 
@@ -188,7 +188,20 @@ class HomeFragment : Fragment() {
             "https://www.healthline.com/health/coronavirus-covid-19",
             R.raw.covid_virus
         )
-        items.add( awareness)
+        items.add(awareness)
+
+        items.add(Loading(true))
+        dashboardViewModel.topAffectedCountriesStat.observe(viewLifecycleOwner) { countries ->
+            // GLOBAL STATISTICS
+            if (countries is List<StatCountries>) { //To prevent crash in case result is empty or null
+                val countriesStat = CountriesVerticalRv(
+                    title = "Top Affected Countries",
+                    countries = countries
+                )
+                items[4] =  countriesStat
+                homeAdapter.notifyItemChanged(4)
+            }
+        }
 
         // What you should know about face mask
         val faceMask = HorizontalSingle(
@@ -205,31 +218,38 @@ class HomeFragment : Fragment() {
         )
         items.add(symptoms)
 
-        val advisory = InfoRv(
-            title = "Advisory",
-            infoItems = listOf(
-                "TRAVEL ADVICE", "TRAVELLERS TO NIGERIA", "ADVICE FOR HEALTH WORKERS",
-                "ADVICE FOR BUSINESSES", "HOW TO PROTECT YOUR SELF"
-            ),
-            source = "NCDC",
-            sourceLink = "www.ncdc.com"
-        )
-        items.add(advisory)
+        items.add(Loading(true))
+        homeViewModel.advisoryInfo.observe(viewLifecycleOwner) { advisoryInfo ->
+            // GLOBAL STATISTICS
+            if (advisoryInfo is List<AdvisoryInfo>) {
+                if (advisoryInfo.size > 3) {
+                    val advisory = InfoRv(
+                        title = "Advisory",
+                        infoItems = advisoryInfo.subList(0,3)
+                    )
+                    items[7] = advisory
+                    homeAdapter.notifyItemChanged(7)
+                }
+            }
+        }
 
-        val faq = InfoRv(
-            title = "FAQ",
-            infoItems = listOf(
-                "What is covid-19", "What is the source of covid-19",
-                "is covid-19 airborne?", "Are countries with covid-19 immune to covid-19"
-            ),
-            source = "NCDC",
-            sourceLink = "www.ncdc.com"
-        )
-        items.add(faq)
+        items.add(Loading(true))
+        homeViewModel.faqInfo.observe(viewLifecycleOwner) { faqInfo ->
+            // GLOBAL STATISTICS
+            if (faqInfo is List<FaqInfo>) {
+                if (faqInfo.size > 3) {
+                    val faq = InfoRv(
+                        title = "Advisory",
+                        infoItems = faqInfo.subList(0, 3)
+                    )
+                    items[8] = faq
+                    homeAdapter.notifyItemChanged(8)
+                }
+            }
+        }
 
         homeAdapter.addItem(items)
     }
-
 
     private fun parseIntegerStat(text: String): Int {
         return text.replace(Regex(","), "").toInt()
@@ -242,5 +262,6 @@ class HomeFragment : Fragment() {
     private fun parseGlobalStat(stat: String, total: Int): Int {
         return ((parseFloatStat(stat) / total) * 100).toInt()
     }
+
 
 }
