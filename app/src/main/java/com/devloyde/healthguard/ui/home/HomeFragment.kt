@@ -239,7 +239,7 @@ class HomeFragment : Fragment() {
             if (faqInfo is List<FaqInfo>) {
                 if (faqInfo.size > 3) {
                     val faq = InfoRv(
-                        title = "Advisory",
+                        title = "Faq",
                         infoItems = faqInfo.subList(0, 3)
                     )
                     items[8] = faq

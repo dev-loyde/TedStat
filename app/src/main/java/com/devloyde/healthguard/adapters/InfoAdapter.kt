@@ -74,7 +74,7 @@ class InfoAdapter(
         fun bind(info: AdvisoryInfo, position: Int) {
             binding.infoItemTitle.text = info.title
             itemView.setOnClickListener {
-                listener.navigateToInfoDetailScreen(position)
+                listener.navigateToInfoDetailScreen(0,position)
             }
             binding.executePendingBindings()
         }
@@ -86,7 +86,7 @@ class InfoAdapter(
         fun bind(info: FaqInfo, position: Int) {
             binding.infoItemTitle.text = info.title
             itemView.setOnClickListener {
-                listener.navigateToInfoDetailScreen(position)
+                listener.navigateToInfoDetailScreen(1,position)
             }
             binding.executePendingBindings()
         }

@@ -18,6 +18,7 @@ import com.devloyde.healthguard.models.SettingsListItem
 import com.devloyde.healthguard.models.StatCountries
 import com.devloyde.healthguard.ui.dashboard.CountryListDialogFragment
 import com.devloyde.healthguard.ui.dashboard.DashboardViewModel
+import com.devloyde.healthguard.ui.home.InfoDetailFragment
 import com.devloyde.healthguard.ui.home.PreventionDetailFragment
 import com.devloyde.healthguard.ui.news.NewsCategoryFragment
 import com.devloyde.healthguard.ui.settings.SettingsFragment
@@ -104,8 +105,15 @@ class MainActivity : AppCompatActivity(), SettingsFragment.OnListFragmentInterac
         launchCustomBrowser(url)
     }
 
-    override fun navigateToInfoDetailScreen(position: Int?) {
-
+    override fun navigateToInfoDetailScreen(infoType:Int,position: Int?) {
+        if (position != null) {
+            val args = InfoDetailFragment.bundleArgs(infoType,position,true)
+            navController.navigate(R.id.action_navigation_home_to_infoDetailFragment, args)
+        } else {
+            val noPosition = 100
+            val args = InfoDetailFragment.bundleArgs(infoType,noPosition,false)
+            navController.navigate(R.id.action_navigation_home_to_infoDetailFragment, args)
+        }
     }
 
     override fun launchNewsUrl(url: String) {

@@ -297,6 +297,13 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
         fun bind(items: InfoRv) {
             binding.infoRvTitle.text = items.title
             val infoItems: List<Any> = items.infoItems.subList(0, 3)
+            binding.infoRvMoreBtn.setOnClickListener {
+                when(infoItems[0]){
+                    is AdvisoryInfo ->  listener?.navigateToInfoDetailScreen(0)
+                    is FaqInfo ->  listener?.navigateToInfoDetailScreen(1)
+                    else ->  listener?.navigateToInfoDetailScreen(1)
+                }
+            }
             val infoAdapter = InfoAdapter(infoItems,listener!!)
             binding.infoRvContainer.layoutManager =
                 LinearLayoutManager(binding.infoRvContainer.context, RecyclerView.VERTICAL, false)

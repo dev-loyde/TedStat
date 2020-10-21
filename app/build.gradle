@@ -31,15 +31,21 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled true
             multiDexEnabled = true
+            ext.enableCrashlytics = true
+            ext.alwaysUpdateBuildId = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String',"ApiKey", MY_API_KEY
+            buildConfigField 'String',"BaseUrl", BASE_URL
         }
         debug {
             minifyEnabled false
             multiDexEnabled = false
             ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false
+            buildConfigField 'String',"ApiKey", MY_API_KEY
+            buildConfigField 'String',"BaseUrl", BASE_URL
         }
 
     }

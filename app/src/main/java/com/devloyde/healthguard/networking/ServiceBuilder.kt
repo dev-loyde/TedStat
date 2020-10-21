@@ -1,16 +1,17 @@
 package com.devloyde.healthguard.networking
 
+import com.devloyde.healthguard.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object NetworkServiceBuilder {
-    private const val baseUrl = "https://health-guard.herokuapp.com"
+    private const val baseUrl = BuildConfig.BaseUrl
 
-    private val httpClient = OkHttpClient.Builder().addInterceptor(Interceptor(){
+    private val httpClient = OkHttpClient.Builder().addInterceptor(Interceptor {
        val request = it.request()
-            .newBuilder().addHeader("Subscription-Key","dcb377dcaa654d42852d79dd0b977247").build()
+            .newBuilder().addHeader("Api-Key", BuildConfig.ApiKey).build()
         return@Interceptor it.proceed(request)
     })
 
