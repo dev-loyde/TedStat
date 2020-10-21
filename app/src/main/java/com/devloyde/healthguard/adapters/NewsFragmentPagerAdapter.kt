@@ -5,7 +5,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-
 class NewsFragmentPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
     private var mFragmentList: ArrayList<Fragment> = ArrayList()
@@ -20,6 +19,6 @@ class NewsFragmentPagerAdapter(fragmentManager: FragmentManager, lifecycle: Life
     }
 
     override fun createFragment(position: Int): Fragment {
-        return mFragmentList[position];
+        return mFragmentList[position]
     }
 }

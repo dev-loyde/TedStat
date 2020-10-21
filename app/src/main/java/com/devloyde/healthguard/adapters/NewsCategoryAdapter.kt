@@ -13,7 +13,6 @@ import com.devloyde.healthguard.listeners.NavigationListeners.NewsItemUrlNavigat
 import com.devloyde.healthguard.models.*
 import com.squareup.picasso.Picasso
 
-
 class NewsCategoryAdapter(val listener: NewsItemUrlNavigationListener?) :
     RecyclerView.Adapter<NewsCategoryAdapter.NewsCategoryViewHolder>() {
 

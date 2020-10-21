@@ -3,6 +3,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def envPropertiesFile = rootProject.file("env.properties")
+def envProperties = new Properties()
+envProperties.load(new FileInputStream(envPropertiesFile))
 
 android {
     compileSdkVersion 30
@@ -28,6 +31,8 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86", "armeabi", "mips"
         }
+        buildConfigField 'String',"ApiKey", envProperties['MY_API_KEY']
+        buildConfigField 'String',"BaseUrl", envProperties['BASE_URL']
     }
     buildTypes {
         release {
@@ -36,16 +41,12 @@ android {
             ext.enableCrashlytics = true
             ext.alwaysUpdateBuildId = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField 'String',"ApiKey", MY_API_KEY
-            buildConfigField 'String',"BaseUrl", BASE_URL
         }
         debug {
             minifyEnabled false
             multiDexEnabled = false
             ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false
-            buildConfigField 'String',"ApiKey", MY_API_KEY
-            buildConfigField 'String',"BaseUrl", BASE_URL
         }
 
     }
@@ -56,7 +57,6 @@ android {
         dev {
             dimension "stage"
             resConfigs "en", "xxhdpi"
-
         }
     }
 
@@ -69,14 +69,11 @@ android {
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
-
-
     }
     kotlinOptions {
         jvmTarget = "1.8"
     }
 }
-
 
 dependencies {
     def room_version = "2.2.5"

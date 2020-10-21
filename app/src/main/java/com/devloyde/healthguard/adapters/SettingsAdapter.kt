@@ -15,12 +15,6 @@ import com.devloyde.healthguard.ui.settings.SettingsFragment.OnListFragmentInter
 import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.android.synthetic.main.fragment_settings_item.view.*
 
-
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
- * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
- */
 class SettingsAdapter(
     private val mItems: List<SettingsListItem>,
     private val mListener: OnListFragmentInteractionListener?
@@ -69,7 +63,6 @@ class SettingsAdapter(
         val mIconView: ImageView = mItemView.settings_icon
         val mTitleView: TextView = mItemView.settings_title
         val mPref: SwitchMaterial = mItemView.settings_pref
-
 
     }
 }

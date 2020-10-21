@@ -29,7 +29,6 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var dashboardViewModel: DashboardViewModel
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var homeRv: RecyclerView
     private lateinit var toolbar: Toolbar
     private lateinit var navController: NavController
     private var navigationListeners: NavigationListeners.HomeDetailNavigationListener? = null
@@ -51,9 +50,7 @@ class HomeFragment : Fragment() {
         toolbar.setupWithNavController(navController, appBarConfiguration)
 
         initRecyclerView()
-        homeViewModel.countriesStat.observe(viewLifecycleOwner) { countriesStat ->
-            Log.d("HOME_FRAGMENT", "fetched global stat")
-        }
+
         return binding.root
     }
 
@@ -81,7 +78,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-
         homeAdapter = HomeAdapter(navigationListeners)
         binding.homeRecyclerView.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)

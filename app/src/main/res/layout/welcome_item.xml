@@ -4,18 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="item"
             type="com.devloyde.healthguard.models.Welcome" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/welcome_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         >
 
         <com.airbnb.lottie.LottieAnimationView

@@ -1,7 +1,5 @@
 package com.devloyde.healthguard.adapters
 
-
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,9 +7,7 @@ import com.devloyde.healthguard.databinding.HorizontalSingleItemBinding
 
 import com.devloyde.healthguard.models.HorizontalSingle
 
-
 class HorizontalAdapter(private val mItems: List<HorizontalSingle>): RecyclerView.Adapter<HorizontalAdapter.HorizontalInnerViewHolder>() {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HorizontalInnerViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)

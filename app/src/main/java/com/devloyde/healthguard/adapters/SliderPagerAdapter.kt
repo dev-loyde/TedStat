@@ -10,7 +10,6 @@ import com.devloyde.healthguard.databinding.WelcomeItemBinding
 import com.devloyde.healthguard.models.Carousel
 import com.devloyde.healthguard.models.Welcome
 
-
 class SliderPagerAdapter(items: List<Any>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

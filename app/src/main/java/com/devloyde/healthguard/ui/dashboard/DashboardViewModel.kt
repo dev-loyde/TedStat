@@ -22,7 +22,6 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
     var countriesStat: LiveData<List<StatCountries>> = MutableLiveData()
     var topAffectedCountriesStat: LiveData<List<StatCountries>> = MutableLiveData()
 
-
     init {
         Log.d("dash-view-model", "view model initialized")
         statRespository = StatRepository.getStatRepository(statDao, executor)

@@ -17,7 +17,6 @@ class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_welcome)
-
         val navController = findNavController(R.id.welcome_host_fragment)
     }
 

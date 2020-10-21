@@ -16,6 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 class NewsRespository(
     val newsDao: NewsDao,
@@ -36,8 +37,9 @@ class NewsRespository(
         newsExecutors.execute {
             Log.d("RECOMMENDED NEWS", "checking db for recommended news")
             val timeout = newsDao.checkTimeout(recommendedNewsTimeout)
+            val expireTime = TimeUnit.HOURS.toMillis(1)
             if (timeout != null) {
-                if (timeout.timeout > System.currentTimeMillis()) {
+                if (timeout.timeout < System.currentTimeMillis() - expireTime) {
                     Log.d("RECOMMENDED NEWS", "Not available in Db recommended news")
                     val call = request.getRecommendedNews()
 
@@ -123,8 +125,9 @@ class NewsRespository(
     fun getLocalNews(): LiveData<List<LocalNews>> {
         newsExecutors.execute {
             val timeout = newsDao.checkTimeout(localNewsTimeout)
+            val expireTime = TimeUnit.HOURS.toMillis(1)
             if (timeout != null) {
-                if (timeout.timeout > System.currentTimeMillis()) {
+                if (timeout.timeout < System.currentTimeMillis() - expireTime) {
                     val call = request.getHealthCareNews()
                     call.enqueue(object : Callback<LocalNewsResponse> {
                         override fun onFailure(call: Call<LocalNewsResponse>, t: Throwable) {
@@ -193,8 +196,9 @@ class NewsRespository(
     fun getGlobalNews(): LiveData<List<GlobalNews>> {
         newsExecutors.execute {
             val timeout = newsDao.checkTimeout(globalNewsTimeout)
+            val expireTime = TimeUnit.HOURS.toMillis(1)
             if (timeout != null) {
-                if (timeout.timeout > System.currentTimeMillis()) {
+                if (timeout.timeout < System.currentTimeMillis() - expireTime) {
                     val call = request.getGlobalNews()
                     call.enqueue(object : Callback<GlobalNewsResponse> {
                         override fun onFailure(call: Call<GlobalNewsResponse>, t: Throwable) {
@@ -265,8 +269,9 @@ class NewsRespository(
     fun getCountryNews(countryIso: String): LiveData<List<CountryNews>> {
         newsExecutors.execute {
             val timeout = newsDao.checkTimeout(countryNewsTimeout)
+            val expireTime = TimeUnit.HOURS.toMillis(1)
             if (timeout != null) {
-                if (timeout.timeout > System.currentTimeMillis()) {
+                if (timeout.timeout < System.currentTimeMillis() - expireTime) {
                     val call = request.getCountryNews(countryIso)
                     call.enqueue(object : Callback<CountryNewsResponse> {
                         override fun onFailure(call: Call<CountryNewsResponse>, t: Throwable) {

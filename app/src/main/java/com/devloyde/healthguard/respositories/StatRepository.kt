@@ -10,6 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.ExecutorService
+import java.util.concurrent.TimeUnit
 
 class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
     // Retrofit request builder service to all news endpoints
@@ -21,8 +22,9 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
         statExecutors.execute {
             Log.d(GLOBAL_STAT_TAG, "checking db for global stat")
             val timeout = statDao.checkTimeout(globalStatsTimeout)
+            val expireTime = TimeUnit.HOURS.toMillis(1)
             if (timeout != null) {
-                if (timeout.timeout > System.currentTimeMillis()) {
+                if (timeout.timeout < System.currentTimeMillis() - expireTime) {
                     Log.d(GLOBAL_STAT_TAG, "user eligible to fetch new stat from server")
                     val call = request.getGlobalStat()
                     call.enqueue(object : Callback<GlobalStatResponse> {
@@ -30,18 +32,12 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
                             Log.d(GLOBAL_STAT_TAG, "Error fetching global stat")
                         }
 
-                        override fun onResponse(
-                            call: Call<GlobalStatResponse>,
-                            response: Response<GlobalStatResponse>
-                        ) {
+                        override fun onResponse(call: Call<GlobalStatResponse>,response: Response<GlobalStatResponse>) {
                             if (response.isSuccessful) {
                                 if (!response.body()!!.error) {
                                     statExecutors.execute {
                                         Log.d(GLOBAL_STAT_TAG, "Success fetching global stat")
-                                        Log.d(
-                                            GLOBAL_STAT_TAG,
-                                            "delete timeout and previous global stat data only on success"
-                                        )
+                                        Log.d(GLOBAL_STAT_TAG,"delete timeout and previous global stat data only on success")
                                         statDao.deleteTimeout(globalStatsTimeout)
                                         statDao.deleteGlobalStat()
                                         Log.d(GLOBAL_STAT_TAG, "Success saving global stats to db")
@@ -105,8 +101,9 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
         statExecutors.execute {
             Log.d(COUNTRY_STAT_TAG, "checking db for countries stat list")
             val timeout = statDao.checkTimeout(countriesStatTimeout)
+            val expireTime = TimeUnit.HOURS.toMillis(1)
             if (timeout != null) {
-                if (timeout.timeout > System.currentTimeMillis()) {
+                if (timeout.timeout < System.currentTimeMillis() - expireTime) {
                     Log.d(COUNTRY_STAT_TAG, "user eligible to fetch new stat from server")
                     val call = request.getCountryStat()
                     call.enqueue(object : Callback<CountryStatResponse> {

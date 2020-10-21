@@ -13,21 +13,16 @@ import com.devloyde.healthguard.respositories.StatRepository
 import java.util.concurrent.Executors
 
 class HomeViewModel(application: Application) : AndroidViewModel(application){
-
-    private val statRespository: StatRepository
     private val infoRepository: InfoRepository
-    private val executor = Executors.newFixedThreadPool(4)
+    private val executor = Executors.newFixedThreadPool(2)
+    val advisoryInfo: LiveData<List<AdvisoryInfo>>
+    val faqInfo: LiveData<List<FaqInfo>>
 
     init{
-        val statDao = HealthGuardDatabase.getDatabase(application).statDao()
         val infoDao = HealthGuardDatabase.getDatabase(application).infoDao()
-        statRespository = StatRepository.getStatRepository(statDao,executor)
         infoRepository = InfoRepository.getStatRepository(infoDao,executor)
+        advisoryInfo = infoRepository.getAdvisoryInfo()
+        faqInfo = infoRepository.getFaqInfo()
     }
-
-    var globalStat: LiveData<GlobalStat> = statRespository.getGlobalStat()
-    var countriesStat: LiveData<List<StatCountries>> = statRespository.getCountriesStat()
-    var advisoryInfo: LiveData<List<AdvisoryInfo>> = infoRepository.getAdvisoryInfo()
-    var faqInfo: LiveData<List<FaqInfo>> = infoRepository.getFaqInfo()
 
 }

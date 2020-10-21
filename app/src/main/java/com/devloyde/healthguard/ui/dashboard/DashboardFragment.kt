@@ -307,6 +307,40 @@ class DashboardFragment : Fragment() {
         return ((parseFloatStat(stat) / total) * 100).toInt()
     }
 
+//    private fun parseConverter(stat: Any): List<Int>? {
+//        when (stat) {
+//            is StatCountries -> {
+//                val confirmedCases = stat.cases!!.toIntOrNull() ?: parseStringInt(stat.cases)
+//                val recoveredCases =
+//                    stat.recovered!!.toIntOrNull() ?: parseStringInt(stat.recovered)
+//                val deathCases = stat.deaths!!.toIntOrNull() ?: parseStringInt(stat.deaths)
+//
+//                val total = confirmedCases + recoveredCases + deathCases
+//
+//                val confirmedPercentage = confirmedCases / total * 100
+//                val recoveredPercentage = recoveredCases / total * 100
+//                val deathsPercentage = deathCases / total * 100
+//
+//                return listOf(confirmedPercentage.toFloat(), recoveredPercentage.toFloat(), deathsPercentage.toFloat())
+//            }
+//            is GlobalStat -> {
+//                val confirmedCases = stat.cases!!.toIntOrNull() ?: parseStringInt(stat.cases)
+//                val recoveredCases =
+//                    stat.recovered!!.toIntOrNull() ?: parseStringInt(stat.recovered)
+//                val deathCases = stat.deaths!!.toIntOrNull() ?: parseStringInt(stat.deaths)
+//
+//                val total = confirmedCases + recoveredCases + deathCases
+//
+//                val confirmedPercentage = confirmedCases / total * 100
+//                val recoveredPercentage = recoveredCases / total * 100
+//                val deathsPercentage = deathCases / total * 100
+//
+//                return listOf(confirmedPercentage.toFloat(), recoveredPercentage.toFloat(), deathsPercentage.toFloat())
+//            }
+//        }
+//        return null
+//    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         when (context) {

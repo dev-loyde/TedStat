@@ -12,14 +12,6 @@ data class NewsCard(
 )
 
 @Entity
-data class TimeoutCheck(
-    @PrimaryKey
-    var id: Int,
-    val timeout: Long = System.currentTimeMillis() + 3600000,
-    val name: String
-)
-
-@Entity
 data class RecommendedNews(
     @PrimaryKey(autoGenerate = true)
     val id: Int,

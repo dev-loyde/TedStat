@@ -13,7 +13,6 @@ import com.devloyde.healthguard.listeners.NavigationListeners.HomeDetailNavigati
 import com.devloyde.healthguard.models.*
 import com.squareup.picasso.Picasso
 
-
 class VerticalAdapter(
     private var mItems: List<Any>,
     private var listener: HomeDetailNavigationListener?
