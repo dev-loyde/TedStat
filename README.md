@@ -10,7 +10,7 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-[![Build status](https://build.appcenter.ms/v0.1/apps/cda7635f-622f-499d-9bb4-61a0ce93bfa9/branches/master/badge)](https://appcenter.ms)
+[![Build status](https://build.appcenter.ms/v0.1/apps/cda7635f-622f-499d-9bb4-61a0ce93bfa9/branches/appcenter/badge)](https://appcenter.ms)
 
 
 <!-- PROJECT LOGO -->
@@ -52,7 +52,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![App Screen Shot][product-screenshot]]
 
 There are many great covid19 resources/information apps out there, however,I decided to create this one in order to further help in making information readily available to everyone
 We need to be very informed at all times with happenings around us inorder for some reasons
@@ -157,4 +157,4 @@ Project Link: [https://github.com/dev-loyde/TedStat](https://github.com/dev-loyd
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: www.linkedin.com/in/thaddeus-oseghale
-[product-screenshot]: https://github.com/dev-loyde/TedStat/blob/master/screenshots/tedstat-screenshots.png
+[product-screenshot]: https://github.com/dev-loyde/TedStat/blob/master/screenshots/ted-stat-screenshot.png
