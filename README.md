@@ -157,4 +157,4 @@ Project Link: [https://github.com/dev-loyde/TedStat](https://github.com/dev-loyd
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: www.linkedin.com/in/thaddeus-oseghale
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: https://github.com/dev-loyde/TedStat/blob/master/screenshots/tedstat-screenshots.png
