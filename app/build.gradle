@@ -31,8 +31,6 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86", "armeabi", "mips"
         }
-        buildConfigField 'String',"ApiKey", envProperties['MY_API_KEY']
-        buildConfigField 'String',"BaseUrl", envProperties['BASE_URL']
     }
     buildTypes {
         release {
@@ -41,12 +39,16 @@ android {
             ext.enableCrashlytics = true
             ext.alwaysUpdateBuildId = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "ApiKey", "\"${System.env.MY_API_KEY}\"")
+            buildConfigField("String", "BaseUrl", "\"${System.env.BASE_URL}\"")
         }
         debug {
             minifyEnabled false
             multiDexEnabled = false
             ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false
+            buildConfigField 'String', "ApiKey", envProperties['MY_API_KEY']
+            buildConfigField 'String', "BaseUrl", envProperties['BASE_URL']
         }
 
     }
@@ -60,7 +62,7 @@ android {
         }
     }
 
-    buildFeatures{
+    buildFeatures {
         dataBinding {
             enabled = true
         }
@@ -77,54 +79,55 @@ android {
 
 dependencies {
     def room_version = "2.2.5"
+    def navigation_version = "2.3.1"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
-    implementation 'androidx.navigation:navigation-fragment:2.2.2'
-    implementation 'androidx.navigation:navigation-ui:2.2.2'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
+    implementation "androidx.appcompat:appcompat:1.2.0"
+    implementation "androidx.core:core-ktx:1.3.2"
+    implementation "com.google.android.material:material:1.2.1"
+    implementation "androidx.constraintlayout:constraintlayout:2.0.2"
+    implementation "androidx.vectordrawable:vectordrawable:1.1.0"
+    implementation "androidx.navigation:navigation-fragment:$navigation_version"
+    implementation "androidx.navigation:navigation-ui:$navigation_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
-    implementation 'androidx.viewpager2:viewpager2:1.1.0-alpha01'
-    implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha03'
-    implementation 'com.github.florent37:shapeofview:1.4.5'
-    implementation 'com.github.florent37:expansionpanel:1.2.4'
-    implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.romandanylyk:pageindicatorview:1.0.3@aar'
+    implementation "androidx.viewpager2:viewpager2:1.1.0-alpha01"
+    implementation "androidx.recyclerview:recyclerview:1.2.0-alpha06"
+    implementation "com.github.florent37:shapeofview:1.4.5"
+    implementation "com.github.florent37:expansionpanel:1.2.4"
+    implementation "com.squareup.picasso:picasso:2.5.2"
+    implementation "com.romandanylyk:pageindicatorview:1.0.3@aar"
 
-    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+    implementation "com.squareup.retrofit2:retrofit:2.6.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.6.0"
 
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.airbnb.android:lottie:3.4.0'
-    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
+    implementation "com.airbnb.android:lottie:3.4.0"
+    implementation "androidx.multidex:multidex:2.0.1"
     // Database
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
     // Charts
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
 
     // chrome custom tabs
-    implementation 'androidx.browser:browser:1.2.0'
+    implementation "androidx.browser:browser:1.2.0"
 //    // Check for v11.4.2 or higher
-//    implementation 'com.google.firebase:firebase-core:17.2.1'
+//    implementation "com.google.firebase:firebase-core:17.2.1"
 //    // (Recommended) Add Analytics
-//    implementation 'com.google.firebase:firebase-analytics:17.2.1'
+//    implementation "com.google.firebase:firebase-analytics:17.2.1"
 //    // Add dependency For crash reports
-//    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+//    implementation "com.crashlytics.sdk.android:crashlytics:2.10.1"
 
-//    implementation 'com.google.firebase:firebase-auth:19.1.0'
-    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+//    implementation "com.google.firebase:firebase-auth:19.1.0"
+    implementation "com.facebook.shimmer:shimmer:0.5.0"
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+    testImplementation "junit:junit:4.12"
+    androidTestImplementation "androidx.test.ext:junit:1.1.2"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
+    debugImplementation "com.amitshekhar.android:debug-db:1.0.6"
 }
