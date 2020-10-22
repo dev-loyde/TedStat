@@ -3,7 +3,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-
+def envPropertiesFile = rootProject.file("env.properties")
+def envProperties = new Properties()
+envProperties.load(new FileInputStream(envPropertiesFile))
 
 android {
     compileSdkVersion 30
@@ -29,6 +31,9 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86", "armeabi", "mips"
         }
+
+        buildConfigField 'String', "ApiKey", envProperties['MY_API_KEY']
+        buildConfigField 'String', "BaseUrl", envProperties['BASE_URL']
     }
     buildTypes {
         release {
@@ -37,21 +42,12 @@ android {
             ext.enableCrashlytics = true
             ext.alwaysUpdateBuildId = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "ApiKey", "\"${System.env.MY_API_KEY}\"")
-            buildConfigField("String", "BaseUrl", "\"${System.env.BASE_URL}\"")
         }
         debug {
             minifyEnabled false
             multiDexEnabled = false
             ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false
-
-            def envPropertiesFile = rootProject.file("env.properties")
-            def envProperties = new Properties()
-            envProperties.load(new FileInputStream(envPropertiesFile))
-
-            buildConfigField 'String', "ApiKey", envProperties['MY_API_KEY']
-            buildConfigField 'String', "BaseUrl", envProperties['BASE_URL']
         }
 
     }
