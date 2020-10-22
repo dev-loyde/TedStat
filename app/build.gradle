@@ -3,9 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-def envPropertiesFile = rootProject.file("env.properties")
-def envProperties = new Properties()
-envProperties.load(new FileInputStream(envPropertiesFile))
+
 
 android {
     compileSdkVersion 30
@@ -47,6 +45,11 @@ android {
             multiDexEnabled = false
             ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false
+
+            def envPropertiesFile = rootProject.file("env.properties")
+            def envProperties = new Properties()
+            envProperties.load(new FileInputStream(envPropertiesFile))
+
             buildConfigField 'String', "ApiKey", envProperties['MY_API_KEY']
             buildConfigField 'String', "BaseUrl", envProperties['BASE_URL']
         }
