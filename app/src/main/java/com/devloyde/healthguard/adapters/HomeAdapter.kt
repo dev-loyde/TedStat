@@ -261,16 +261,14 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
             val mContext = binding.verticalRvContainer.context
             val countriesListAdapter = DashboardCountryAdapter()
             countriesListAdapter.addItems(countries.toCollection(ArrayList()))
-
             binding.verticalRvContainer.layoutManager =
                 LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false)
+            binding.verticalRvContainer.adapter = countriesListAdapter
             binding.verticalRvTitle.text = verticalHeader
-
             binding.verticalRvMoreBtn.setOnClickListener {
              //to do
             }
 
-            binding.verticalRvContainer.adapter = countriesListAdapter
             binding.executePendingBindings()
         }
     }
@@ -296,7 +294,7 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
 
         fun bind(items: InfoRv) {
             binding.infoRvTitle.text = items.title
-            val infoItems: List<Any> = items.infoItems.subList(0, 3)
+            val infoItems: List<Any> = items.infoItems
             binding.infoRvMoreBtn.setOnClickListener {
                 when(infoItems[0]){
                     is AdvisoryInfo ->  listener?.navigateToInfoDetailScreen(0)

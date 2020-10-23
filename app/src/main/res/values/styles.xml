@@ -15,7 +15,6 @@
         <item name="tintColor">@color/tintColor</item>
         <item name="textColor">@color/textColor</item>
         <item name="android:textColorPrimary">@color/textColor</item>
-        <item name="android:windowBackground">@drawable/splash_screen_bg</item>
         <item name="android:navigationBarColor">@color/backgroundColor</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
@@ -24,6 +23,12 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+   </style>
+
+    <style name="AppTheme.WindowBackground">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/splash_screen_bg</item>
     </style>
 
     <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">

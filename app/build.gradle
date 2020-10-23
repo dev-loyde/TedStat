@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 def envPropertiesFile = rootProject.file("env.properties")
 def envProperties = new Properties()
@@ -124,6 +125,7 @@ dependencies {
 
 //    implementation "com.google.firebase:firebase-auth:19.1.0"
     implementation "com.facebook.shimmer:shimmer:0.5.0"
+    implementation "com.google.android.gms:play-services-oss-licenses:17.0.0"
 
     testImplementation "junit:junit:4.12"
     androidTestImplementation "androidx.test.ext:junit:1.1.2"

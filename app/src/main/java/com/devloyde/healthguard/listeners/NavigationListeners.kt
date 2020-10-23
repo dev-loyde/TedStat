@@ -16,4 +16,8 @@ class NavigationListeners {
     interface NewsItemUrlNavigationListener {
         fun launchNewsUrl(url: String)
     }
+
+    interface SettingsNavigationListener {
+        fun launchOpenSourceLicenses()
+    }
 }

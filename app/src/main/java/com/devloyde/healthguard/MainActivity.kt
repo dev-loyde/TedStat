@@ -25,7 +25,7 @@ import com.devloyde.healthguard.ui.settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class MainActivity : AppCompatActivity(), SettingsFragment.OnListFragmentInteractionListener,
+class MainActivity : AppCompatActivity(),
     NavigationListeners.HomeDetailNavigationListener,
     NavigationListeners.NewsItemUrlNavigationListener,
     DisplayListener.CountrySelection{
@@ -62,11 +62,7 @@ class MainActivity : AppCompatActivity(), SettingsFragment.OnListFragmentInterac
         bottomNavigationView.setupWithNavController(navController)
 
     }
-
-    override fun onListFragmentInteraction(item: SettingsListItem?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
+    
     private fun launchCustomBrowser(url: String) {
 
         val builder = CustomTabsIntent.Builder()

@@ -47,10 +47,7 @@ class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) {
                                 if (!response.body()!!.error) {
                                     infoExecutors.execute {
                                         Log.d(ADVISORY_INFO_TAG, "Success fetching advisory info")
-                                        Log.d(
-                                            ADVISORY_INFO_TAG,
-                                            "delete timeout and previous advisory info data only on success"
-                                        )
+                                        Log.d(ADVISORY_INFO_TAG, "delete timeout and previous advisory info data only on success")
                                         infoDao.deleteTimeout(advisoryTimeout)
                                         infoDao.deleteAdvisory()
                                         Log.d(
