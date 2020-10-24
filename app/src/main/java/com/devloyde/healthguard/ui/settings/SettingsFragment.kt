@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
@@ -72,7 +73,7 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
                 SettingsListItem(R.drawable.ic_info_black_24dp, "Help", null),
                 SettingsListItem(R.drawable.ic_star_black_24dp, "Rate Us", null)
             )
-            ,this
+            , this
         )
         return binding.root
     }
@@ -80,6 +81,18 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
     override fun launchOpenSourceLicenses() {
         val licenseIntent = Intent(activity, OssLicensesMenuActivity::class.java)
         startActivity(licenseIntent)
+    }
+
+    override fun launchShare() {
+        try {
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "TedStat")
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "Hi download TedStat today")
+            startActivity(Intent.createChooser(shareIntent, "Share with :"))
+        } catch (e: Exception) {
+            Toast.makeText(activity, "Sorry, \nCannot share please try again later", Toast.LENGTH_SHORT).show()
+        }
     }
 
 

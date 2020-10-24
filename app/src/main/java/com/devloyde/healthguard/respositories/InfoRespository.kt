@@ -29,7 +29,7 @@ class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) {
         infoExecutors.execute {
             Log.d(ADVISORY_INFO_TAG, "checking db for advisory info")
             val timeout = infoDao.checkTimeout(advisoryTimeout)
-            val expireTime = TimeUnit.HOURS.toMillis(1)
+            val expireTime = TimeUnit.MINUTES.toMillis(1)
             if (timeout != null) {
                 if (timeout.timeout < System.currentTimeMillis() - expireTime) {
                     Log.d(ADVISORY_INFO_TAG, "user eligible to fetch advisory info from server")
@@ -47,7 +47,10 @@ class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) {
                                 if (!response.body()!!.error) {
                                     infoExecutors.execute {
                                         Log.d(ADVISORY_INFO_TAG, "Success fetching advisory info")
-                                        Log.d(ADVISORY_INFO_TAG, "delete timeout and previous advisory info data only on success")
+                                        Log.d(
+                                            ADVISORY_INFO_TAG,
+                                            "delete timeout and previous advisory info data only on success"
+                                        )
                                         infoDao.deleteTimeout(advisoryTimeout)
                                         infoDao.deleteAdvisory()
                                         Log.d(
@@ -145,7 +148,7 @@ class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) {
                                                 "delete timeout and previous faq info data only on success"
                                             )
                                             infoDao.deleteTimeout(faqTimeout)
-                                            infoDao.deleteAdvisory()
+                                            infoDao.deleteFaq()
                                             Log.d(FAQ_INFO_TAG, "Success saving faq info to db")
                                             infoDao.saveFaq(*response.body()!!.data.toTypedArray())
                                             Log.d(FAQ_INFO_TAG, "Saving faq info news timeout")
@@ -182,7 +185,7 @@ class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) {
                                             "delete timeout and previous faq info data only on success"
                                         )
                                         infoDao.deleteTimeout(faqTimeout)
-                                        infoDao.deleteAdvisory()
+                                        infoDao.deleteFaq()
                                         Log.d(FAQ_INFO_TAG, "Success saving faq info to db")
                                         infoDao.saveFaq(*response.body()!!.data.toTypedArray())
                                         Log.d(FAQ_INFO_TAG, "Saving faq info news timeout")

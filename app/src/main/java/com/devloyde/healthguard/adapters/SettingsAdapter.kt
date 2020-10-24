@@ -56,7 +56,7 @@ class SettingsAdapter(
         holder.itemView.setOnClickListener {
             when (position) {
                 shareAppPosition -> {
-
+                    mListener?.launchShare()
                 }
                 openSourceLicensesPosition -> {
                     mListener?.launchOpenSourceLicenses()

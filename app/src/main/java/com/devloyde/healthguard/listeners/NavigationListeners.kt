@@ -19,5 +19,6 @@ class NavigationListeners {
 
     interface SettingsNavigationListener {
         fun launchOpenSourceLicenses()
+        fun launchShare()
     }
 }
