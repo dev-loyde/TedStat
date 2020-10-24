@@ -19,7 +19,7 @@
         <EditText
             android:id="@+id/country_search"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="45dp"
             android:layout_margin="16dp"
             android:background="@drawable/search_bg"
             android:drawableStart="@drawable/ic_search"

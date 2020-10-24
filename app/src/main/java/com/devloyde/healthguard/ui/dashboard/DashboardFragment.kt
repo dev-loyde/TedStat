@@ -274,11 +274,13 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.topAffectedCountriesStat.observe(viewLifecycleOwner) { countries ->
             // GLOBAL STATISTICS
             if (countries is List<StatCountries>) {
-                val countriesStat = CountriesVerticalRv(
-                    title = "Top Affected Countries",
-                    countries = countries
-                )
-                items[2] = countriesStat
+                if (countries.size > 1) {
+                    val countriesStat = CountriesVerticalRv(
+                        title = "Top Affected Countries",
+                        countries = countries
+                    )
+                    items[2] = countriesStat
+                }
             }
         }
 

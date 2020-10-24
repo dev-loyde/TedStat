@@ -190,12 +190,14 @@ class HomeFragment : Fragment() {
         dashboardViewModel.topAffectedCountriesStat.observe(viewLifecycleOwner) { countries ->
             // GLOBAL STATISTICS
             if (countries is List<StatCountries>) { //To prevent crash in case result is empty or null
-                val countriesStat = CountriesVerticalRv(
-                    title = "Top Affected Countries",
-                    countries = countries
-                )
-                items[4] =  countriesStat
-                homeAdapter.notifyItemChanged(4)
+                if(countries.size > 1) {
+                    val countriesStat = CountriesVerticalRv(
+                        title = "Top Affected Countries",
+                        countries = countries
+                    )
+                    items[4] = countriesStat
+                    homeAdapter.notifyItemChanged(4)
+                }
             }
         }
 
@@ -221,7 +223,7 @@ class HomeFragment : Fragment() {
                 if (advisoryInfo.size > 3) {
                     val advisory = InfoRv(
                         title = "Advisory",
-                        infoItems = advisoryInfo.subList(0,3)
+                        infoItems = advisoryInfo.subList(0, 3)
                     )
                     items[7] = advisory
                     homeAdapter.notifyItemChanged(7)
