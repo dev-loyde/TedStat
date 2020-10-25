@@ -13,7 +13,8 @@
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="false"
         app:rippleColor="#eeffffff"
-        android:background="@color/cardBackground">
+        android:background="?attr/cardBackground"
+        android:backgroundTint="?attr/cardBackground">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -37,6 +38,7 @@
                 android:layout_height="0dp"
                 android:padding="10dp"
                 android:text="Sample Title"
+                android:textColor="?attr/textColor"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:layout_constraintBottom_toTopOf="@id/news_publisher"
                 app:layout_constraintLeft_toRightOf="@id/news_img"
@@ -51,6 +53,7 @@
                 android:padding="15dp"
                 android:text="BBC News"
                 android:textSize="15sp"
+                android:textColor="?attr/textColor"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/news_img"

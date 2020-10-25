@@ -11,18 +11,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.devloyde.healthguard.MainActivity
 import com.devloyde.healthguard.R
 import com.devloyde.healthguard.adapters.SettingsAdapter
 import com.devloyde.healthguard.databinding.FragmentNewsBinding
 import com.devloyde.healthguard.databinding.FragmentSettingsItemListBinding
+import com.devloyde.healthguard.db.SharedPref
 import com.devloyde.healthguard.listeners.NavigationListeners
 import com.devloyde.healthguard.models.SettingsListItem
+import com.google.android.gms.oss.licenses.OssLicensesActivity
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.rd.draw.data.Orientation
 
@@ -31,6 +36,8 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
     private lateinit var binding: FragmentSettingsItemListBinding
     private lateinit var list: RecyclerView
     private lateinit var toolbar: Toolbar
+    private lateinit var navController: NavController
+    private lateinit var sharedPref: SharedPref
 
 
     override fun onCreateView(
@@ -49,7 +56,7 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
             list = settingsList
         }
 
-        val navController = findNavController()
+        navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home,
@@ -64,7 +71,11 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
             layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
             addItemDecoration(DividerItemDecoration(activity, RecyclerView.VERTICAL))
         }
+
+        sharedPref = SharedPref(list.context)
+
         list.adapter = SettingsAdapter(
+            sharedPref,
             listOf(
                 SettingsListItem(R.drawable.ic_share_black_24dp, "Share App", null),
                 SettingsListItem(R.drawable.ic_library, "Open Source Licenses", null),
@@ -91,9 +102,25 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
             shareIntent.putExtra(Intent.EXTRA_TEXT, "Hi download TedStat today")
             startActivity(Intent.createChooser(shareIntent, "Share with :"))
         } catch (e: Exception) {
-            Toast.makeText(activity, "Sorry, \nCannot share please try again later", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                activity,
+                "Sorry, \nCannot share please try again later",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
+
+    override fun restartApp(mode: Boolean) {
+        if (mode) {
+            sharedPref.setDarkModeState(true)
+        } else {
+            sharedPref.setDarkModeState(false)
+        }
+        val mainActivityIntent = Intent(activity, MainActivity::class.java)
+        activity?.finish()
+        mainActivityIntent.putExtra("THEME_REFRESH", true)
+        startActivity(mainActivityIntent)
+    }
 
 }

@@ -13,13 +13,16 @@
     <color name="loadingBackgroundTint">#00998A</color>
 
 
-<!--    <color name="colorPrimary">#131217</color>-->
-<!--    <color name="colorPrimaryDark">#131217</color>-->
-    <!--    <color name="colorAccent">#D81B60</color>-->
-    <!--    <color name="textColor">#ffffff</color>-->
-    <!--    <color name="tintColor">#000000</color>-->
-    <!--    <color name="cardBackgroundColor">#232129</color>-->
-    <!--    <color name="backgroundColor">131217</color>-->
-<!--    <color name="cardBackgroundTint">#131217</color>-->
-<!--    <color name="cardBackground">#232129</color>-->
+    <color name="darkColorPrimary">#232129</color>
+    <color name="darkColorPrimaryDark">#232129</color>
+    <color name="darkColorAccent">#D81B60</color>
+    <color name="darkTextColor">#ddffffff</color>
+    <color name="darkTintColor">#000000</color>
+    <color name="darkCardBackgroundColor">#232129</color>
+    <color name="darkBackgroundColor">#131217</color>
+    <color name="darkCardBackgroundTint">#131217</color>
+    <color name="darkCardBackground">#232129</color>
+    <color name="darkCardBackgroundPrimary">#232129</color>
+    <color name="darkColorBlue">#ff33b5e5</color>
+    <color name="darkLoadingBackgroundTint">#00998A</color>
 </resources>

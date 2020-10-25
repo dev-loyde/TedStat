@@ -28,6 +28,8 @@
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
             android:background="?attr/backgroundColor"
+            app:itemTextColor="@drawable/bottom_nav_item_tint"
+            app:itemIconTint="@drawable/bottom_nav_item_tint"
             app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

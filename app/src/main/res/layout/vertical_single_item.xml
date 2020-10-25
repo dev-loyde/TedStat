@@ -16,19 +16,14 @@
         android:layout_marginVertical="5dp"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
-        android:background="?attr/cardBackground"
+        android:backgroundTint="?attr/cardBackground"
         android:clickable="true"
         android:focusable="true"
         android:minWidth="150dp"
         android:minHeight="180dp"
         app:cardCornerRadius="3dp"
         app:cardPreventCornerOverlap="false"
-        app:cardUseCompatPadding="false"
-
-        >
-
-        <!--    android:foreground="?attr/selectableItemBackgroundBorderless"-->
-        <!--    app:rippleColor="#eeffffff"-->
+        app:cardUseCompatPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,20 +53,6 @@
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textSize="9sp"
                 tools:text="DONT TOUCH EYES NOSE OR MOUTH WITH UNWASHED HANDS" />
-
-            <!--        <TextView-->
-            <!--            android:id="@+id/vertical_description"-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="0dp"-->
-            <!--            android:layout_marginStart="5dp"-->
-            <!--            android:layout_marginLeft="5dp"-->
-            <!--            android:layout_weight="0.5"-->
-            <!--            android:ellipsize="end"-->
-            <!--            android:singleLine="true"-->
-            <!--            android:text="@{item.description}"-->
-            <!--            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"-->
-            <!--         />-->
-
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

@@ -25,7 +25,7 @@
             android:drawableStart="@drawable/ic_search"
             android:drawableLeft="@drawable/ic_search"
             android:drawablePadding="4dp"
-            android:drawableTint="@color/textColor"
+            android:drawableTint="?attr/textColor"
             android:hint="Search Country here"
             android:imeOptions="actionNone"
             android:inputType="text"
@@ -34,7 +34,9 @@
             android:paddingTop="4dp"
             android:paddingRight="8dp"
             android:paddingBottom="4dp"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textColorHint="?attr/textColor"
+            android:textColor="?attr/textColor"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/country_list"
@@ -49,15 +51,15 @@
             tools:listitem="@layout/country_list_dialog_item" />
 
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/country_close_btn"
             style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@color/colorAccent"
-            android:backgroundTint="@color/colorAccent"
+            android:background="?attr/colorAccent"
+            android:backgroundTint="?attr/colorAccent"
             android:text="Close" />
     </LinearLayout>
 </layout>

@@ -1,12 +1,16 @@
 package com.devloyde.healthguard.ui.dashboard
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -34,6 +38,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.color.MaterialColors
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -109,7 +114,9 @@ class DashboardFragment : Fragment() {
 
         countryPieChart.setUsePercentValues(true)
         countryPieChart.isDrawHoleEnabled = true
-        countryPieChart.setHoleColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
+        val color: Int = MaterialColors.getColor(countryPieChart.context,R.attr.colorPrimary,
+            ContextCompat.getColor(requireContext(),R.color.colorPrimary))
+        countryPieChart.setHoleColor(color)
         countryPieChart.transparentCircleRadius = 60F
         countryPieChart.legend.isEnabled = false
         countryPieChart.description.isEnabled = false

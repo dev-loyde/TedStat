@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -12,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.devloyde.healthguard.databinding.ActivityMainBinding
+import com.devloyde.healthguard.db.SharedPref
 import com.devloyde.healthguard.listeners.DisplayListener
 import com.devloyde.healthguard.listeners.NavigationListeners
 import com.devloyde.healthguard.models.SettingsListItem
@@ -28,7 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity(),
     NavigationListeners.HomeDetailNavigationListener,
     NavigationListeners.NewsItemUrlNavigationListener,
-    DisplayListener.CountrySelection{
+    DisplayListener.CountrySelection {
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
     private val tag: String = "MainActivity"
@@ -41,12 +43,12 @@ class MainActivity : AppCompatActivity(),
         const val DASHBOARD_FRAGMENT: String = "DASHBOARD_FRAGMENT"
         const val SETTINGS_FRAGMENT: String = "SETTINGS_FRAGMENT"
 
-
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        checkDarkMode()
         dashboardViewModel =
             ViewModelProvider(this).get(DashboardViewModel::class.java)
 
@@ -61,8 +63,25 @@ class MainActivity : AppCompatActivity(),
 
         bottomNavigationView.setupWithNavController(navController)
 
+        gotoSettingsOnRefresh()
     }
-    
+
+    private fun checkDarkMode() {
+        val sharedPref = SharedPref(applicationContext)
+        if (sharedPref.loadDarkModeState()) {
+            setTheme(R.style.DarkTheme_NoActionBar)
+        } else {
+            setTheme(R.style.AppTheme_NoActionBar)
+        }
+    }
+
+    private fun gotoSettingsOnRefresh(){
+        val refresh = intent.extras?.getBoolean("THEME_REFRESH",false)
+        if(refresh != null && refresh == true){
+            navController.navigate(R.id.action_navigation_home_to_navigation_settings)
+        }
+    }
+
     private fun launchCustomBrowser(url: String) {
 
         val builder = CustomTabsIntent.Builder()
@@ -101,13 +120,13 @@ class MainActivity : AppCompatActivity(),
         launchCustomBrowser(url)
     }
 
-    override fun navigateToInfoDetailScreen(infoType:Int,position: Int?) {
+    override fun navigateToInfoDetailScreen(infoType: Int, position: Int?) {
         if (position != null) {
-            val args = InfoDetailFragment.bundleArgs(infoType,position,true)
+            val args = InfoDetailFragment.bundleArgs(infoType, position, true)
             navController.navigate(R.id.action_navigation_home_to_infoDetailFragment, args)
         } else {
             val noPosition = 100
-            val args = InfoDetailFragment.bundleArgs(infoType,noPosition,false)
+            val args = InfoDetailFragment.bundleArgs(infoType, noPosition, false)
             navController.navigate(R.id.action_navigation_home_to_infoDetailFragment, args)
         }
     }

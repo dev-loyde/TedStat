@@ -13,7 +13,9 @@
         android:focusable="true"
         android:foreground="?attr/selectableItemBackgroundBorderless"
         app:cardCornerRadius="3dp"
-        app:rippleColor="#eeffffff">
+        app:rippleColor="#eeffffff"
+        android:background="?attr/backgroundColor"
+        android:backgroundTint="?attr/backgroundColor">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

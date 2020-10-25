@@ -28,7 +28,7 @@
                 android:padding="3dp"
                 android:text="Latest Releases"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/textColor" />
+                android:textColor="?attr/textColor" />
 
             <TextView
                 android:id="@+id/vertical_rv_more_btn"
@@ -43,7 +43,7 @@
                 android:padding="3dp"
                 android:text="see All"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-
+                android:textColor="?attr/textColor"
                 tools:text="more" />
 
 

@@ -5,6 +5,6 @@
         android:radius="8dp"
         />
 
-    <solid android:color="@color/cardBackground" />
+    <solid android:color="?attr/cardBackground" />
     <stroke android:color="@color/colorPrimary" android:width="1.2dp"/>
 </shape>

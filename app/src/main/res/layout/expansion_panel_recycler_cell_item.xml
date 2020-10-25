@@ -16,7 +16,7 @@
         app:expansion_toggleOnClick="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@android:color/white"
+            android:background="?attr/cardBackground"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:paddingLeft="16dp"
@@ -29,7 +29,7 @@
                 android:layout_width="0dp"
                 android:text="Trip name"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:textColor="#3E3E3E"
+                android:textColor="?attr/textColor"
                 android:padding="8dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -69,7 +69,7 @@
 
             <TextView
                 android:id="@+id/info_content"
-                android:background="#EEE"
+                android:background="?attr/cardBackground"
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
@@ -85,6 +85,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="#CCC" />
+        android:background="?attr/tintColor" />
 </LinearLayout>
 </layout>

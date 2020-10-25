@@ -10,6 +10,7 @@
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
         android:background="?attr/cardBackground"
+        android:backgroundTint="?attr/cardBackground"
         android:clickable="true"
         android:focusable="true"
         app:cardCornerRadius="3dp"
@@ -25,7 +26,7 @@
     android:paddingTop="16dp"
     android:paddingRight="@dimen/list_item_spacing"
     android:paddingBottom="16dp"
-    android:textColor="@color/textColor"
+    android:textColor="?attr/textColor"
     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
     tools:text="Hello" />
 

@@ -4,7 +4,7 @@
     android:id="@+id/pie_chart_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
+    android:background="?attr/colorPrimary"
     android:minHeight="200dp"
     android:padding="8dp">
 

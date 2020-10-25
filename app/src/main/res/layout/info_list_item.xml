@@ -8,11 +8,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="7dp"
         android:background="?attr/cardBackground"
+        android:backgroundTint="?attr/cardBackground"
         android:clickable="true"
         android:focusable="true"
         app:cardCornerRadius="3dp"
         app:cardPreventCornerOverlap="false"
-        app:cardUseCompatPadding="false">
+        app:cardUseCompatPadding="false"
+        app:cardElevation="4dp">
 
         <TextView
             android:id="@+id/info_item_title"
@@ -23,7 +25,8 @@
             android:padding="3dp"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            tools:text="DONT TOUCH EYES NOSE" />
+            tools:text="DONT TOUCH EYES NOSE"
+            android:textColor="?attr/textColor"/>
 
     </com.google.android.material.card.MaterialCardView>
 </layout>

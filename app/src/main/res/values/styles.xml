@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme. -->
+    <!-- Light mode application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar.Bridge">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -18,6 +18,27 @@
         <item name="android:navigationBarColor">@color/backgroundColor</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="DarkTheme" parent="Theme.MaterialComponents.Light.DarkActionBar.Bridge">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/darkColorPrimary</item>
+        <item name="colorPrimaryDark">@color/darkColorPrimaryDark</item>
+        <item name="colorAccent">@color/darkColorAccent</item>
+        <item name="actionBarSize">45dp</item>
+        <item name="buttonTint">@color/darkColorAccent</item>
+        <item name="cardBackground">@color/darkCardBackground</item>
+        <item name="cardBackgroundPrimary">@color/darkCardBackgroundPrimary</item>
+        <item name="cardBackgroundTint">@color/darkCardBackgroundTint</item>
+        <item name="backgroundColor">@color/darkBackgroundColor</item>
+        <item name="tintColor">@color/darkTintColor</item>
+        <item name="textColor">@color/darkTextColor</item>
+        <item name="android:textColorPrimary">@color/darkTextColor</item>
+        <item name="android:navigationBarColor">@color/darkBackgroundColor</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -25,10 +46,20 @@
         <item name="windowNoTitle">true</item>
    </style>
 
+    <style name="DarkTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="AppTheme.WindowBackground">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/splash_screen_bg</item>
+    </style>
+
+    <style name="WindowAnimationTransition">
+        <item name="android:windowEnterTransition">@anim/fragment_fade_enter</item>
+        <item name="android:windowExitTransition">@anim/fragment_fade_exit</item>
     </style>
 
     <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
