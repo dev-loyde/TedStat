@@ -20,7 +20,6 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_walkThroughFragment_to_welcomeFragment"
-
             app:destination="@id/welcomeFragment" />
     </fragment>
     <activity

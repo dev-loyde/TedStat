@@ -30,7 +30,6 @@ class WalkThroughFragment : Fragment() {
     private lateinit var mIndicator: PageIndicatorView
     private lateinit var mNextButton: Button
     private lateinit var mSkipButton: Button
-    private lateinit var mWelcomeButton: Button
     private lateinit var mTransition: Transition
 
 
@@ -51,7 +50,6 @@ class WalkThroughFragment : Fragment() {
             mIndicator = welcomeIndicator
             mNextButton = nextButton
             mSkipButton = skipButton
-            mWelcomeButton = welcomeBtn
         }
         mTransition = Slide(Gravity.BOTTOM)
         mTransition.duration = 700
@@ -60,15 +58,12 @@ class WalkThroughFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        initWalkThrough(mockData())
+        initWalkThrough(loadData())
         mSkipButton.setOnClickListener {
             gotoLastScreen()
         }
         mNextButton.setOnClickListener {
             gotoNextScreen()
-        }
-        mWelcomeButton.setOnClickListener {
-            gotoHome()
         }
     }
 
@@ -88,7 +83,7 @@ class WalkThroughFragment : Fragment() {
         })
     }
 
-    private fun mockData(): Welcomes {
+    private fun loadData(): Welcomes {
 
         return Welcomes(
             listOf(
@@ -122,12 +117,9 @@ class WalkThroughFragment : Fragment() {
 
     }
 
-    private fun gotoHome() {
-        navController.navigate(R.id.action_walkThroughFragment_to_mainActivity)
-    }
 
     private fun gotoLastScreen() {
-        mViewPager.setCurrentItem(mockData().welcomes.size - 1, true)
+        mViewPager.setCurrentItem(loadData().welcomes.size - 1, true)
     }
 
     private fun gotoNextScreen() {
@@ -137,17 +129,12 @@ class WalkThroughFragment : Fragment() {
     }
 
     private fun getStartedMode(position: Int) {
-        if (position == mockData().welcomes.size - 1) {
-            mNextButton.visibility = View.INVISIBLE
-            mSkipButton.visibility = View.INVISIBLE
-            mIndicator.visibility = View.INVISIBLE
-            mWelcomeButton.visibility = View.VISIBLE
-            mTransition.addTarget(mWelcomeButton)
+        if (position == loadData().welcomes.size - 1) {
+           navController.navigate(R.id.action_walkThroughFragment_to_welcomeFragment)
         } else {
             mNextButton.visibility = View.VISIBLE
             mSkipButton.visibility = View.VISIBLE
             mIndicator.visibility = View.VISIBLE
-            mWelcomeButton.visibility = View.INVISIBLE
         }
     }
 }

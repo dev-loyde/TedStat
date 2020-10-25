@@ -14,6 +14,8 @@
         <item name="backgroundColor">@color/backgroundColor</item>
         <item name="tintColor">@color/tintColor</item>
         <item name="textColor">@color/textColor</item>
+        <item name="loadingBackground">@color/loadingBackgroundTint</item>
+        <item name="placeholderBackgroundTint">@color/placeholderBackgroundTint</item>
         <item name="android:textColorPrimary">@color/textColor</item>
         <item name="android:navigationBarColor">@color/backgroundColor</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
@@ -35,6 +37,8 @@
         <item name="backgroundColor">@color/darkBackgroundColor</item>
         <item name="tintColor">@color/darkTintColor</item>
         <item name="textColor">@color/darkTextColor</item>
+        <item name="loadingBackground">@color/darkLoadingBackgroundTint</item>
+        <item name="placeholderBackgroundTint">@color/darkPlaceholderBackgroundTint</item>
         <item name="android:textColorPrimary">@color/darkTextColor</item>
         <item name="android:navigationBarColor">@color/darkBackgroundColor</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>

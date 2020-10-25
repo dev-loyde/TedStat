@@ -10,7 +10,8 @@
     <color name="cardBackgroundTint">#ff008577</color>
     <color name="cardBackgroundPrimary">#37008577</color>
     <color name="colorBlue">#ff33b5e5</color>
-    <color name="loadingBackgroundTint">#00998A</color>
+    <color name="loadingBackgroundTint">#dadada</color>
+    <color name="placeholderBackgroundTint">#ccffffff</color>
 
 
     <color name="darkColorPrimary">#232129</color>
@@ -24,5 +25,7 @@
     <color name="darkCardBackground">#232129</color>
     <color name="darkCardBackgroundPrimary">#232129</color>
     <color name="darkColorBlue">#ff33b5e5</color>
-    <color name="darkLoadingBackgroundTint">#00998A</color>
+    <color name="darkLoadingBackgroundTint">#232129</color>
+    <color name="darkPlaceholderBackgroundTint">#cc000000</color>
+
 </resources>

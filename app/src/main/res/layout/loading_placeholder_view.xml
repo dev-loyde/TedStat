@@ -11,6 +11,8 @@
         android:layout_marginVertical="5dp"
         android:clickable="true"
         android:focusable="true"
+        android:backgroundTint="?attr/cardBackground"
+        android:background="?attr/cardBackground"
         android:foreground="?attr/selectableItemBackgroundBorderless"
         app:cardCornerRadius="3dp"
         app:rippleColor="#eeffffff">

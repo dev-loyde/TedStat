@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:drawable="@drawable/launch_logo"
+        android:gravity="center"
+        android:width="120dp"
+        android:height="120dp"
+        android:top="30dp"
+        android:right="30dp"
+        android:bottom="30dp"
+        android:left="30dp"
+        />
+
+    <item
+        android:drawable="@drawable/placeholder_scrim_bg"
+        android:gravity="fill"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+</layer-list>
