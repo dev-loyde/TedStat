@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.devloyde.healthguard.ui.home.HomeFragment"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_preventionDetailFragment"
             app:destination="@id/preventionDetailFragment" />
@@ -36,8 +36,7 @@
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.devloyde.healthguard.ui.settings.SettingsFragment"
-       />
+        android:name="com.devloyde.healthguard.ui.settings.SettingsFragment" />
     <fragment
         android:id="@+id/preventionDetailFragment"
         android:name="com.devloyde.healthguard.ui.home.PreventionDetailFragment"
@@ -47,5 +46,4 @@
         android:id="@+id/infoDetailFragment"
         android:name="com.devloyde.healthguard.ui.home.InfoDetailFragment"
         android:label="Info" />
-
 </navigation>

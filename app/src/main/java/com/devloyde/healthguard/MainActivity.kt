@@ -1,5 +1,6 @@
 package com.devloyde.healthguard
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
@@ -11,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.devloyde.healthguard.databinding.ActivityMainBinding
 import com.devloyde.healthguard.db.SharedPref
@@ -30,25 +32,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity(),
     NavigationListeners.HomeDetailNavigationListener,
     NavigationListeners.NewsItemUrlNavigationListener,
-    DisplayListener.CountrySelection {
+    DisplayListener.CountrySelection,
+    DisplayListener.UpdateTheme {
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
     private val tag: String = "MainActivity"
     private lateinit var navController: NavController
     private lateinit var dashboardViewModel: DashboardViewModel
 
-    companion object {
-        const val HOMEPAGE_FRAGMENT: String = "HOME_FRAGMENT"
-        const val NEWS_FRAGMENT: String = "NEWS FRAGMENT"
-        const val DASHBOARD_FRAGMENT: String = "DASHBOARD_FRAGMENT"
-        const val SETTINGS_FRAGMENT: String = "SETTINGS_FRAGMENT"
-
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         checkDarkMode()
+        super.onCreate(savedInstanceState)
         dashboardViewModel =
             ViewModelProvider(this).get(DashboardViewModel::class.java)
 
@@ -57,13 +52,13 @@ class MainActivity : AppCompatActivity(),
             bottomNavigationView = navView
         }
 
-        navController = findNavController(R.id.nav_host_fragment)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
 
         bottomNavigationView.setupWithNavController(navController)
 
-        gotoSettingsOnRefresh()
     }
 
     private fun checkDarkMode() {
@@ -75,12 +70,6 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    private fun gotoSettingsOnRefresh(){
-        val refresh = intent.extras?.getBoolean("THEME_REFRESH",false)
-        if(refresh != null && refresh == true){
-            navController.navigate(R.id.action_navigation_home_to_navigation_settings)
-        }
-    }
 
     private fun launchCustomBrowser(url: String) {
 
@@ -142,6 +131,11 @@ class MainActivity : AppCompatActivity(),
             enterTransition = R.anim.fragment_open_enter
         }
     }
+
+    override fun changeTheme(mode: Boolean) {
+        recreate()
+    }
+
 
 
 }

@@ -25,6 +25,7 @@ import com.devloyde.healthguard.adapters.SettingsAdapter
 import com.devloyde.healthguard.databinding.FragmentNewsBinding
 import com.devloyde.healthguard.databinding.FragmentSettingsItemListBinding
 import com.devloyde.healthguard.db.SharedPref
+import com.devloyde.healthguard.listeners.DisplayListener
 import com.devloyde.healthguard.listeners.NavigationListeners
 import com.devloyde.healthguard.models.SettingsListItem
 import com.google.android.gms.oss.licenses.OssLicensesActivity
@@ -38,11 +39,9 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
     private lateinit var toolbar: Toolbar
     private lateinit var navController: NavController
     private lateinit var sharedPref: SharedPref
+    private lateinit var themeListener: DisplayListener.UpdateTheme
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?
     ): View? {
 
         binding = DataBindingUtil.inflate(
@@ -110,6 +109,12 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
         }
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is DisplayListener.UpdateTheme){
+            themeListener = context
+        }
+    }
 
     override fun restartApp(mode: Boolean) {
         if (mode) {
@@ -117,10 +122,8 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
         } else {
             sharedPref.setDarkModeState(false)
         }
-        val mainActivityIntent = Intent(activity, MainActivity::class.java)
-        activity?.finish()
-        mainActivityIntent.putExtra("THEME_REFRESH", true)
-        startActivity(mainActivityIntent)
+
+        themeListener.changeTheme(mode)
     }
 
 }

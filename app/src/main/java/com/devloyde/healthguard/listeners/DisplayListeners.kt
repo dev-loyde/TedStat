@@ -11,4 +11,8 @@ class DisplayListener {
     interface UpdateCountrySelection {
         fun updateSelectedCountry(country: StatCountries)
     }
+
+    interface UpdateTheme {
+        fun changeTheme(mode: Boolean)
+    }
 }
