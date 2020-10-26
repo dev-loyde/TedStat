@@ -78,6 +78,7 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
             listOf(
                 SettingsListItem(R.drawable.ic_share_black_24dp, "Share App", null),
                 SettingsListItem(R.drawable.ic_library, "Open Source Licenses", null),
+                SettingsListItem(R.drawable.ic_library, "Credits", null),
                 SettingsListItem(R.drawable.ic_about_us, "About", null),
                 SettingsListItem(R.drawable.ic_dark_mode, "Night Mode", 1),
                 SettingsListItem(R.drawable.ic_info_black_24dp, "Help", null),
@@ -122,7 +123,6 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
         } else {
             sharedPref.setDarkModeState(false)
         }
-
         themeListener.changeTheme(mode)
     }
 

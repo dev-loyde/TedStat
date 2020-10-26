@@ -159,7 +159,7 @@ class HomeFragment : Fragment() {
         // What you should know
         val awareness = HorizontalSingle(
             "what you should know about covid-19",
-            "https://www.healthline.com/health/coronavirus-covid-19",
+            "https://www.unicef.org/nigeria/what-you-need-know-about-coronavirus",
             R.raw.covid_virus
         )
         items.add(awareness)
