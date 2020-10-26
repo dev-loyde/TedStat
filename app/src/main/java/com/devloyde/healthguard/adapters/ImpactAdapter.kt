@@ -2,7 +2,9 @@ package com.devloyde.healthguard.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.devloyde.healthguard.R
 import com.devloyde.healthguard.databinding.ImpactStatItemBinding
 import com.devloyde.healthguard.models.ImpactStat
 import com.devloyde.healthguard.models.ImpactStats
@@ -37,6 +39,7 @@ class ImpactAdapter(private var mItems: ImpactStats): RecyclerView.Adapter<Impac
         fun bind(item: ImpactStat){
             binding.impactTitle.text = item.name
             binding.impactValue.text = item.count.toString()
+            binding.impactValue.setTextColor(ContextCompat.getColor(binding.impactValue.context, item.colour))
             binding.executePendingBindings()
         }
     }

@@ -1,16 +1,11 @@
 package com.devloyde.healthguard.ui.dashboard
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.annotation.AttrRes
-import androidx.annotation.ColorInt
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -30,6 +25,7 @@ import com.devloyde.healthguard.listeners.AppBarStateListener
 import com.devloyde.healthguard.listeners.DisplayListener
 import com.devloyde.healthguard.listeners.NavigationListeners
 import com.devloyde.healthguard.models.*
+import com.devloyde.healthguard.utils.StatUtils
 import com.github.mikephil.charting.animation.Easing.EaseOutCirc
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
@@ -114,8 +110,10 @@ class DashboardFragment : Fragment() {
 
         countryPieChart.setUsePercentValues(true)
         countryPieChart.isDrawHoleEnabled = true
-        val color: Int = MaterialColors.getColor(countryPieChart.context,R.attr.colorPrimary,
-            ContextCompat.getColor(requireContext(),R.color.colorPrimary))
+        val color: Int = MaterialColors.getColor(
+            countryPieChart.context, R.attr.colorPrimary,
+            ContextCompat.getColor(requireContext(), R.color.colorPrimary)
+        )
         countryPieChart.setHoleColor(color)
         countryPieChart.transparentCircleRadius = 60F
         countryPieChart.legend.isEnabled = false
@@ -123,7 +121,7 @@ class DashboardFragment : Fragment() {
 
     }
 
-    private fun insertChartData(pieDataValues: ArrayList<PieEntry>) {
+    private fun insertChartData(pieDataValues: List<PieEntry>) {
         countryPieChart.animateY(1000, EaseOutCirc)
 
         val pieDataSet = PieDataSet(pieDataValues, "chart")
@@ -134,8 +132,6 @@ class DashboardFragment : Fragment() {
             ColorTemplate.rgb("#ff33b5e5"),
             ColorTemplate.rgb("#e9967a")
         )
-
-        //ColorTemplate.PASTEL_COLORS.asList()
 
         val pieData = PieData(pieDataSet)
         countryPieChart.data = pieData
@@ -156,40 +152,30 @@ class DashboardFragment : Fragment() {
                     binding.pieCaseNo.text = defaultCountry.cases
                     binding.dashboardCountryBtn.text =
                         defaultCountry.country?.toUpperCase(Locale.getDefault())
-                    val countriesData = ArrayList<PieEntry>()
-                    if (defaultCountry.recovered!! != "No data") {
-                        countriesData.add(
-                            PieEntry(
-                                parseFloatStat(defaultCountry.recovered) + 10000.0.toFloat(),
-                                "R-C"
-                            )
-                        )
-                    }
-                    if (defaultCountry.cases!! != "No data") {
-                        countriesData.add(
-                            PieEntry(
-                                parseFloatStat(defaultCountry.cases) - 10000.0.toFloat(),
-                                "C-C"
-                            )
-                        )
-                    }
-                    if (defaultCountry.deaths!! != "No data") {
-                        countriesData.add(
-                            PieEntry(
-                                parseFloatStat(defaultCountry.deaths) - 10000.0.toFloat(),
-                                "T-D"
-                            )
-                        )
-                    }
+                    val statFloatData = StatUtils.parseCountriesStat(defaultCountry)
+                    val countriesData = listOf(
+                        PieEntry(statFloatData[0], "R-C"),
+                        PieEntry(statFloatData[1], "C-C"),
+                        PieEntry(statFloatData[2], "D-C")
+                    )
                     insertChartData(countriesData)
                     val impacts = ImpactStats(
                         listOf(
-                            ImpactStat(name = "Confirmed Cases(CC)", count = defaultCountry.cases),
+                            ImpactStat(
+                                name = "Confirmed Cases(CC)",
+                                count = defaultCountry.cases,
+                                colour = R.color.colorBlue
+                            ),
                             ImpactStat(
                                 name = "Recovered Cases (RC)",
-                                count = defaultCountry.recovered
+                                count = defaultCountry.recovered,
+                                colour = R.color.colorPrimary
                             ),
-                            ImpactStat(name = "Total Deaths (TD)", count = defaultCountry.deaths)
+                            ImpactStat(
+                                name = "Total Deaths (TD)",
+                                count = defaultCountry.deaths,
+                                colour = R.color.colorAccent
+                            )
                         )
                     )
                     items[0] = impacts
@@ -205,40 +191,30 @@ class DashboardFragment : Fragment() {
                     binding.pieCaseNo.text = selectedCountry.cases
                     binding.dashboardCountryBtn.text =
                         selectedCountry.country?.toUpperCase(Locale.getDefault())
-                    val countriesData = ArrayList<PieEntry>()
-                    if (selectedCountry.recovered!! != "No data") {
-                        countriesData.add(
-                            PieEntry(
-                                parseFloatStat(selectedCountry.recovered) + 10000.0.toFloat(),
-                                "R-C"
-                            )
-                        )
-                    }
-                    if (selectedCountry.cases!! != "No data") {
-                        countriesData.add(
-                            PieEntry(
-                                parseFloatStat(selectedCountry.cases) - 10000.0.toFloat(),
-                                "C-C"
-                            )
-                        )
-                    }
-                    if (selectedCountry.deaths!! != "No data") {
-                        countriesData.add(
-                            PieEntry(
-                                parseFloatStat(selectedCountry.deaths) - 10000.0.toFloat(),
-                                "T-D"
-                            )
-                        )
-                    }
+                    val statFloatData = StatUtils.parseCountriesStat(selectedCountry)
+                    val countriesData = listOf(
+                        PieEntry(statFloatData[0], "R-C"),
+                        PieEntry(statFloatData[1], "C-C"),
+                        PieEntry(statFloatData[2], "D-C")
+                    )
                     insertChartData(countriesData)
                     val impacts = ImpactStats(
                         listOf(
-                            ImpactStat(name = "Confirmed Cases(CC)", count = selectedCountry.cases),
+                            ImpactStat(
+                                name = "Confirmed Cases(CC)",
+                                count = selectedCountry.cases,
+                                colour = R.color.colorBlue
+                            ),
                             ImpactStat(
                                 name = "Recovered Cases (RC)",
-                                count = selectedCountry.recovered
+                                count = selectedCountry.recovered,
+                                colour = R.color.colorPrimary
                             ),
-                            ImpactStat(name = "Total Deaths (TD)", count = selectedCountry.deaths)
+                            ImpactStat(
+                                name = "Total Deaths (TD)",
+                                count = selectedCountry.deaths,
+                                colour = R.color.colorAccent
+                            )
                         )
                     )
                     items[0] = impacts
@@ -249,31 +225,7 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.globalStat.observe(viewLifecycleOwner) { globalStat ->
             // GLOBAL STATISTICS
             if (globalStat is GlobalStat) {
-                val total =
-                    parseIntegerStat(globalStat.cases!!) + parseIntegerStat(globalStat.recovered!!) +
-                            parseIntegerStat(globalStat.deaths!!)
-                val globalCasesProgress =
-                    parseGlobalStat(globalStat.cases, total) + parseGlobalStat(
-                        globalStat.deaths, total
-                    ) +
-                            parseGlobalStat(globalStat.recovered, total)
-                val globalRecoveredProgress =
-                    parseGlobalStat(globalStat.recovered, total) + parseGlobalStat(
-                        globalStat.deaths, total
-                    ) + 15
-                val globalDeathsProgress = parseGlobalStat(globalStat.deaths, total) + 20
-
-                val globalStatistics = GlobalStat(
-                    globalStat.id,
-                    globalStat.cases,
-                    globalStat.recovered,
-                    globalStat.deaths,
-                    globalCasesProgress,
-                    globalRecoveredProgress,
-                    globalDeathsProgress
-                )
-                items[1] = globalStatistics
-                //  homeAdapter.addItem(items)
+                items[1] = StatUtils.parseGlobalStat(globalStat)
                 viewsAdapter.notifyDataSetChanged()
             }
         }
@@ -302,53 +254,6 @@ class DashboardFragment : Fragment() {
         dashboardRv.adapter = viewsAdapter
         loadItems()
     }
-
-
-    private fun parseIntegerStat(text: String): Int {
-        return text.replace(Regex(","), "").toInt()
-    }
-
-    private fun parseFloatStat(text: String): Float {
-        return text.replace(Regex(","), "").toFloat()
-    }
-
-    private fun parseGlobalStat(stat: String, total: Int): Int {
-        return ((parseFloatStat(stat) / total) * 100).toInt()
-    }
-
-//    private fun parseConverter(stat: Any): List<Int>? {
-//        when (stat) {
-//            is StatCountries -> {
-//                val confirmedCases = stat.cases!!.toIntOrNull() ?: parseStringInt(stat.cases)
-//                val recoveredCases =
-//                    stat.recovered!!.toIntOrNull() ?: parseStringInt(stat.recovered)
-//                val deathCases = stat.deaths!!.toIntOrNull() ?: parseStringInt(stat.deaths)
-//
-//                val total = confirmedCases + recoveredCases + deathCases
-//
-//                val confirmedPercentage = confirmedCases / total * 100
-//                val recoveredPercentage = recoveredCases / total * 100
-//                val deathsPercentage = deathCases / total * 100
-//
-//                return listOf(confirmedPercentage.toFloat(), recoveredPercentage.toFloat(), deathsPercentage.toFloat())
-//            }
-//            is GlobalStat -> {
-//                val confirmedCases = stat.cases!!.toIntOrNull() ?: parseStringInt(stat.cases)
-//                val recoveredCases =
-//                    stat.recovered!!.toIntOrNull() ?: parseStringInt(stat.recovered)
-//                val deathCases = stat.deaths!!.toIntOrNull() ?: parseStringInt(stat.deaths)
-//
-//                val total = confirmedCases + recoveredCases + deathCases
-//
-//                val confirmedPercentage = confirmedCases / total * 100
-//                val recoveredPercentage = recoveredCases / total * 100
-//                val deathsPercentage = deathCases / total * 100
-//
-//                return listOf(confirmedPercentage.toFloat(), recoveredPercentage.toFloat(), deathsPercentage.toFloat())
-//            }
-//        }
-//        return null
-//    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

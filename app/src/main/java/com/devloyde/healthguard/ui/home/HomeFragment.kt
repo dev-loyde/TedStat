@@ -23,6 +23,7 @@ import com.devloyde.healthguard.databinding.FragmentHomeBinding
 import com.devloyde.healthguard.listeners.NavigationListeners
 import com.devloyde.healthguard.models.*
 import com.devloyde.healthguard.ui.dashboard.DashboardViewModel
+import com.devloyde.healthguard.utils.StatUtils
 
 class HomeFragment : Fragment() {
 
@@ -150,30 +151,7 @@ class HomeFragment : Fragment() {
         dashboardViewModel.globalStat.observe(viewLifecycleOwner) { globalStat ->
             // GLOBAL STATISTICS
             if (globalStat is GlobalStat) {
-                val total =
-                    parseIntegerStat(globalStat.cases!!) + parseIntegerStat(globalStat.recovered!!) +
-                            parseIntegerStat(globalStat.deaths!!)
-                val globalCasesProgress =
-                    parseGlobalStat(globalStat.cases, total) + parseGlobalStat(
-                        globalStat.deaths, total
-                    ) +
-                            parseGlobalStat(globalStat.recovered, total)
-                val globalRecoveredProgress =
-                    parseGlobalStat(globalStat.recovered, total) + parseGlobalStat(
-                        globalStat.deaths, total
-                    ) + 15
-                val globalDeathsProgress = parseGlobalStat(globalStat.deaths, total) + 20
-
-                val globalStatistics = GlobalStat(
-                    globalStat.id,
-                    globalStat.cases,
-                    globalStat.recovered,
-                    globalStat.deaths,
-                    globalCasesProgress,
-                    globalRecoveredProgress,
-                    globalDeathsProgress
-                )
-                items[2] = globalStatistics
+                items[2] = StatUtils.parseGlobalStat(globalStat)
                 homeAdapter.notifyItemChanged(2)
             }
         }
@@ -248,18 +226,5 @@ class HomeFragment : Fragment() {
 
         homeAdapter.addItem(items)
     }
-
-    private fun parseIntegerStat(text: String): Int {
-        return text.replace(Regex(","), "").toInt()
-    }
-
-    private fun parseFloatStat(text: String): Float {
-        return text.replace(Regex(","), "").toFloat()
-    }
-
-    private fun parseGlobalStat(stat: String, total: Int): Int {
-        return ((parseFloatStat(stat) / total) * 100).toInt()
-    }
-
 
 }
