@@ -28,10 +28,11 @@ class SettingsAdapter(
 
     private val shareAppPosition: Int = 0
     private val openSourceLicensesPosition: Int = 1
-    private val aboutUsPosition: Int = 2
-    private val darkModePosition: Int = 3
-    private val helpPosition: Int = 4
-    private val rateUsPosition: Int = 5
+    private val creditsPosition: Int = 2
+    private val aboutUsPosition: Int = 3
+    private val darkModePosition: Int = 4
+    private val helpPosition: Int = 5
+    private val rateUsPosition: Int = 6
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SettingsViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -50,9 +51,9 @@ class SettingsAdapter(
             holder.mPref.visibility = View.VISIBLE
             holder.mPref.isChecked = sharedPref.loadDarkModeState()
             holder.mPref.setOnCheckedChangeListener { _, isChecked ->
-                if(isChecked){
+                if (isChecked) {
                     mListener?.restartApp(true)
-                }else{
+                } else {
                     mListener?.restartApp(false)
                 }
             }
@@ -69,6 +70,9 @@ class SettingsAdapter(
                 }
                 openSourceLicensesPosition -> {
                     mListener?.launchOpenSourceLicenses()
+                }
+                creditsPosition -> {
+                    mListener?.launchCredits()
                 }
                 aboutUsPosition -> {
 

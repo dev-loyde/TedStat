@@ -76,7 +76,7 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
         list.adapter = SettingsAdapter(
             sharedPref,
             listOf(
-                SettingsListItem(R.drawable.ic_share_black_24dp, "Share App", null),
+                SettingsListItem(R.drawable.ic_share_black_24dp, "Share With Friends", null),
                 SettingsListItem(R.drawable.ic_library, "Open Source Licenses", null),
                 SettingsListItem(R.drawable.ic_library, "Credits", null),
                 SettingsListItem(R.drawable.ic_about_us, "About", null),
@@ -92,6 +92,10 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
     override fun launchOpenSourceLicenses() {
         val licenseIntent = Intent(activity, OssLicensesMenuActivity::class.java)
         startActivity(licenseIntent)
+    }
+
+    override fun launchCredits() {
+      navController.navigate(R.id.action_navigation_settings_to_creditsFragment)
     }
 
     override fun launchShare() {

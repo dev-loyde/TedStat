@@ -24,3 +24,9 @@ data class Info(
     val title: String,
     val description: String
 )
+
+data class Credits(
+    val categories: String,
+    val source: String,
+    val link: String
+)

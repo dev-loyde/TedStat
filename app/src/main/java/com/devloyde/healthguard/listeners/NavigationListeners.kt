@@ -21,5 +21,6 @@ class NavigationListeners {
         fun launchOpenSourceLicenses()
         fun launchShare()
         fun restartApp(mode:Boolean)
+        fun launchCredits()
     }
 }

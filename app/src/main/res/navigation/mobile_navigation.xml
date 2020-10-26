@@ -36,7 +36,13 @@
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.devloyde.healthguard.ui.settings.SettingsFragment" />
+        android:name="com.devloyde.healthguard.ui.settings.SettingsFragment" >
+        <action
+            android:id="@+id/action_navigation_settings_to_creditsFragment"
+            app:destination="@id/creditsFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left" />
+    </fragment>
     <fragment
         android:id="@+id/preventionDetailFragment"
         android:name="com.devloyde.healthguard.ui.home.PreventionDetailFragment"
@@ -45,5 +51,9 @@
     <fragment
         android:id="@+id/infoDetailFragment"
         android:name="com.devloyde.healthguard.ui.home.InfoDetailFragment"
-        android:label="Info" />
+       />
+    <fragment
+        android:id="@+id/creditsFragment"
+        android:name="com.devloyde.healthguard.ui.settings.CreditsFragment"
+        android:label="Credits &amp; Sources" />
 </navigation>

@@ -32,6 +32,7 @@ android {
 
         def envPropertiesFile = rootProject.file("env.properties")
         def envProperties = new Properties()
+
         if(envPropertiesFile.exists()){
             envProperties.load(new FileInputStream(envPropertiesFile))
             buildConfigField 'String', "ApiKey", envProperties['MY_API_KEY']
