@@ -30,10 +30,10 @@ android {
             abiFilters "armeabi-v7a", "x86", "armeabi", "mips"
         }
 
-        def envPropertiesFile = rootProject.file("env.properties")
+        def envPropertiesFile = file("env.properties")
         def envProperties = new Properties()
 
-        if(envPropertiesFile.exists()){
+        if(envPropertiesFile.canRead()){
             envProperties.load(new FileInputStream(envPropertiesFile))
             buildConfigField 'String', "ApiKey", envProperties['MY_API_KEY']
             buildConfigField 'String', "BaseUrl", envProperties['BASE_URL']
