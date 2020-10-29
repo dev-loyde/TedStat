@@ -42,6 +42,9 @@
             app:destination="@id/creditsFragment"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left" />
+        <action
+            android:id="@+id/action_navigation_settings_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
     </fragment>
     <fragment
         android:id="@+id/preventionDetailFragment"
@@ -56,4 +59,8 @@
         android:id="@+id/creditsFragment"
         android:name="com.devloyde.healthguard.ui.settings.CreditsFragment"
         android:label="Credits &amp; Sources" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.devloyde.healthguard.ui.settings.AboutFragment"
+        android:label="About" />
 </navigation>

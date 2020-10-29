@@ -75,10 +75,7 @@ class SettingsAdapter(
                     mListener?.launchCredits()
                 }
                 aboutUsPosition -> {
-
-                }
-                darkModePosition -> {
-
+                    mListener?.launchAbout()
                 }
                 helpPosition -> {
 

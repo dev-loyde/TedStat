@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -33,7 +34,8 @@ class MainActivity : AppCompatActivity(),
     NavigationListeners.HomeDetailNavigationListener,
     NavigationListeners.NewsItemUrlNavigationListener,
     DisplayListener.CountrySelection,
-    DisplayListener.UpdateTheme {
+    DisplayListener.UpdateTheme,
+    NavigationListeners.SocialsNavigationListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
     private val tag: String = "MainActivity"
@@ -52,7 +54,8 @@ class MainActivity : AppCompatActivity(),
             bottomNavigationView = navView
         }
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -77,8 +80,6 @@ class MainActivity : AppCompatActivity(),
         builder.setToolbarColor(ContextCompat.getColor(this@MainActivity, R.color.colorPrimary))
         // builder.addDefaultShareMenuItem("MENU_ITEM_NAME",PendingIntent)
         builder.setShowTitle(true)
-//        builder.setCloseButtonIcon(bitmap)
-//        builder.setActionButton(bitmap,"Android",pendingIntent,true)
         builder.setExitAnimations(
             this@MainActivity,
             android.R.anim.fade_in,
@@ -86,18 +87,15 @@ class MainActivity : AppCompatActivity(),
         )
         val customTabsIntent: CustomTabsIntent = builder.build()
         customTabsIntent.launchUrl(this, Uri.parse(url))
-//        val packageName = CustomTabsHelper.getPackageNameToUse(this,url)
+//        val packageName = CustomTabsIntent..getPackageNameToUse(this,url)
 //        if(packageName == null){
-//            //launch in web view
-//        }else{
-//
+//            launchUrlIntentToExternalApps(url)
 //        }
     }
 
     override fun navigateToPreventionDetailScreen(position: Int?) {
         if (position != null) {
             val args = PreventionDetailFragment.bundleArgs(position)
-//        Toast.makeText(this@MainActivity,position,Toast.LENGTH_LONG).show()
             navController.navigate(R.id.action_navigation_home_to_preventionDetailFragment, args)
         } else {
             navController.navigate(R.id.action_navigation_home_to_preventionDetailFragment)
@@ -105,7 +103,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun launchCustomUrl(url: String) {
-        Toast.makeText(this@MainActivity, url, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@MainActivity, "loading...", Toast.LENGTH_SHORT).show()
         launchCustomBrowser(url)
     }
 
@@ -136,6 +134,14 @@ class MainActivity : AppCompatActivity(),
         recreate()
     }
 
+    override fun launchSocialFollow(url: String) {
+        launchUrlIntentToExternalApps(url)
+    }
 
+    private fun launchUrlIntentToExternalApps(url:String){
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        startActivity(intent)
+    }
 
 }

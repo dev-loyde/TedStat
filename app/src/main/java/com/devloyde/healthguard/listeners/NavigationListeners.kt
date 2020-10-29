@@ -17,10 +17,15 @@ class NavigationListeners {
         fun launchNewsUrl(url: String)
     }
 
+    interface SocialsNavigationListener {
+        fun launchSocialFollow(url: String)
+    }
+
     interface SettingsNavigationListener {
         fun launchOpenSourceLicenses()
         fun launchShare()
         fun restartApp(mode:Boolean)
         fun launchCredits()
+        fun launchAbout()
     }
 }

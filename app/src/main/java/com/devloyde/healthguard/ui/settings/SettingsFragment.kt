@@ -81,8 +81,7 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
                 SettingsListItem(R.drawable.ic_library, "Credits", null),
                 SettingsListItem(R.drawable.ic_about_us, "About", null),
                 SettingsListItem(R.drawable.ic_dark_mode, "Night Mode", 1),
-                SettingsListItem(R.drawable.ic_info_black_24dp, "Help", null),
-                SettingsListItem(R.drawable.ic_star_black_24dp, "Rate Us", null)
+                SettingsListItem(R.drawable.ic_info_black_24dp, "FeedBack", null)
             )
             , this
         )
@@ -96,6 +95,10 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
 
     override fun launchCredits() {
       navController.navigate(R.id.action_navigation_settings_to_creditsFragment)
+    }
+
+    override fun launchAbout() {
+        navController.navigate(R.id.action_navigation_settings_to_aboutFragment)
     }
 
     override fun launchShare() {
