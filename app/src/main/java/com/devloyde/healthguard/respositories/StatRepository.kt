@@ -18,7 +18,7 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
     private val globalStatsTimeout: Int = 5
     private val countriesStatTimeout: Int = 6
 
-    fun getGlobalStat(): LiveData<GlobalStat> {
+    fun getGlobalStat(){
         statExecutors.execute {
             Log.d(GLOBAL_STAT_TAG, "checking db for global stat")
             val timeout = statDao.checkTimeout(globalStatsTimeout)
@@ -94,10 +94,9 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
             }
 
         }
-        return statDao.loadGlobalStat()
     }
 
-    fun getCountriesStat(): LiveData<List<StatCountries>> {
+    fun getCountriesStat() {
         statExecutors.execute {
             Log.d(COUNTRY_STAT_TAG, "checking db for countries stat list")
             val timeout = statDao.checkTimeout(countriesStatTimeout)
@@ -178,7 +177,6 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
                 })
             }
         }
-        return statDao.loadCountriesStat()
     }
 
     companion object {

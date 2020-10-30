@@ -25,7 +25,7 @@ class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) {
     private val advisoryTimeout: Int = 10
     private val faqTimeout: Int = 11
 
-    fun getAdvisoryInfo(): LiveData<List<AdvisoryInfo>> {
+    fun getAdvisoryInfo() {
         infoExecutors.execute {
             Log.d(ADVISORY_INFO_TAG, "checking db for advisory info")
             val timeout = infoDao.checkTimeout(advisoryTimeout)
@@ -118,10 +118,9 @@ class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) {
                 })
             }
         }
-        return infoDao.loadAdvisory()
     }
 
-    fun getFaqInfo(): LiveData<List<FaqInfo>> {
+    fun getFaqInfo() {
         infoExecutors.execute {
             Log.d(FAQ_INFO_TAG, "checking db for faq info")
             val timeout = infoDao.checkTimeout(faqTimeout)
@@ -202,7 +201,6 @@ class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) {
                     })
                 }
         }
-        return infoDao.loadFaq()
     }
 
     companion object {

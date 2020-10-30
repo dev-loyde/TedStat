@@ -2,6 +2,8 @@ package com.devloyde.healthguard.ui.dashboard
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +20,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.devloyde.healthguard.R
 import com.devloyde.healthguard.adapters.HomeAdapter
 import com.devloyde.healthguard.databinding.FragmentDashboardBinding
@@ -35,6 +38,7 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.color.MaterialColors
+import com.tapadoo.alerter.Alerter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -52,6 +56,7 @@ class DashboardFragment : Fragment() {
     private var countrySelectionListener: DisplayListener.CountrySelection? = null
     private var navigationListeners: NavigationListeners.HomeDetailNavigationListener? = null
     private lateinit var viewsAdapter: HomeAdapter
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,6 +94,17 @@ class DashboardFragment : Fragment() {
         binding.dashboardCountryBtn.setOnClickListener {
             countrySelectionListener?.showCountrySelectionDialog()
         }
+        swipeRefreshLayout.setOnRefreshListener {
+            dashboardViewModel.refresh()
+            Handler(Looper.getMainLooper()).postDelayed(Runnable {
+                swipeRefreshLayout.isRefreshing = false
+                Alerter.create(activity)
+                    .setText("Up to Date")
+                    .setIcon(R.drawable.ic_check)
+                    .setBackgroundColorRes(R.color.colorPrimary) // or setBackgroundColorInt(Color.CYAN)
+                    .show()
+            }, 6000)
+        }
         setUpCountryChart()
         initRecyclerView()
         return binding.root
@@ -102,6 +118,7 @@ class DashboardFragment : Fragment() {
             dashboardRv = dashboardContent.dashboardRecyclerView
             collapsingToolbar = dashboardCollapsingToolbar
             appBar = dashboardAppbar
+            swipeRefreshLayout = dashboardContent.dashboardRefreshLayout
         }
 
     }
@@ -225,6 +242,7 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.globalStat.observe(viewLifecycleOwner) { globalStat ->
             // GLOBAL STATISTICS
             if (globalStat is GlobalStat) {
+                dismissRefreshLayout()
                 items[1] = StatUtils.parseGlobalStat(globalStat)
                 viewsAdapter.notifyDataSetChanged()
             }
@@ -264,6 +282,12 @@ class DashboardFragment : Fragment() {
             else -> {
                 throw RuntimeException("$context must implement countrySelectionListener Dialog")
             }
+        }
+    }
+
+    private fun dismissRefreshLayout(){
+        if(swipeRefreshLayout.isRefreshing){
+            swipeRefreshLayout.isRefreshing = false
         }
     }
 

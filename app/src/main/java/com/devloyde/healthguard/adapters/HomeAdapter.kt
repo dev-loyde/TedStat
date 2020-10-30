@@ -3,6 +3,7 @@ package com.devloyde.healthguard.adapters
 import android.view.LayoutInflater
 
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -89,7 +90,7 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
             globalStat -> globalStatView(holder as GlobalStatViewHolder, position)
             advisoryFaq -> infoView(holder as InfoViewHolder, position)
             impactStat -> impactStatView(holder as ImpactStatViewHolder, position)
-            countryShowcase -> countriesVerticalView(holder as CountriesStatViewHolder,position)
+            countryShowcase -> countriesVerticalView(holder as CountriesStatViewHolder, position)
         }
     }
 
@@ -176,7 +177,7 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
         return -1
     }
 
-     class LoadingViewHolder(private val binding: LoadingPlaceholderViewBinding) :
+    class LoadingViewHolder(private val binding: LoadingPlaceholderViewBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     inner class HorizontalViewHolder(private val binding: HorizontalSingleItemBinding) :
@@ -266,7 +267,7 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
             binding.verticalRvContainer.adapter = countriesListAdapter
             binding.verticalRvTitle.text = verticalHeader
             binding.verticalRvMoreBtn.setOnClickListener {
-             //to do
+                Toast.makeText(mContext, "coming soon...", Toast.LENGTH_SHORT).show()
             }
 
             binding.executePendingBindings()
@@ -296,13 +297,13 @@ class HomeAdapter(private var listener: HomeDetailNavigationListener?) :
             binding.infoRvTitle.text = items.title
             val infoItems: List<Any> = items.infoItems
             binding.infoRvMoreBtn.setOnClickListener {
-                when(infoItems[0]){
-                    is AdvisoryInfo ->  listener?.navigateToInfoDetailScreen(0)
-                    is FaqInfo ->  listener?.navigateToInfoDetailScreen(1)
-                    else ->  listener?.navigateToInfoDetailScreen(1)
+                when (infoItems[0]) {
+                    is AdvisoryInfo -> listener?.navigateToInfoDetailScreen(0)
+                    is FaqInfo -> listener?.navigateToInfoDetailScreen(1)
+                    else -> listener?.navigateToInfoDetailScreen(1)
                 }
             }
-            val infoAdapter = InfoAdapter(infoItems,listener!!)
+            val infoAdapter = InfoAdapter(infoItems, listener!!)
             binding.infoRvContainer.layoutManager =
                 LinearLayoutManager(binding.infoRvContainer.context, RecyclerView.VERTICAL, false)
             binding.infoRvContainer.adapter = infoAdapter

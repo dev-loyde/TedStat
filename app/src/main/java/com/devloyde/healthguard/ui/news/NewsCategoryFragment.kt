@@ -2,6 +2,8 @@ package com.devloyde.healthguard.ui.news
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.devloyde.healthguard.R
 import com.devloyde.healthguard.adapters.NewsCategoryAdapter
 import com.devloyde.healthguard.databinding.FragmentNewsCategoryBinding
@@ -20,20 +23,15 @@ import com.devloyde.healthguard.ui.news.NewsFragment.Companion.GLOBAL_NEWS
 import com.devloyde.healthguard.ui.news.NewsFragment.Companion.COUNTRY_NEWS
 import com.devloyde.healthguard.ui.news.NewsFragment.Companion.LOCAL_NEWS
 import com.devloyde.healthguard.ui.news.NewsFragment.Companion.RECOMMENDED_NEWS
+import com.tapadoo.alerter.Alerter
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [NewsCategoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class NewsCategoryFragment : Fragment() {
     private lateinit var newsType: String
     private lateinit var binding: FragmentNewsCategoryBinding
     private lateinit var viewModel: NewsViewModel
     private lateinit var newsAdapter: NewsCategoryAdapter
     private var newsItemUrlNavigationListener: NewsItemUrlNavigationListener? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +49,17 @@ class NewsCategoryFragment : Fragment() {
         // Inflate the layout for this fragment
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_news_category, container, false)
-
+        binding.newsRefreshLayout.setOnRefreshListener {
+            viewModel.refresh()
+            Handler(Looper.getMainLooper()).postDelayed(Runnable {
+                binding.newsRefreshLayout.isRefreshing = false
+                Alerter.create(activity)
+                    .setText("Up to Date")
+                    .setIcon(R.drawable.ic_check)
+                    .setBackgroundColorRes(R.color.colorPrimary) // or setBackgroundColorInt(Color.CYAN)
+                    .show()
+            }, 6000)
+        }
         return binding.root
     }
 
@@ -89,37 +97,41 @@ class NewsCategoryFragment : Fragment() {
         when (fragment) {
             RECOMMENDED_NEWS -> {
                 viewModel.recommendedNews.observe(viewLifecycleOwner) { recommendedNews ->
-                     if(recommendedNews.isNotEmpty()){
+                    if (recommendedNews.isNotEmpty()) {
+                        dismissRefreshLayout()
                         binding.shimmerEffectFrame.stopShimmer()
-                         binding.shimmerEffectFrame.visibility = View.GONE
+                        binding.shimmerEffectFrame.visibility = View.GONE
                     }
                     newsAdapter.addItems(recommendedNews)
                 }
             }
             GLOBAL_NEWS -> {
                 viewModel.globalNews.observe(viewLifecycleOwner) { globalNews ->
-                    if(globalNews.isNotEmpty()){
+                    if (globalNews.isNotEmpty()) {
+                        dismissRefreshLayout()
                         binding.shimmerEffectFrame.stopShimmer()
                         binding.shimmerEffectFrame.visibility = View.GONE
                     }
                     newsAdapter.addItems(globalNews)
                 }
             }
-            COUNTRY_NEWS  -> {
+            COUNTRY_NEWS -> {
                 val isoCode = "NG"
                 viewModel.countryNews.observe(viewLifecycleOwner) { countryNews ->
-                     if(countryNews.isNotEmpty()){
+                    if (countryNews.isNotEmpty()) {
+                        dismissRefreshLayout()
                         binding.shimmerEffectFrame.stopShimmer()
-                         binding.shimmerEffectFrame.visibility = View.GONE
+                        binding.shimmerEffectFrame.visibility = View.GONE
                     }
                     newsAdapter.addItems(countryNews)
                 }
             }
             LOCAL_NEWS -> {
                 viewModel.localNews.observe(viewLifecycleOwner) { localNews ->
-                     if(localNews.isNotEmpty()){
+                    if (localNews.isNotEmpty()) {
+                        dismissRefreshLayout()
                         binding.shimmerEffectFrame.stopShimmer()
-                         binding.shimmerEffectFrame.visibility = View.GONE
+                        binding.shimmerEffectFrame.visibility = View.GONE
                     }
                     newsAdapter.addItems(localNews)
                 }
@@ -127,9 +139,16 @@ class NewsCategoryFragment : Fragment() {
         }
     }
 
+    private fun dismissRefreshLayout() {
+        if (binding.newsRefreshLayout.isRefreshing) {
+            binding.newsRefreshLayout.isRefreshing = false
+        }
+    }
+
     interface NewsItemClick {
         fun onItemClick(url: String)
     }
+
     companion object {
         /**
          * Use this factory method to create a new instance of

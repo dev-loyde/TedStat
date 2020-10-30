@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.devloyde.healthguard.db.HealthGuardDatabase
+import com.devloyde.healthguard.db.NewsDao
 import com.devloyde.healthguard.models.CountryNews
 import com.devloyde.healthguard.models.GlobalNews
 import com.devloyde.healthguard.models.LocalNews
@@ -15,17 +16,29 @@ import java.util.concurrent.Executors
 
 class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val newsRepository: NewsRespository
+    private var newsRepository: NewsRespository
     private val newsExecutor = Executors.newFixedThreadPool(4)
+    private val newsDao: NewsDao = HealthGuardDatabase.getDatabase(application).newsDao()
 
-    init{
-        val newsDao = HealthGuardDatabase.getDatabase(application).newsDao()
-        newsRepository = NewsRespository.getNewsRepository(newsDao,newsExecutor)
+    init {
+        newsRepository = NewsRespository.getNewsRepository(newsDao, newsExecutor)
+        fetchNews()
     }
 
-    var recommendedNews: LiveData<List<RecommendedNews>> = newsRepository.getRecommendedNews()
-    var localNews: LiveData<List<LocalNews>> = newsRepository.getLocalNews()
-    var countryNews: LiveData<List<CountryNews>> = newsRepository.getCountryNews("NG")
-    var globalNews: LiveData<List<GlobalNews>> = newsRepository.getGlobalNews()
+    var recommendedNews: LiveData<List<RecommendedNews>> = newsDao.loadRecommendedNews()
+    var localNews: LiveData<List<LocalNews>> = newsDao.loadLocalNews()
+    var countryNews: LiveData<List<CountryNews>> = newsDao.loadCountryNews()
+    var globalNews: LiveData<List<GlobalNews>> = newsDao.loadGlobalNews()
+
+    fun refresh() {
+        fetchNews()
+    }
+
+    private fun fetchNews(){
+        newsRepository.getRecommendedNews()
+        newsRepository.getLocalNews()
+        newsRepository.getCountryNews("NG")
+        newsRepository.getGlobalNews()
+    }
 
 }

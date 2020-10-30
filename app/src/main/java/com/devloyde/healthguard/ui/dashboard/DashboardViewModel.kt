@@ -25,11 +25,21 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
     init {
         Log.d("dash-view-model", "view model initialized")
         statRespository = StatRepository.getStatRepository(statDao, executor)
-        countriesStat = statRespository.getCountriesStat()
+        fetchStat()
+        countriesStat = statDao.loadCountriesStat()
         topAffectedCountriesStat = statDao.loadTopAffectedCountriesStat()
     }
 
-    var globalStat: LiveData<GlobalStat> = statRespository.getGlobalStat()
+    var globalStat: LiveData<GlobalStat> = statDao.loadGlobalStat()
+
+    private fun fetchStat() {
+        statRespository.getCountriesStat()
+        statRespository.getGlobalStat()
+    }
+
+    fun refresh() {
+        fetchStat()
+    }
 
     fun setCurrentCountry(country: StatCountries) {
         currentCountry.value = country

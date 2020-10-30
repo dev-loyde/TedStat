@@ -2,10 +2,12 @@ package com.devloyde.healthguard.ui.home
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -17,6 +19,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.devloyde.healthguard.R
 import com.devloyde.healthguard.adapters.HomeAdapter
 import com.devloyde.healthguard.databinding.FragmentHomeBinding
@@ -24,6 +27,7 @@ import com.devloyde.healthguard.listeners.NavigationListeners
 import com.devloyde.healthguard.models.*
 import com.devloyde.healthguard.ui.dashboard.DashboardViewModel
 import com.devloyde.healthguard.utils.StatUtils
+import com.tapadoo.alerter.Alerter
 
 class HomeFragment : Fragment() {
 
@@ -34,6 +38,8 @@ class HomeFragment : Fragment() {
     private lateinit var navController: NavController
     private var navigationListeners: NavigationListeners.HomeDetailNavigationListener? = null
     private lateinit var homeAdapter: HomeAdapter
+
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,7 +57,18 @@ class HomeFragment : Fragment() {
         toolbar.setupWithNavController(navController, appBarConfiguration)
 
         initRecyclerView()
-
+        swipeRefreshLayout.setOnRefreshListener {
+            homeViewModel.refresh()
+            dashboardViewModel.refresh()
+            Handler(Looper.getMainLooper()).postDelayed(Runnable {
+                swipeRefreshLayout.isRefreshing = false
+                Alerter.create(activity)
+                    .setText("Up to Date")
+                    .setIcon(R.drawable.ic_check)
+                    .setBackgroundColorRes(R.color.colorPrimary) // or setBackgroundColorInt(Color.CYAN)
+                    .show()
+            }, 6000)
+        }
         return binding.root
     }
 
@@ -75,6 +92,7 @@ class HomeFragment : Fragment() {
     private fun bindViews() {
         binding.apply {
             toolbar = mainToolbar
+            swipeRefreshLayout = homeRefreshLayout
         }
     }
 
@@ -151,6 +169,7 @@ class HomeFragment : Fragment() {
         dashboardViewModel.globalStat.observe(viewLifecycleOwner) { globalStat ->
             // GLOBAL STATISTICS
             if (globalStat is GlobalStat) {
+                dismissRefreshLayout()
                 items[2] = StatUtils.parseGlobalStat(globalStat)
                 homeAdapter.notifyItemChanged(2)
             }
@@ -168,7 +187,7 @@ class HomeFragment : Fragment() {
         dashboardViewModel.topAffectedCountriesStat.observe(viewLifecycleOwner) { countries ->
             // GLOBAL STATISTICS
             if (countries is List<StatCountries>) { //To prevent crash in case result is empty or null
-                if(countries.size > 1) {
+                if (countries.size > 1) {
                     val countriesStat = CountriesVerticalRv(
                         title = "Top Affected Countries",
                         countries = countries
@@ -199,6 +218,7 @@ class HomeFragment : Fragment() {
             // GLOBAL STATISTICS
             if (advisoryInfo is List<AdvisoryInfo>) {
                 if (advisoryInfo.size > 3) {
+                    dismissRefreshLayout()
                     val advisory = InfoRv(
                         title = "Advisory",
                         infoItems = advisoryInfo.subList(0, 3)
@@ -214,6 +234,7 @@ class HomeFragment : Fragment() {
             // GLOBAL STATISTICS
             if (faqInfo is List<FaqInfo>) {
                 if (faqInfo.size > 3) {
+                    dismissRefreshLayout()
                     val faq = InfoRv(
                         title = "Faq",
                         infoItems = faqInfo.subList(0, 3)
@@ -225,6 +246,11 @@ class HomeFragment : Fragment() {
         }
 
         homeAdapter.addItem(items)
+    }
+    private fun dismissRefreshLayout(){
+        if(swipeRefreshLayout.isRefreshing){
+            swipeRefreshLayout.isRefreshing = false
+        }
     }
 
 }

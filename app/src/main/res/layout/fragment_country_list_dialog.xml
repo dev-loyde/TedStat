@@ -57,8 +57,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"
+            android:textColor="?attr/textColor"
             android:background="@drawable/btn_bg"
-            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTint="@color/colorAccent"
             android:text="Close" />
     </LinearLayout>
 </layout>

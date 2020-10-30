@@ -32,8 +32,7 @@ class NewsRespository(
     private val globalNewsTimeout: Int = 2
     private val countryNewsTimeout: Int = 3
 
-
-    fun getRecommendedNews(): LiveData<List<RecommendedNews>> {
+    fun getRecommendedNews(){
         newsExecutors.execute {
             Log.d("RECOMMENDED NEWS", "checking db for recommended news")
             val timeout = newsDao.checkTimeout(recommendedNewsTimeout)
@@ -119,10 +118,9 @@ class NewsRespository(
             }
 
         }
-        return newsDao.loadRecommendedNews()
     }
 
-    fun getLocalNews(): LiveData<List<LocalNews>> {
+    fun getLocalNews() {
         newsExecutors.execute {
             val timeout = newsDao.checkTimeout(localNewsTimeout)
             val expireTime = TimeUnit.HOURS.toMillis(1)
@@ -190,10 +188,9 @@ class NewsRespository(
                 })
             }
         }
-        return newsDao.loadLocalNews()
     }
 
-    fun getGlobalNews(): LiveData<List<GlobalNews>> {
+    fun getGlobalNews() {
         newsExecutors.execute {
             val timeout = newsDao.checkTimeout(globalNewsTimeout)
             val expireTime = TimeUnit.HOURS.toMillis(1)
@@ -263,10 +260,9 @@ class NewsRespository(
                 })
             }
         }
-        return newsDao.loadGlobalNews()
     }
 
-    fun getCountryNews(countryIso: String): LiveData<List<CountryNews>> {
+    fun getCountryNews(countryIso: String) {
         newsExecutors.execute {
             val timeout = newsDao.checkTimeout(countryNewsTimeout)
             val expireTime = TimeUnit.HOURS.toMillis(1)
@@ -332,7 +328,6 @@ class NewsRespository(
                 })
             }
         }
-        return newsDao.loadCountryNews()
     }
 
     companion object {

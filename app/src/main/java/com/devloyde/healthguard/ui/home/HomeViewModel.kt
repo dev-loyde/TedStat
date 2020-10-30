@@ -6,23 +6,34 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.devloyde.healthguard.db.HealthGuardDatabase
+import com.devloyde.healthguard.db.InfoDao
 import com.devloyde.healthguard.models.*
 import com.devloyde.healthguard.respositories.InfoRepository
 import com.devloyde.healthguard.respositories.NewsRespository
 import com.devloyde.healthguard.respositories.StatRepository
 import java.util.concurrent.Executors
 
-class HomeViewModel(application: Application) : AndroidViewModel(application){
-    private val infoRepository: InfoRepository
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
+    private var infoRepository: InfoRepository
     private val executor = Executors.newFixedThreadPool(2)
-    val advisoryInfo: LiveData<List<AdvisoryInfo>>
-    val faqInfo: LiveData<List<FaqInfo>>
+    var advisoryInfo: LiveData<List<AdvisoryInfo>>
+    var faqInfo: LiveData<List<FaqInfo>>
+    private val infoDao: InfoDao = HealthGuardDatabase.getDatabase(application).infoDao()
 
-    init{
-        val infoDao = HealthGuardDatabase.getDatabase(application).infoDao()
-        infoRepository = InfoRepository.getStatRepository(infoDao,executor)
-        advisoryInfo = infoRepository.getAdvisoryInfo()
-        faqInfo = infoRepository.getFaqInfo()
+    init {
+        infoRepository = InfoRepository.getStatRepository(infoDao, executor)
+        fetchInfo()
+        advisoryInfo = infoDao.loadAdvisory()
+        faqInfo = infoDao.loadFaq()
+    }
+
+    fun refresh() {
+        fetchInfo()
+    }
+
+    private fun fetchInfo() {
+        infoRepository.getAdvisoryInfo()
+        infoRepository.getFaqInfo()
     }
 
 }
