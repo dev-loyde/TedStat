@@ -63,7 +63,7 @@ class HomeFragment : Fragment() {
             Handler(Looper.getMainLooper()).postDelayed(Runnable {
                 swipeRefreshLayout.isRefreshing = false
                 Alerter.create(activity)
-                    .setText("Up to Date")
+                    .setText("Refreshed")
                     .setIcon(R.drawable.ic_check)
                     .setBackgroundColorRes(R.color.colorPrimary) // or setBackgroundColorInt(Color.CYAN)
                     .show()
