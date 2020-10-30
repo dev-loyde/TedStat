@@ -3,9 +3,7 @@ package com.devloyde.healthguard.networking
 import com.devloyde.healthguard.models.*
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface NewsEndpoints {
 
@@ -38,4 +36,16 @@ interface InfoEndpoints {
 
     @GET("/api/info/faq")
     fun getFaqInfo(): Call<FaqResponse>
+
+}
+
+interface FeedBackEndpoints {
+    @POST("formResponse")
+    @FormUrlEncoded
+    fun submitFeedBack(
+        @Field("entry.1794988330") name: String,
+        @Field("entry.1393192673") emailAddress: String,
+        @Field("entry.1997933339") message: String,
+        @Field("entry.1274061842") date: String
+    ): Call<Void>
 }

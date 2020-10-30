@@ -27,5 +27,6 @@ class NavigationListeners {
         fun restartApp(mode:Boolean)
         fun launchCredits()
         fun launchAbout()
+        fun launchFeedBack()
     }
 }

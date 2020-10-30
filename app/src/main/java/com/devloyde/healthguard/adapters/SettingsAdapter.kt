@@ -30,9 +30,7 @@ class SettingsAdapter(
     private val openSourceLicensesPosition: Int = 1
     private val creditsPosition: Int = 2
     private val aboutUsPosition: Int = 3
-    private val darkModePosition: Int = 4
-    private val helpPosition: Int = 5
-    private val rateUsPosition: Int = 6
+    private val feedbackPosition: Int = 5
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SettingsViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -77,11 +75,8 @@ class SettingsAdapter(
                 aboutUsPosition -> {
                     mListener?.launchAbout()
                 }
-                helpPosition -> {
-
-                }
-                rateUsPosition -> {
-
+                feedbackPosition -> {
+                    mListener?.launchFeedBack()
                 }
             }
         }

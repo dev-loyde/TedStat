@@ -37,9 +37,11 @@ android {
             envProperties.load(new FileInputStream(envPropertiesFile))
             buildConfigField 'String', "ApiKey", envProperties['MY_API_KEY']
             buildConfigField 'String', "BaseUrl", envProperties['BASE_URL']
+            buildConfigField 'String', "FeedBackBaseUrl", envProperties['FEEDBACK_BASE_URL']
         }else{
             buildConfigField("String", "ApiKey","\"${System.env.MY_API_KEY}\"")
             buildConfigField("String", "BaseUrl","\"${System.env.BASE_URL}\"")
+            buildConfigField("String", "FeedBackBaseUrl","\"${System.env.FEEDBACK_BASE_URL}\"")
         }
 
     }
@@ -136,6 +138,9 @@ dependencies {
 //    implementation "com.google.firebase:firebase-auth:19.1.0"
     implementation "com.facebook.shimmer:shimmer:0.5.0"
     implementation "com.google.android.gms:play-services-oss-licenses:17.0.0"
+
+    implementation 'com.tapadoo.android:alerter:6.2.1'
+    implementation 'com.github.hadilq.liveevent:liveevent:1.2.0'
 
     testImplementation "junit:junit:4.12"
     androidTestImplementation "androidx.test.ext:junit:1.1.2"

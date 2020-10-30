@@ -16,7 +16,7 @@
 
     <color name="darkColorPrimary">#232129</color>
     <color name="darkColorPrimaryDark">#232129</color>
-    <color name="darkColorAccent">#D81B60</color>
+    <color name="darkColorAccent">#e9967a</color>
     <color name="darkTextColor">#ddffffff</color>
     <color name="darkTintColor">#000000</color>
     <color name="darkCardBackgroundColor">#232129</color>

@@ -80,7 +80,7 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
                 SettingsListItem(R.drawable.ic_library, "Open Source Licenses", null),
                 SettingsListItem(R.drawable.ic_library, "Credits", null),
                 SettingsListItem(R.drawable.ic_about_us, "About", null),
-                SettingsListItem(R.drawable.ic_dark_mode, "Night Mode", 1),
+                SettingsListItem(R.drawable.ic_dark_mode, "Dark Mode", 1),
                 SettingsListItem(R.drawable.ic_info_black_24dp, "FeedBack", null)
             )
             , this
@@ -99,6 +99,10 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
 
     override fun launchAbout() {
         navController.navigate(R.id.action_navigation_settings_to_aboutFragment)
+    }
+
+    override fun launchFeedBack() {
+        navController.navigate(R.id.action_navigation_settings_to_feedBackFragment)
     }
 
     override fun launchShare() {

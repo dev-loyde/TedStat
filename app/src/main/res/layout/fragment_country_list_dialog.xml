@@ -53,7 +53,6 @@
 
         <Button
             android:id="@+id/country_close_btn"
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

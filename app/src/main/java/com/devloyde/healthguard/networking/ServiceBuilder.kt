@@ -8,6 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object NetworkServiceBuilder {
     private const val baseUrl = BuildConfig.BaseUrl
+    private const val feedBackBaseUrl = BuildConfig.FeedBackBaseUrl
 
     private val httpClient = OkHttpClient.Builder().addInterceptor(Interceptor {
        val request = it.request()
@@ -25,5 +26,14 @@ object NetworkServiceBuilder {
         return retrofit.create(service)
     }
 
+    private val retrofitFeedbackInstance = Retrofit.Builder()
+        .baseUrl(feedBackBaseUrl)
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(httpClient.build())
+        .build()
+
+    fun<T> buildFeedBackService(service: Class<T>):T{
+        return retrofitFeedbackInstance.create(service)
+    }
 
 }
