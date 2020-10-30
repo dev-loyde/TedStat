@@ -69,17 +69,6 @@ class ExpansionLayoutAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return -1
     }
 
-    fun setItemExpanded(position:Int){
-        if (mItems[position] is AdvisoryInfo) {
-            val advisoryInfoViewHolder = holder as AdvisoryInfoItemViewHolder
-            advisoryInfoViewHolder.expansionLayout.isExpanded
-        }
-        if (mItems[position] is FaqInfo) {
-            val faqInfoViewHolder = holder as FaqInfoItemViewHolder
-            faqInfoViewHolder.expansionLayout.isExpanded
-        }
-    }
-
     override fun getItemCount(): Int {
         return mItems.size
     }
@@ -102,6 +91,7 @@ class ExpansionLayoutAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.infoContent.text = info.description
             binding.expansionLayout.collapse(true)
             binding.executePendingBindings()
+
         }
     }
 

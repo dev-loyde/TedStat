@@ -1,5 +1,6 @@
 package com.devloyde.healthguard.ui.settings
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,6 +21,8 @@ import com.devloyde.healthguard.R
 import com.devloyde.healthguard.adapters.CreditsAdapter
 import com.devloyde.healthguard.databinding.FragmentCreditsBinding
 import com.devloyde.healthguard.databinding.FragmentHomeBinding
+import com.devloyde.healthguard.listeners.DisplayListener
+import com.devloyde.healthguard.listeners.NavigationListeners
 import com.devloyde.healthguard.models.Credits
 
 class CreditsFragment : Fragment() {
@@ -28,6 +31,7 @@ class CreditsFragment : Fragment() {
     private lateinit var toolbar: Toolbar
     private lateinit var list: RecyclerView
     private lateinit var navController: NavController
+    private var listener: NavigationListeners.SocialsNavigationListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,23 +53,32 @@ class CreditsFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
-       list.apply {
+        list.apply {
             layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
             setHasFixedSize(true)
             addItemDecoration(DividerItemDecoration(activity, RecyclerView.VERTICAL))
-            adapter = CreditsAdapter(creditsData())
+            adapter = CreditsAdapter(creditsData(), listener)
         }
     }
 
     private fun creditsData(): List<Credits> {
         return listOf(
-            Credits(categories = "Illustrations, Logo",source = "Freepik",link = "www.com"),
-            Credits(categories = "Animations",source = "Lottie",link = "www.com"),
-            Credits(categories = "Covid19 Statistics Data",source = "Wikipedia",link = "www.com"),
-            Credits(categories = "Symptoms",source = "CDC",link = "www.com"),
-            Credits(categories = "Health Care News, Advisory, Faq",source = "NCDC (nigeria)",link = "www.com"),
-            Credits(categories = "Recommended News",source = "WHO",link = "www.com"),
-            Credits(categories = "Latest and Local News",source = "Bing News",link = "www.com")
+            Credits(categories = "Illustrations, Logo", source = "Freepik", link = "https://freepik.com"),
+            Credits(categories = "Animations", source = "Lottie", link = "https://www.lottiefiles.com"),
+            Credits(categories = "Covid19 Statistics Data", source = "Wikipedia", link = "https://en.wikipedia.org/wiki/Template:COVID-19_pandemic_data"),
+            Credits(categories = "Symptoms", source = "CDC", link = "https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html"),
+            Credits(categories = "Health Care News, Advisory, Faq",source = "NCDC (nigeria)", link = "https://covid19.ncdc.gov.ng/globals"),
+            Credits(categories = "Recommended News", source = "WHO", link = "https://who.int"),
+            Credits(categories = "Latest and Local News", source = "Bing News", link = "")
         )
+
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is NavigationListeners.SocialsNavigationListener) {
+            listener = context
+        }
+    }
+
 }

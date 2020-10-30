@@ -36,7 +36,6 @@ private const val INFO_TYPE_POSITION = "info-type-position"
 class InfoDetailFragment : Fragment() {
 
     private var infoTypeParam: Int? = null
-    private var infoTypePositionParam: Int? = null
     private lateinit var binding: FragmentInfoDetailBinding
     private lateinit var recyclerView: RecyclerView
     private lateinit var toolbar: Toolbar
@@ -48,7 +47,6 @@ class InfoDetailFragment : Fragment() {
 
         arguments?.let {
             infoTypeParam = it.getInt(INFO_TYPE)
-            infoTypePositionParam = it.getInt(INFO_TYPE_POSITION)
         }
 
         Toast.makeText(context,infoTypeParam.toString(),Toast.LENGTH_SHORT).show()
@@ -107,20 +105,15 @@ class InfoDetailFragment : Fragment() {
             }
         }
 
-        if(infoTypePositionParam != null){
-        //    expansionInfoAdapter.setItemExpanded(infoTypePositionParam!!)
-            expansionInfoAdapter.expansionsCollection
-        }
+
     }
 
     companion object {
 
-        fun bundleArgs(infoType:Int,position: Int,available:Boolean): Bundle {
+        fun bundleArgs(infoType:Int): Bundle {
             return Bundle().apply {
                 putInt(INFO_TYPE, infoType)
-                if(available) {
-                    putInt(INFO_TYPE_POSITION, position)
-                }
+
             }
         }
     }

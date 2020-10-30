@@ -15,4 +15,6 @@ class DisplayListener {
     interface UpdateTheme {
         fun changeTheme(mode: Boolean)
     }
+
+
 }

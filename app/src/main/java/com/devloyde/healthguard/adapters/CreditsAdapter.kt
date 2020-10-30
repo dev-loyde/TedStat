@@ -8,14 +8,16 @@ import android.widget.TextView
 import com.devloyde.healthguard.R
 import com.devloyde.healthguard.databinding.CreditsItemBinding
 import com.devloyde.healthguard.databinding.FragmentCreditsBinding
+import com.devloyde.healthguard.listeners.NavigationListeners
 import com.devloyde.healthguard.models.Credits
 
 class CreditsAdapter(
-    private val values: List<Credits>
+    private val values: List<Credits>,
+    private val listener: NavigationListeners.SocialsNavigationListener?
 ) : RecyclerView.Adapter<CreditsAdapter.CreditsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditsViewHolder {
-        val binding = CreditsItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = CreditsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CreditsViewHolder(binding)
     }
 
@@ -26,13 +28,14 @@ class CreditsAdapter(
 
     override fun getItemCount(): Int = values.size
 
-    inner class CreditsViewHolder(val binding:CreditsItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class CreditsViewHolder(val binding: CreditsItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item:Credits){
+        fun bind(item: Credits) {
             binding.categories.text = item.categories
             binding.source.text = item.source
-            binding.source.setOnClickListener {
-
+            itemView.setOnClickListener {
+                listener?.launchSocialFollow(item.link)
             }
         }
     }

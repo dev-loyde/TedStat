@@ -110,7 +110,6 @@ class HomeFragment : Fragment() {
         //     HOME CAROUSEL INPUT
         val carouselItemList = Carousels(
             listOf(
-                Carousel(title = "Healthy lifestyle increase life", image = R.drawable.warrior),
                 Carousel(title = "Stay warm at all times", image = R.drawable.smiley),
                 Carousel(title = "Stay warm at all times", image = R.drawable.social_distance)
             )
@@ -229,6 +228,14 @@ class HomeFragment : Fragment() {
             }
         }
 
+        //Self risk assessment
+        val riskAssessment = HorizontalSingle(
+            "Take your Risk Assessment Test Now",
+            "https://selfassessment.ncdc.gov.ng",
+            R.raw.scanner
+        )
+        items.add(riskAssessment)
+
         items.add(Loading(true))
         homeViewModel.faqInfo.observe(viewLifecycleOwner) { faqInfo ->
             // GLOBAL STATISTICS
@@ -239,8 +246,8 @@ class HomeFragment : Fragment() {
                         title = "Faq",
                         infoItems = faqInfo.subList(0, 3)
                     )
-                    items[8] = faq
-                    homeAdapter.notifyItemChanged(8)
+                    items[9] = faq
+                    homeAdapter.notifyItemChanged(9)
                 }
             }
         }
