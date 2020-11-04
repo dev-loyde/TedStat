@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.devloyde.healthguard.models.Welcome" />
+            type="com.devloyde.tedstat.models.Welcome" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

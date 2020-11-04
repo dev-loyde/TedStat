@@ -19,3 +19,15 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+### OKHTTP
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+-keep class com.devloyde.tedstat.models.** { *; }
+
+-dontwarn okhttp3.**
+-dontnote okhttp3.internal.Platform
+-dontwarn okio.Okio
+-dontwarn okio.DeflaterSink

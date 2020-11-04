@@ -4,12 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
-
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
     defaultConfig {
-        applicationId "com.devloyde.healthguard"
+        applicationId "com.devloyde.tedstat"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
@@ -33,45 +32,31 @@ android {
         def envPropertiesFile = file("env.properties")
         def envProperties = new Properties()
 
-        if(envPropertiesFile.canRead()){
+        if(envPropertiesFile.exists()){
             envProperties.load(new FileInputStream(envPropertiesFile))
             buildConfigField 'String', "ApiKey", envProperties['MY_API_KEY']
             buildConfigField 'String', "BaseUrl", envProperties['BASE_URL']
             buildConfigField 'String', "FeedBackBaseUrl", envProperties['FEEDBACK_BASE_URL']
+            buildConfigField 'String', "AppCenterKey", envProperties['APP_CENTER_KEY']
         }else{
             buildConfigField("String", "ApiKey","\"${System.env.MY_API_KEY}\"")
             buildConfigField("String", "BaseUrl","\"${System.env.BASE_URL}\"")
             buildConfigField("String", "FeedBackBaseUrl","\"${System.env.FEEDBACK_BASE_URL}\"")
+            buildConfigField("String", "AppCenterKey","\"${System.env.APP_CENTER_KEY}\"")
         }
-
+        
     }
     buildTypes {
         release {
             minifyEnabled true
             multiDexEnabled = true
-            ext.enableCrashlytics = true
-            ext.alwaysUpdateBuildId = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
-
         }
         debug {
             minifyEnabled false
             multiDexEnabled = false
-            ext.enableCrashlytics = false
-            ext.alwaysUpdateBuildId = false
-
         }
 
-    }
-
-    flavorDimensions "stage"
-
-    productFlavors {
-        dev {
-            dimension "stage"
-            resConfigs "en", "xxhdpi"
-        }
     }
 
     buildFeatures {
@@ -128,22 +113,22 @@ dependencies {
 
     // chrome custom tabs
     implementation "androidx.browser:browser:1.2.0"
-//    // Check for v11.4.2 or higher
-//    implementation "com.google.firebase:firebase-core:17.2.1"
-//    // (Recommended) Add Analytics
-//    implementation "com.google.firebase:firebase-analytics:17.2.1"
-//    // Add dependency For crash reports
-//    implementation "com.crashlytics.sdk.android:crashlytics:2.10.1"
 
 //    implementation "com.google.firebase:firebase-auth:19.1.0"
+
     implementation "com.facebook.shimmer:shimmer:0.5.0"
     implementation "com.google.android.gms:play-services-oss-licenses:17.0.0"
 
     implementation 'com.tapadoo.android:alerter:6.2.1'
     implementation 'com.github.hadilq.liveevent:liveevent:1.2.0'
 
+    def appCenterSdkVersion = '3.3.1'
+    implementation "com.microsoft.appcenter:appcenter-distribute:${appCenterSdkVersion}"
+    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
+    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
+
     testImplementation "junit:junit:4.12"
     androidTestImplementation "androidx.test.ext:junit:1.1.2"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
-    debugImplementation "com.amitshekhar.android:debug-db:1.0.6"
+ //   debugImplementation "com.amitshekhar.android:debug-db:1.0.6"
 }

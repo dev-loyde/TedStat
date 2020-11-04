@@ -35,7 +35,7 @@
                     android:id="@+id/prevention_img"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:src="@drawable/avoid_contact_safety" />
+                     />
 
                 <TextView
                     android:id="@+id/prevention_title"
@@ -59,7 +59,9 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="7dp"
                     android:layout_marginRight="7dp"
-                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:padding="10dp"
+                    android:textAlignment="center"
+                    android:textAppearance="?attr/textAppearanceBody1"
                     tools:text="@string/sample_prevention_detail" />
 
 

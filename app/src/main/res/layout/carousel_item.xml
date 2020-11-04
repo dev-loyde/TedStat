@@ -5,7 +5,7 @@
     <data>
         <variable
             name="item"
-            type="com.devloyde.healthguard.models.Carousel" />
+            type="com.devloyde.tedstat.models.Carousel" />
 
     </data>
 

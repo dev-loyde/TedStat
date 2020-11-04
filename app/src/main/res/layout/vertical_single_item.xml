@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.devloyde.healthguard.models.HealthCard" />
+            type="com.devloyde.tedstat.models.HealthCard" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -35,7 +35,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="3"
-                android:src="@drawable/avoid_contact_safety"
                 tools:imageUrl="@{item.image}" />
 
             <TextView
