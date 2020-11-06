@@ -230,7 +230,7 @@ class HomeFragment : Fragment() {
         //Self risk assessment
         val riskAssessment = HorizontalSingle(
             "Take your Risk Assessment Test Now",
-            "https://selfassessment.ncdc.gov.ng",
+            "https://production-ncdc-gloepid-bot-web-driver.azurewebsites.net/bot?partnerId=0&config=eyJjb2xsYXBzZUJ5RGVmYXVsdCI6dHJ1ZX0=",
             R.raw.scanner
         )
         items.add(riskAssessment)

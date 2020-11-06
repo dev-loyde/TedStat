@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun launchNewsUrl(url: String) {
-        Toast.makeText(this@MainActivity, url, Toast.LENGTH_SHORT).show()
+     //   Toast.makeText(this@MainActivity, url, Toast.LENGTH_SHORT).show()
         launchCustomBrowser(url)
     }
 

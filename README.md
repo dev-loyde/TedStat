@@ -23,9 +23,9 @@
   <h3 align="center">TedStat covid19 Safety and Statistics App</h3>
 
   <p align="center">
-    An awesome project that help you to easily find information on the covid19 pandemic!
+    An awesome project that help you to easily find information and statistics on the covid19 pandemic!
     <br />
-    <a href="https://github.com/dev-loyde/TedStat">View Demo</a>
+    <a href="https://install.appcenter.ms/users/dev_loyde/apps/tedstat/distribution_groups/public_release">View Demo</a>
     ·
     <a href="https://github.com/dev-loyde/TedStat/issues">Report Bug</a>
     ·
@@ -52,9 +52,10 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![App Screen Shot][product-screenshot]]
+![App Walthrough Screen Shot][product-walkthrough]
+![App Screen Shot][product-screenshot]
 
-There are many great covid19 resources/information apps out there, however,I decided to create this one in order to further help in making information readily available to everyone
+There are many great covid19 resources/information apps out there, however,I decided to create this one in order to further help in making information readily and easily accessible to everyone.
 We need to be very informed at all times with happenings around us inorder for some reasons
 
 Here's why:
@@ -62,19 +63,21 @@ Here's why:
 * To be updated with statistical cases trend around us
 * To easily get access to advisories and faq's from trusted sources
 
-Of course, no one app will serve all needs since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue.
+Of course, no one app will serve all needs since everyone needs may be different. So I'll be adding more features in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue.
+
+![App Screen Shot][product-dark]
 
 A list of commonly used resources that I find helpful are listed in the acknowledgements.
 
 ### Built With
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+This App and its web scaper for fetching the online informations and statistics was Developed with.
 * [Kotlin](https://kotlinlang.org)
+* [Node Js](https://nodejs.org)
 
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
 ### Installation
@@ -85,11 +88,12 @@ To get a local copy up and running follow these simple example steps.
 - build gradle version 4.0.1
 - compileSdkVersion 30
 - kotlin version 1.3.72-release-Studio 4.0-5
-- create a file env.properties in project root
+- copy sample.env.properties into a new file env.     properties in project app folder
 - Add build config variables
 ```JS
-   API_KEY = 'ENTER YOUR API';
+   API_KEY = 'ENTER YOUR API KEY';
    BASE_URL = 'ENTER SERVER BASEURL';
+   APP_CENTER_KEY = 'ENTER YOUR SECRET KEY'
 ```
 - build and run project.
 
@@ -157,4 +161,7 @@ Project Link: [https://github.com/dev-loyde/TedStat](https://github.com/dev-loyd
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: www.linkedin.com/in/thaddeus-oseghale
-[product-screenshot]: https://github.com/dev-loyde/TedStat/blob/master/screenshots/ted-stat-screenshot.png
+<!-- [product-screenshot]: https://github.com/dev-loyde/TedStat/blob/master/screenshots/ted-stat-screenshot.png -->
+[product-screenshot]: screenshots/ted-stat-screenshot.png
+[product-walkthrough]: screenshots/ted-stat-walkthrough.png
+[product-dark]: screenshots/ted-stat-showcase-dark.png

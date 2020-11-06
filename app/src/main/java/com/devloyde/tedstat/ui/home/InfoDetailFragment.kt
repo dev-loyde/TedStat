@@ -45,7 +45,6 @@ class InfoDetailFragment : Fragment() {
             infoTypeParam = it.getInt(INFO_TYPE)
         }
 
-        Toast.makeText(context,infoTypeParam.toString(),Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateView(
