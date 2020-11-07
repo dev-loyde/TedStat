@@ -23,4 +23,6 @@
     <string name="health_care_news_source">source: NCDC</string>
     <string name="dashboard_total_cases_placeholder">Total Cases</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="connectivity_no_connection">No Connection</string>
+    <string name="connectivity_connection_back">Connection Back</string>
 </resources>

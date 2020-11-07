@@ -16,7 +16,6 @@ interface ConnectivityProvider {
 
     fun addListener(listener: ConnectivityStateListener)
     fun removeListener(listener: ConnectivityStateListener)
-
     fun getNetworkState(): NetworkState
 
     @Suppress("MemberVisibilityCanBePrivate", "CanBeParameter")
@@ -32,7 +31,7 @@ interface ConnectivityProvider {
 
             @Suppress("DEPRECATION")
             data class ConnectedLegacy(val networkInfo: NetworkInfo) : ConnectedState(
-                networkInfo.isConnectedOrConnecting
+                networkInfo.isConnected
             )
         }
     }

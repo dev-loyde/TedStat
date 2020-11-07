@@ -44,17 +44,19 @@ class ConnectivityProviderLegacyImpl(
             val fallbackNetworkInfo: NetworkInfo? = intent.getParcelableExtra(EXTRA_NETWORK_INFO)
             // a set of dirty workarounds
             val state: ConnectivityProvider.NetworkState =
-                if (networkInfo?.isConnectedOrConnecting == true) {
+                if (networkInfo?.isConnected == true) {
                     ConnectedState.ConnectedLegacy(networkInfo)
                 } else if (networkInfo != null && fallbackNetworkInfo != null &&
-                    networkInfo.isConnectedOrConnecting != fallbackNetworkInfo.isConnectedOrConnecting
+                    networkInfo.isConnected != fallbackNetworkInfo.isConnected
                 ) {
                     ConnectedState.ConnectedLegacy(fallbackNetworkInfo)
                 } else {
                     val state = networkInfo ?: fallbackNetworkInfo
-                    if (state != null) ConnectivityProvider.NetworkState.ConnectedState.ConnectedLegacy(
-                        state
-                    ) else ConnectivityProvider.NetworkState.NotConnectedState
+                    if (state != null) {
+                        ConnectivityProvider.NetworkState.ConnectedState.ConnectedLegacy(state)
+                    } else {
+                        ConnectivityProvider.NetworkState.NotConnectedState
+                    }
                 }
             dispatchChange(state)
         }

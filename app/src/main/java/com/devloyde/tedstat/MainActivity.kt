@@ -10,9 +10,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -47,7 +45,6 @@ class MainActivity : AppCompatActivity(),
     ConnectivityProvider.ConnectivityStateListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavigationView: BottomNavigationView
-    private val tag: String = "MainActivity"
     private lateinit var navController: NavController
     private lateinit var dashboardViewModel: DashboardViewModel
 
@@ -78,6 +75,8 @@ class MainActivity : AppCompatActivity(),
             Analytics::class.java,
             Crashes::class.java
         )
+
+        provider.addListener(this)
     }
 
     private fun checkDarkMode() {
@@ -167,15 +166,15 @@ class MainActivity : AppCompatActivity(),
         val context = binding.networkStateContainer.context
 
         if (isConnected) {
-            binding.networkStateContainer.text = "Connection Back"
+            binding.networkStateContainer.text = getString(R.string.connectivity_connection_back)
             binding.networkStateContainer.setTextColor(ContextCompat.getColor(context, R.color.darkTextColor))
             binding.networkStateContainer.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary))
             slideUp(true)
-            Handler(Looper.getMainLooper()).postDelayed(Runnable {
+            Handler(Looper.getMainLooper()).postDelayed({
                 slideUp(false)
             }, 2000)
         } else {
-            binding.networkStateContainer.text = "No Connection"
+            binding.networkStateContainer.text = getString(R.string.connectivity_no_connection)
             val textColor: Int = MaterialColors.getColor(
                 context, R.attr.textColor,
                 ContextCompat.getColor(context, R.color.textColor)
@@ -198,13 +197,8 @@ class MainActivity : AppCompatActivity(),
         return (this as? ConnectivityProvider.NetworkState.ConnectedState)?.hasInternet == true
     }
 
-    override fun onStart() {
-        super.onStart()
-        provider.addListener(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         provider.removeListener(this)
     }
 
