@@ -28,12 +28,10 @@
         android:id="@+id/navigation_news"
         android:name="com.devloyde.tedstat.ui.news.NewsFragment"
         tools:layout="@layout/fragment_news" />
-
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.devloyde.tedstat.ui.dashboard.DashboardFragment"
         tools:layout="@layout/fragment_dashboard" />
-
     <fragment
         android:id="@+id/navigation_settings"
         android:name="com.devloyde.tedstat.ui.settings.SettingsFragment" >
@@ -53,7 +51,15 @@
         android:id="@+id/preventionDetailFragment"
         android:name="com.devloyde.tedstat.ui.home.PreventionDetailFragment"
         android:label="Preventions"
-        tools:layout="@layout/fragment_prevention_detail" />
+        tools:layout="@layout/fragment_prevention_detail" >
+        <action
+            android:id="@+id/action_preventionDetailFragment_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
+    </fragment>
     <fragment
         android:id="@+id/infoDetailFragment"
         android:name="com.devloyde.tedstat.ui.home.InfoDetailFragment"

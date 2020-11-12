@@ -253,6 +253,7 @@ class HomeFragment : Fragment() {
 
         homeAdapter.addItem(items)
     }
+
     private fun dismissRefreshLayout(){
         if(swipeRefreshLayout.isRefreshing){
             swipeRefreshLayout.isRefreshing = false

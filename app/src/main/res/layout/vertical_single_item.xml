@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="item"
-            type="com.devloyde.tedstat.models.HealthCard" />
-    </data>
-
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/health_card"
         android:layout_width="120dp"
@@ -35,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="3"
-                tools:imageUrl="@{item.image}" />
+                />
 
             <TextView
                 android:id="@+id/vertical_title"
@@ -47,7 +41,6 @@
                 android:layout_marginRight="7dp"
                 android:layout_weight="0.2"
                 android:gravity="center"
-                android:text="@{item.title}"
                 android:textAlignment="center"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textSize="9sp"

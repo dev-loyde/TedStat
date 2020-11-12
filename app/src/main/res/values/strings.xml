@@ -25,4 +25,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="connectivity_no_connection">No Connection</string>
     <string name="connectivity_connection_back">Connection Back</string>
+    <string name="prevention_method_image">Prevention method image</string>
+    <string name="prevention_previous_btn">Previous</string>
+    <string name="prevention_next_btn">Next</string>
 </resources>

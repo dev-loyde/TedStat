@@ -1,13 +1,18 @@
 package com.devloyde.tedstat.listeners
 
+import android.widget.ImageView
+
 class NavigationListeners {
 
     interface HomeDetailNavigationListener {
-        fun navigateToPreventionDetailScreen(position: Int? = null)
+        fun navigateToPreventionDetailScreen(
+            position: Int? = null,
+            image: ImageView? = null
+        )
 
         fun launchCustomUrl(url: String)
 
-        fun navigateToInfoDetailScreen(infoType:Int,position: Int? = null)
+        fun navigateToInfoDetailScreen(infoType: Int, position: Int? = null)
 
     }
 
@@ -22,7 +27,7 @@ class NavigationListeners {
     interface SettingsNavigationListener {
         fun launchOpenSourceLicenses()
         fun launchShare()
-        fun restartApp(mode:Boolean)
+        fun restartApp(mode: Boolean)
         fun launchCredits()
         fun launchAbout()
         fun launchFeedBack()

@@ -36,7 +36,8 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
     private lateinit var sharedPref: SharedPref
     private lateinit var themeListener: DisplayListener.UpdateTheme
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
         binding = DataBindingUtil.inflate(
@@ -89,7 +90,7 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
     }
 
     override fun launchCredits() {
-      navController.navigate(R.id.action_navigation_settings_to_creditsFragment)
+        navController.navigate(R.id.action_navigation_settings_to_creditsFragment)
     }
 
     override fun launchAbout() {
@@ -105,7 +106,12 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.type = "text/plain"
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, "TedStat")
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "Hi download TedStat today")
+            shareIntent.putExtra(
+                Intent.EXTRA_TEXT, "Hi download TedStat today" +
+                        "Its a covid19 information aggregator app that helps you stay " +
+                        "informed on news and statistics." +
+                        " https://install.appcenter.ms/users/dev_loyde/apps/tedstat/distribution_groups/public_release"
+            )
             startActivity(Intent.createChooser(shareIntent, "Share with :"))
         } catch (e: Exception) {
             Toast.makeText(
@@ -118,7 +124,7 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(context is DisplayListener.UpdateTheme){
+        if (context is DisplayListener.UpdateTheme) {
             themeListener = context
         }
     }

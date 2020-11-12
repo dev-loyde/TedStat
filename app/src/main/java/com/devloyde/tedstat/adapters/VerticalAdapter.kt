@@ -3,14 +3,20 @@ package com.devloyde.tedstat.adapters
 import android.view.LayoutInflater
 
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.databinding.ViewDataBinding
+import androidx.navigation.Navigator
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 
 import androidx.recyclerview.widget.RecyclerView
+import com.devloyde.tedstat.R
 import com.devloyde.tedstat.databinding.PreventionDetailsItemBinding
 
 import com.devloyde.tedstat.databinding.VerticalSingleItemBinding
 import com.devloyde.tedstat.listeners.NavigationListeners.HomeDetailNavigationListener
 import com.devloyde.tedstat.models.*
+import com.devloyde.tedstat.ui.home.PreventionDetailFragment
 import com.squareup.picasso.Picasso
 
 class VerticalAdapter(
@@ -53,7 +59,6 @@ class VerticalAdapter(
 
     private fun homeCardView(holder: HomeCardVerticalViewHolder, position: Int) {
         val verticalModel: HealthCard = mItems[position] as HealthCard
-
         holder.bind(verticalModel, position)
     }
 
@@ -82,11 +87,24 @@ class VerticalAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: HealthCard, position: Int) {
-            binding.item = item
-            binding.executePendingBindings()
+            Picasso.with(binding.verticalImg.context)
+                .load(item.image)
+                .into(binding.verticalImg)
+            binding.verticalTitle.text = item.title
+            ViewCompat.setTransitionName(binding.verticalImg,"preventionImageTransition_$position")
             binding.healthCard.setOnClickListener {
-                listener?.navigateToPreventionDetailScreen(position)
+                //  listener?.navigateToPreventionDetailScreen(position, binding.verticalImg)
+                val extras =
+                    FragmentNavigatorExtras(binding.verticalImg to "preventionImageTransition_$position")
+                val args = PreventionDetailFragment.bundleArgs(position,item)
+                binding.root.findNavController().navigate(
+                    R.id.action_navigation_home_to_preventionDetailFragment,
+                    args, // Bundle of args
+                    null, // NavOptions
+                    extras
+                )
             }
+            binding.executePendingBindings()
         }
     }
 
@@ -94,17 +112,17 @@ class VerticalAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: PreventionDetailCard, position: Int) {
-            binding.preventionTitle.text = item.title
-            binding.preventionDescription.text = item.description
-            Picasso.with(binding.preventionTitle.context)
+            Picasso.with(binding.preventionImg.context)
                 .load(item.image)
                 .into(binding.preventionImg)
+            binding.preventionTitle.text = item.title
+            binding.preventionDescription.text = item.description
+            ViewCompat.setTransitionName(binding.preventionImg,"preventionImageTransition_$position")
             binding.executePendingBindings()
 
         }
 
 
     }
-
 
 }

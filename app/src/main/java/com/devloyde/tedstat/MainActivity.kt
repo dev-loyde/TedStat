@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.Gravity
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
@@ -14,6 +15,8 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.Navigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.transition.Slide
@@ -108,12 +111,27 @@ class MainActivity : AppCompatActivity(),
 //        }
     }
 
-    override fun navigateToPreventionDetailScreen(position: Int?) {
+    override fun navigateToPreventionDetailScreen(
+        position: Int?,image: ImageView?) {
+        var extras: Navigator.Extras? = null
+        if (image != null) {
+            extras = FragmentNavigatorExtras(image to "preventionImageTransition$position")
+        }
         if (position != null) {
-            val args = PreventionDetailFragment.bundleArgs(position)
-            navController.navigate(R.id.action_navigation_home_to_preventionDetailFragment, args)
+       //     val args = PreventionDetailFragment.bundleArgs(position,)
+            navController.navigate(
+                R.id.action_navigation_home_to_preventionDetailFragment,
+                null, // Bundle of args
+                null, // NavOptions
+                extras
+            )
         } else {
-            navController.navigate(R.id.action_navigation_home_to_preventionDetailFragment)
+            navController.navigate(
+                R.id.action_navigation_home_to_preventionDetailFragment,
+                null, // Bundle of args
+                null, // NavOptions
+                null
+            )
         }
     }
 
@@ -128,7 +146,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun launchNewsUrl(url: String) {
-     //   Toast.makeText(this@MainActivity, url, Toast.LENGTH_SHORT).show()
+        //   Toast.makeText(this@MainActivity, url, Toast.LENGTH_SHORT).show()
         launchCustomBrowser(url)
     }
 
@@ -167,8 +185,18 @@ class MainActivity : AppCompatActivity(),
 
         if (isConnected) {
             binding.networkStateContainer.text = getString(R.string.connectivity_connection_back)
-            binding.networkStateContainer.setTextColor(ContextCompat.getColor(context, R.color.darkTextColor))
-            binding.networkStateContainer.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            binding.networkStateContainer.setTextColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.darkTextColor
+                )
+            )
+            binding.networkStateContainer.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.colorPrimary
+                )
+            )
             slideUp(true)
             Handler(Looper.getMainLooper()).postDelayed({
                 slideUp(false)

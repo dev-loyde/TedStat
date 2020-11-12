@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.devloyde.tedstat.R
 import com.devloyde.tedstat.databinding.NewsCategoryListItemBinding
@@ -37,7 +37,12 @@ class NewsCategoryAdapter(val listener: NewsItemUrlNavigationListener?) :
                 Picasso.with(context)
                     .load(news.image)
                     .fit()
-                    .placeholder(R.drawable.placeholder_logo)
+                    .placeholder(
+                        ContextCompat.getDrawable(
+                            holder.itemView.context,
+                            R.drawable.placeholder_logo
+                        )
+                    )
                     .into(holder.image)
 
                 holder.title.text = news.title
@@ -53,7 +58,12 @@ class NewsCategoryAdapter(val listener: NewsItemUrlNavigationListener?) :
                 Picasso.with(context)
                     .load(news.image)
                     .fit()
-                    .placeholder(R.drawable.placeholder_logo)
+                    .placeholder(
+                        ContextCompat.getDrawable(
+                            holder.itemView.context,
+                            R.drawable.placeholder_logo
+                        )
+                    )
                     .into(holder.image)
 
                 holder.title.text = news.title
@@ -67,11 +77,17 @@ class NewsCategoryAdapter(val listener: NewsItemUrlNavigationListener?) :
                 Picasso.with(context)
                     .load(news.image)
                     .fit()
-                    .placeholder(R.drawable.placeholder_logo)
+                    .placeholder(
+                        ContextCompat.getDrawable(
+                            holder.itemView.context,
+                            R.drawable.placeholder_logo
+                        )
+                    )
                     .into(holder.image)
 
                 holder.title.text = news.title
-                holder.publisher.text = context.getString(R.string.news_item_source_text, news.provider)
+                holder.publisher.text =
+                    context.getString(R.string.news_item_source_text, news.provider)
                 holder.itemView.setOnClickListener {
                     news.link?.let { link -> listener?.launchNewsUrl(link) }
                 }
@@ -80,11 +96,17 @@ class NewsCategoryAdapter(val listener: NewsItemUrlNavigationListener?) :
                 Picasso.with(context)
                     .load(news.image)
                     .fit()
-                    .placeholder(R.drawable.placeholder_logo)
+                    .placeholder(
+                        ContextCompat.getDrawable(
+                            holder.itemView.context,
+                            R.drawable.placeholder_logo
+                        )
+                    )
                     .into(holder.image)
 
                 holder.title.text = news.title
-                holder.publisher.text = context.getString(R.string.news_item_source_text, news.provider)
+                holder.publisher.text =
+                    context.getString(R.string.news_item_source_text, news.provider)
                 holder.itemView.setOnClickListener {
                     news.link?.let { link -> listener?.launchNewsUrl(link) }
                 }

@@ -26,6 +26,6 @@
     <color name="darkCardBackgroundPrimary">#232129</color>
     <color name="darkColorBlue">#ff33b5e5</color>
     <color name="darkLoadingBackgroundTint">#131217</color>
-    <color name="darkPlaceholderBackgroundTint">#cc000000</color>
+    <color name="darkPlaceholderBackgroundTint">#aa000000</color>
 
 </resources>
