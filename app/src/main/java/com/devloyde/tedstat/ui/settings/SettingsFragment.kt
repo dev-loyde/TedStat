@@ -107,10 +107,10 @@ class SettingsFragment : Fragment(), NavigationListeners.SettingsNavigationListe
             shareIntent.type = "text/plain"
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, "TedStat")
             shareIntent.putExtra(
-                Intent.EXTRA_TEXT, "Hi download TedStat today" +
-                        "Its a covid19 information aggregator app that helps you stay " +
-                        "informed on news and statistics." +
-                        " https://install.appcenter.ms/users/dev_loyde/apps/tedstat/distribution_groups/public_release"
+                Intent.EXTRA_TEXT, "Hi download TedStat today. " +
+                        "A simple covid19 information aggregator app that helps you stay " +
+                        "informed on news and statistics from the world and around you." +
+                        " https://bit.ly/tedstat"
             )
             startActivity(Intent.createChooser(shareIntent, "Share with :"))
         } catch (e: Exception) {

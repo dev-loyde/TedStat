@@ -51,6 +51,7 @@ class HomeFragment : Fragment() {
             ViewModelProvider(requireActivity()).get(DashboardViewModel::class.java)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         bindViews()
+        postponeEnterTransition()
         navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         toolbar.setupWithNavController(navController, appBarConfiguration)
@@ -252,6 +253,7 @@ class HomeFragment : Fragment() {
         }
 
         homeAdapter.addItem(items)
+        startPostponedEnterTransition()
     }
 
     private fun dismissRefreshLayout(){

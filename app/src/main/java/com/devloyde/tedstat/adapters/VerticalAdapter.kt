@@ -91,11 +91,11 @@ class VerticalAdapter(
                 .load(item.image)
                 .into(binding.verticalImg)
             binding.verticalTitle.text = item.title
-            ViewCompat.setTransitionName(binding.verticalImg,"preventionImageTransition_$position")
+            ViewCompat.setTransitionName(binding.verticalImg, item.image.toString())
             binding.healthCard.setOnClickListener {
                 //  listener?.navigateToPreventionDetailScreen(position, binding.verticalImg)
                 val extras =
-                    FragmentNavigatorExtras(binding.verticalImg to "preventionImageTransition_$position")
+                    FragmentNavigatorExtras(binding.verticalImg to item.image.toString())
                 val args = PreventionDetailFragment.bundleArgs(position,item)
                 binding.root.findNavController().navigate(
                     R.id.action_navigation_home_to_preventionDetailFragment,
@@ -117,7 +117,10 @@ class VerticalAdapter(
                 .into(binding.preventionImg)
             binding.preventionTitle.text = item.title
             binding.preventionDescription.text = item.description
-            ViewCompat.setTransitionName(binding.preventionImg,"preventionImageTransition_$position")
+            ViewCompat.setTransitionName(
+                binding.preventionImg,
+                "preventionImageTransition_$position"
+            )
             binding.executePendingBindings()
 
         }

@@ -147,7 +147,7 @@ class PreventionDetailFragment : Fragment() {
             })
             setUpViewpagerControls(safetyTipsList.size)
         } else {
-            ViewCompat.setTransitionName(image, "preventionImageTransition_${listPosition}")
+            ViewCompat.setTransitionName(image, preventionItem.image.toString())
             Picasso.with(context)
                 .load(preventionItem.image)
                 .into(image)
