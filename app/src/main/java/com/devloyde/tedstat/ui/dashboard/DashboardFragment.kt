@@ -124,7 +124,6 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setUpCountryChart() {
-
         countryPieChart.setUsePercentValues(true)
         countryPieChart.isDrawHoleEnabled = true
         val color: Int = MaterialColors.getColor(
@@ -135,7 +134,6 @@ class DashboardFragment : Fragment() {
         countryPieChart.transparentCircleRadius = 60F
         countryPieChart.legend.isEnabled = false
         countryPieChart.description.isEnabled = false
-
     }
 
     private fun insertChartData(pieDataValues: List<PieEntry>) {

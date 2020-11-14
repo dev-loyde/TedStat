@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.devloyde.tedstat.db.HealthGuardDatabase
+import com.devloyde.tedstat.db.SharedPref
 import com.devloyde.tedstat.db.StatDao
 import com.devloyde.tedstat.models.GlobalStat
 import com.devloyde.tedstat.models.StatCountries
@@ -20,6 +21,7 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
     private var currentCountry: MutableLiveData<StatCountries> = MutableLiveData()
     var countriesStat: LiveData<List<StatCountries>> = MutableLiveData()
     var topAffectedCountriesStat: LiveData<List<StatCountries>> = MutableLiveData()
+    val sharedPreference = SharedPref(application)
 
     init {
         Log.d("dash-view-model", "view model initialized")
@@ -42,6 +44,7 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun setCurrentCountry(country: StatCountries) {
         currentCountry.value = country
+        sharedPreference.saveDashboardSelectedCountry(country.country!!)
     }
 
     fun getCurrentCountry(): LiveData<StatCountries> {
@@ -49,7 +52,7 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun getDefaultCountry(): LiveData<StatCountries> {
-        return statDao.loadOneCountriesStat("Nigeria")
+        return statDao.loadOneCountriesStat(sharedPreference.loadDashboardSelectedCountry()!!)
     }
 
 }

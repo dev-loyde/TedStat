@@ -16,24 +16,31 @@ object StatUtils {
         var confirmedCases = 0
         var recoveredCases = 0
         var deathCases = 0
-        val visibilityFactor = 10000
+        val visibilityFactor = 100
+
+        if (stat.deaths != null) {
+            if (stat.deaths != "No data") {
+                deathCases = stat.deaths.toIntOrNull() ?: parseIntegerStat(stat.deaths)
+                if (deathCases > visibilityFactor) {
+                    deathCases += 10000
+                }
+            }
+        }
 
         if (stat.recovered != null) {
             if (stat.recovered != "No data") {
                 recoveredCases = stat.recovered.toIntOrNull() ?: parseIntegerStat(stat.recovered)
-                recoveredCases += visibilityFactor
+                if (deathCases > visibilityFactor) {
+                    recoveredCases += 10000
+                }
             }
         }
         if (stat.cases != null) {
             if (stat.cases != "No data") {
                 confirmedCases = stat.cases.toIntOrNull() ?: parseIntegerStat(stat.cases)
-                confirmedCases += visibilityFactor
-            }
-        }
-        if (stat.deaths != null) {
-            if (stat.deaths != "No data") {
-                deathCases = stat.deaths.toIntOrNull() ?: parseIntegerStat(stat.deaths)
-                deathCases += visibilityFactor
+                if (deathCases > visibilityFactor) {
+                    confirmedCases += 10000
+                }
             }
         }
 
