@@ -6,9 +6,6 @@
     <string name="title_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="title_activity_welcome">WelcomeActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
     <string name="news_item_source_text">source: %1$s</string>
     <string name="dashboard_cases_country_header">Total Cases in %1$s</string>
     <string name="countries_stat_infected_cases">Infected %1$s</string>
@@ -28,4 +25,6 @@
     <string name="prevention_method_image">Prevention method image</string>
     <string name="prevention_previous_btn">Previous</string>
     <string name="prevention_next_btn">Next</string>
+    <string name="home_banner_image">Home Banner Image</string>
+
 </resources>

@@ -2,6 +2,7 @@ package com.devloyde.tedstat.respositories
 
 import android.util.Log
 import com.devloyde.tedstat.db.StatDao
+import com.devloyde.tedstat.interfaces.StatRepositoryInterface
 import com.devloyde.tedstat.models.*
 import com.devloyde.tedstat.networking.NetworkServiceBuilder
 import com.devloyde.tedstat.networking.StatEndpoints
@@ -11,13 +12,14 @@ import retrofit2.Response
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.TimeUnit
 
-class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
+class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) :
+    StatRepositoryInterface {
     // Retrofit request builder service to all news endpoints
     private val request = NetworkServiceBuilder.buildService(StatEndpoints::class.java)
     private val globalStatsTimeout: Int = 5
     private val countriesStatTimeout: Int = 6
 
-    fun getGlobalStat(){
+    override fun getGlobalStat() {
         statExecutors.execute {
             Log.d(GLOBAL_STAT_TAG, "checking db for global stat")
             val timeout = statDao.checkTimeout(globalStatsTimeout)
@@ -31,12 +33,18 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
                             Log.d(GLOBAL_STAT_TAG, "Error fetching global stat")
                         }
 
-                        override fun onResponse(call: Call<GlobalStatResponse>,response: Response<GlobalStatResponse>) {
+                        override fun onResponse(
+                            call: Call<GlobalStatResponse>,
+                            response: Response<GlobalStatResponse>
+                        ) {
                             if (response.isSuccessful) {
                                 if (!response.body()!!.error) {
                                     statExecutors.execute {
                                         Log.d(GLOBAL_STAT_TAG, "Success fetching global stat")
-                                        Log.d(GLOBAL_STAT_TAG,"delete timeout and previous global stat data only on success")
+                                        Log.d(
+                                            GLOBAL_STAT_TAG,
+                                            "delete timeout and previous global stat data only on success"
+                                        )
                                         statDao.deleteTimeout(globalStatsTimeout)
                                         statDao.deleteGlobalStat()
                                         Log.d(GLOBAL_STAT_TAG, "Success saving global stats to db")
@@ -54,7 +62,7 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
                         }
                     })
                 }
-            }else{
+            } else {
                 Log.d(GLOBAL_STAT_TAG, "user eligible to fetch new stat from server")
                 val call = request.getGlobalStat()
                 call.enqueue(object : Callback<GlobalStatResponse> {
@@ -95,7 +103,7 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
         }
     }
 
-    fun getCountriesStat() {
+    override fun getCountriesStat() {
         statExecutors.execute {
             Log.d(COUNTRY_STAT_TAG, "checking db for countries stat list")
             val timeout = statDao.checkTimeout(countriesStatTimeout)
@@ -123,7 +131,10 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
                                         )
                                         statDao.deleteTimeout(countriesStatTimeout)
                                         statDao.deleteCountriesStat()
-                                        Log.d(COUNTRY_STAT_TAG, "Success saving countries stats to db")
+                                        Log.d(
+                                            COUNTRY_STAT_TAG,
+                                            "Success saving countries stats to db"
+                                        )
                                         statDao.saveStatCountries(*response.body()!!.data.toTypedArray())
                                         Log.d(COUNTRY_STAT_TAG, "Saving countries stat timeout")
                                         statDao.saveTimeout(
@@ -138,7 +149,7 @@ class StatRepository(val statDao: StatDao, val statExecutors: ExecutorService) {
                         }
                     })
                 }
-            }else{
+            } else {
                 Log.d(COUNTRY_STAT_TAG, "user eligible to fetch new stat from server")
                 val call = request.getCountryStat()
                 call.enqueue(object : Callback<CountryStatResponse> {

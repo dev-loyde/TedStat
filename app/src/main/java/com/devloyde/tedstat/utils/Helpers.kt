@@ -4,11 +4,12 @@ import com.devloyde.tedstat.models.GlobalStat
 import com.devloyde.tedstat.models.StatCountries
 
 object StatUtils {
-    private fun parseIntegerStat(text: String): Int {
+
+    fun parseIntegerStat(text: String): Int {
         return text.replace(Regex(","), "").toInt()
     }
 
-    private fun parseGlobalStatPercentage(stat: Int, total: Int): Int {
+    fun parseGlobalStatPercentage(stat: Int, total: Int): Int {
         return ((stat.toFloat() / total) * 100).toInt()
     }
 
@@ -26,7 +27,6 @@ object StatUtils {
                 }
             }
         }
-
         if (stat.recovered != null) {
             if (stat.recovered != "No data") {
                 recoveredCases = stat.recovered.toIntOrNull() ?: parseIntegerStat(stat.recovered)

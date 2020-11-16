@@ -2,6 +2,7 @@ package com.devloyde.tedstat.respositories
 
 import android.util.Log
 import com.devloyde.tedstat.db.InfoDao
+import com.devloyde.tedstat.interfaces.InfoRepositoryInterface
 import com.devloyde.tedstat.models.*
 import com.devloyde.tedstat.networking.InfoEndpoints
 import com.devloyde.tedstat.networking.NetworkServiceBuilder
@@ -11,13 +12,13 @@ import retrofit2.Response
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.TimeUnit
 
-class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) {
+class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) : InfoRepositoryInterface {
     // Retrofit request builder service to all news endpoints
     private val request = NetworkServiceBuilder.buildService(InfoEndpoints::class.java)
     private val advisoryTimeout: Int = 10
     private val faqTimeout: Int = 11
 
-    fun getAdvisoryInfo() {
+    override fun getAdvisoryInfo() {
         infoExecutors.execute {
             Log.d(ADVISORY_INFO_TAG, "checking db for advisory info")
             val timeout = infoDao.checkTimeout(advisoryTimeout)
@@ -112,7 +113,7 @@ class InfoRepository(val infoDao: InfoDao, val infoExecutors: ExecutorService) {
         }
     }
 
-    fun getFaqInfo() {
+    override fun getFaqInfo() {
         infoExecutors.execute {
             Log.d(FAQ_INFO_TAG, "checking db for faq info")
             val timeout = infoDao.checkTimeout(faqTimeout)

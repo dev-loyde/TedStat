@@ -24,7 +24,7 @@
                 android:id="@+id/news_img"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/teens"
+                android:src="@drawable/placeholder_logo"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"

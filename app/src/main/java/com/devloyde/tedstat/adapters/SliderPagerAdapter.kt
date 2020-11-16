@@ -9,6 +9,7 @@ import com.devloyde.tedstat.databinding.CarouselItemBinding
 import com.devloyde.tedstat.databinding.WelcomeItemBinding
 import com.devloyde.tedstat.models.Carousel
 import com.devloyde.tedstat.models.Welcome
+import com.squareup.picasso.Picasso
 
 class SliderPagerAdapter(items: List<Any>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -81,7 +82,11 @@ class SliderPagerAdapter(items: List<Any>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Carousel) {
-            binding.item = item
+            Picasso
+                .with(binding.carouselImg.context)
+                .load(item.image)
+                .into(binding.carouselImg)
+            binding.executePendingBindings()
         }
     }
 
@@ -93,6 +98,7 @@ class SliderPagerAdapter(items: List<Any>) :
             binding.welcomeImg.imageAssetsFolder = "images"
             binding.welcomeImg.setRenderMode(RenderMode.SOFTWARE)
             binding.welcomeImg.setAnimation(item.img)
+            binding.executePendingBindings()
         }
     }
 

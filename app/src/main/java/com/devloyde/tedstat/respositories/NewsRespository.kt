@@ -3,6 +3,7 @@ package com.devloyde.tedstat.respositories
 import android.util.Log
 
 import com.devloyde.tedstat.db.NewsDao
+import com.devloyde.tedstat.interfaces.NewsRespositoryInterface
 import com.devloyde.tedstat.models.*
 import com.devloyde.tedstat.networking.NetworkServiceBuilder
 import com.devloyde.tedstat.networking.NewsEndpoints
@@ -19,7 +20,7 @@ import java.util.concurrent.TimeUnit
 class NewsRespository(
     val newsDao: NewsDao,
     val newsExecutors: ExecutorService
-) {
+): NewsRespositoryInterface {
 
     // Retrofit request builder service to all news endpoints
     private val request = NetworkServiceBuilder.buildService(NewsEndpoints::class.java)
@@ -30,7 +31,7 @@ class NewsRespository(
     private val globalNewsTimeout: Int = 2
     private val countryNewsTimeout: Int = 3
 
-    fun getRecommendedNews(){
+    override fun getRecommendedNews(){
         newsExecutors.execute {
             Log.d("RECOMMENDED NEWS", "checking db for recommended news")
             val timeout = newsDao.checkTimeout(recommendedNewsTimeout)
@@ -118,7 +119,7 @@ class NewsRespository(
         }
     }
 
-    fun getLocalNews() {
+    override fun getLocalNews() {
         newsExecutors.execute {
             val timeout = newsDao.checkTimeout(localNewsTimeout)
             val expireTime = TimeUnit.HOURS.toMillis(1)
@@ -188,7 +189,7 @@ class NewsRespository(
         }
     }
 
-    fun getGlobalNews() {
+    override fun getGlobalNews() {
         newsExecutors.execute {
             val timeout = newsDao.checkTimeout(globalNewsTimeout)
             val expireTime = TimeUnit.HOURS.toMillis(1)
@@ -260,7 +261,7 @@ class NewsRespository(
         }
     }
 
-    fun getCountryNews(countryIso: String) {
+    override fun getCountryNews(countryIso: String) {
         newsExecutors.execute {
             val timeout = newsDao.checkTimeout(countryNewsTimeout)
             val expireTime = TimeUnit.HOURS.toMillis(1)
