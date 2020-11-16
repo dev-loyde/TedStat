@@ -103,6 +103,10 @@ class HomeFragment : Fragment() {
         binding.homeRecyclerView.setHasFixedSize(false)
         binding.homeRecyclerView.adapter = homeAdapter
         loadItems()
+        binding.homeRecyclerView.viewTreeObserver.addOnPreDrawListener {
+            startPostponedEnterTransition()
+            true
+        }
     }
 
     private fun loadItems() {
@@ -253,7 +257,6 @@ class HomeFragment : Fragment() {
         }
 
         homeAdapter.addItem(items)
-        startPostponedEnterTransition()
     }
 
     private fun dismissRefreshLayout(){

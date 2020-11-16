@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devloyde.tedstat.R
 import com.devloyde.tedstat.databinding.PreventionDetailsItemBinding
 
-import com.devloyde.tedstat.databinding.VerticalSingleItemBinding
+import com.devloyde.tedstat.databinding.PreventionSingleItemBinding
 import com.devloyde.tedstat.listeners.NavigationListeners.HomeDetailNavigationListener
 import com.devloyde.tedstat.models.*
 import com.devloyde.tedstat.ui.home.PreventionDetailFragment
@@ -34,7 +34,7 @@ class VerticalAdapter(
 
         when (viewType) {
             homeCardVertical -> {
-                binding = VerticalSingleItemBinding.inflate(inflater, parent, false)
+                binding = PreventionSingleItemBinding.inflate(inflater, parent, false)
                 holder = HomeCardVerticalViewHolder(binding)
             }
             preventionCardDetail -> {
@@ -83,7 +83,7 @@ class VerticalAdapter(
     }
 
 
-    inner class HomeCardVerticalViewHolder(val binding: VerticalSingleItemBinding) :
+    inner class HomeCardVerticalViewHolder(val binding: PreventionSingleItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: HealthCard, position: Int) {
@@ -93,16 +93,7 @@ class VerticalAdapter(
             binding.verticalTitle.text = item.title
             ViewCompat.setTransitionName(binding.verticalImg, item.image.toString())
             binding.healthCard.setOnClickListener {
-                //  listener?.navigateToPreventionDetailScreen(position, binding.verticalImg)
-                val extras =
-                    FragmentNavigatorExtras(binding.verticalImg to item.image.toString())
-                val args = PreventionDetailFragment.bundleArgs(position,item)
-                binding.root.findNavController().navigate(
-                    R.id.action_navigation_home_to_preventionDetailFragment,
-                    args, // Bundle of args
-                    null, // NavOptions
-                    extras
-                )
+              listener?.navigateToPreventionDetailScreen(item,position, binding.verticalImg)
             }
             binding.executePendingBindings()
         }
@@ -117,10 +108,6 @@ class VerticalAdapter(
                 .into(binding.preventionImg)
             binding.preventionTitle.text = item.title
             binding.preventionDescription.text = item.description
-            ViewCompat.setTransitionName(
-                binding.preventionImg,
-                "preventionImageTransition_$position"
-            )
             binding.executePendingBindings()
 
         }

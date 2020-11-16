@@ -16,6 +16,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigator
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -26,6 +27,7 @@ import com.devloyde.tedstat.databinding.ActivityMainBinding
 import com.devloyde.tedstat.db.SharedPref
 import com.devloyde.tedstat.listeners.DisplayListener
 import com.devloyde.tedstat.listeners.NavigationListeners
+import com.devloyde.tedstat.models.HealthCard
 import com.devloyde.tedstat.networking.ConnectivityProvider
 import com.devloyde.tedstat.ui.dashboard.CountryListDialogFragment
 import com.devloyde.tedstat.ui.dashboard.DashboardViewModel
@@ -112,16 +114,16 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun navigateToPreventionDetailScreen(
-        position: Int?,image: ImageView?) {
+        item:HealthCard?,position: Int?,image: ImageView?) {
         var extras: Navigator.Extras? = null
         if (image != null) {
-            extras = FragmentNavigatorExtras(image to "preventionImageTransition$position")
+            extras = FragmentNavigatorExtras(image to item!!.image.toString())
         }
         if (position != null) {
-       //     val args = PreventionDetailFragment.bundleArgs(position,)
+            val args = PreventionDetailFragment.bundleArgs(position,item!!)
             navController.navigate(
                 R.id.action_navigation_home_to_preventionDetailFragment,
-                null, // Bundle of args
+                args, // Bundle of args
                 null, // NavOptions
                 extras
             )
