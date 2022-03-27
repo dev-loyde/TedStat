@@ -6,6 +6,9 @@ import com.devloyde.tedstat.models.StatCountries
 object StatUtils {
 
     fun parseIntegerStat(text: String): Int {
+        if(text == ""){
+            return 0
+        }
         return text.replace(Regex(","), "").toInt()
     }
 
