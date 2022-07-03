@@ -89,6 +89,7 @@ To get a local copy up and running follow these simple example steps.
 - compileSdkVersion 30
 - kotlin version 1.3.72-release-Studio 4.0-5
 - copy sample.env.properties into a new file env.     properties in project app folder
+- request api keys
 - Add build config variables
 ```JS
    API_KEY = 'ENTER YOUR API KEY';
